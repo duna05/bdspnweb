@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnPagosProgramadosController.validarFlujoPagoProgramadoPaso2()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formAfiliar2">
+
+                    <h:panelGroup layout="block" id="divBodyAfiliar" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listPagProg.confirmacion', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listPagProg.finEliminarPP', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+                        
+                          <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <h:panelGrid columns="1" styleClass="width-100 sinBorde">
+
+                                    <h:panelGroup layout="block" styleClass="notificaciones-exitoso">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.operacionFinalizada', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+
+                                <h:panelGroup layout="block" styleClass="fondoCabeceraTablaOpFin">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.eliminarPagosProgramados.operacionFinalizada', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>                        
+                       <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                            <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink actionListener="#{wpnPagosProgramadosController.eliminarPagoProgramadoPDF}" ajax="false" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink action="#" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                         <p:printer target="divPrincipalAfiliar"/>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                            </h:panelGrid> 
+                            <div class="lineaGrisOscuro clear"  ></div>  
+                        </h:panelGroup>                        
+                        <c:forEach items="#{wpnPagosProgramadosController.listSelected}" varStatus="pos" var="agenda">
+                            <h:panelGroup layout="block" styleClass="width-100" id="divPrincipalAfiliar">                                    
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                    <p:panelGrid styleClass="width-100 sinBorde">
+
+                                        <p:row>
+                                            <p:column colspan="3">
+                                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                    <!--<h:outputText value="# //{wpnTextosController.getNombreTexto('pnw.desafiliar.titulo.desafiliar', wpnInicioSesion.idCanal)} # //{afiliacion.nombreBeneficiario}"/>-->
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosProgramados.consulta.banco', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                    <h:outputText value="#{agenda.bancoBeneficiario}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosProgramados.consulta.nomBeneficiario', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                    <h:outputText value="#{agenda.nombreBeneficiario}"/>                                                
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>                                        
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                   <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosProgramados.consulta.nroCtaTDC', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                    <h:outputText value="#{agenda.cuentaDestino}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosProgramados.consulta.montoaPagar', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                    <h:outputText value="#{wpnPagosProgramadosController.formatearMonto(agenda.monto)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosProgramados.consulta.frecuencia', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                      <h:outputText value="#{wpnPagosProgramadosController.evaluarFrecuencia(agenda.frecuencia)}" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                    </p:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </c:forEach>
+
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

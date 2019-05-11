@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnGestionServiciosController.limpiarRecarga()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formRecargarServ1">
+                    <h:panelGroup layout="block">
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRecargServ" class="cuatro-pasos">
+                                <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100" rendered="#{wpnGestionServiciosController.validaCierreOperaciones}">
+
+                            <h:panelGroup layout="block" styleClass="width-100 margin-top-5" id="divRecarga">                                    
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                    <p:panelGrid styleClass="width-100 sinBorde">
+                                        <p:row>
+                                            <p:column colspan="3">
+                                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso1', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>   
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.servicio', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <h:selectOneMenu id="selectServRecargar" value="#{wpnGestionServiciosController.servicioSeleccionadoRecarga}" styleClass="font-size-09em selectExterno">                             
+                                                        <f:selectItem itemLabel="Seleccione un Servicio" itemValue="-1"/>
+                                                        <f:selectItems value="#{wpnGestionServiciosController.servicios}" var="servicio" itemValue="#{servicio.codigoServicio}" itemLabel="#{servicio.descripcionServicio}" />
+                                                        <p:ajax event="change" update="divAfiliaciones @(.ui-message)" listener="#{wpnGestionServiciosController.actualizarAfiliaciones}"/>
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="selectServRecargar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>                                            
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.numeroRecargar', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5" id="divAfiliaciones">
+                                                    <h:selectOneMenu id="selectAfiRecargar" value="#{wpnGestionServiciosController.afiliacionSeleccionada}" styleClass="font-size-09em selectExterno">                             
+                                                        <f:selectItem itemLabel="Seleccione un Servicio" itemValue="-1"/>
+                                                        <f:selectItems value="#{wpnGestionServiciosController.afiliaciones}" var="afi" itemValue="#{afi.afiliacionID}" itemLabel="#{afi.beneficiario.nombre} - #{afi.codigoAbonado}" />
+                                                        <p:ajax event="change" process="@this" update="@(.ui-message)"/>
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="selectAfiRecargar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>                                            
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.ctaDebitar', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5" id="cuentas">
+                                                    <h:selectOneMenu id="selectCtaDebitar" value="#{wpnGestionServiciosController.ctaSeleccionada}" styleClass="font-size-09em selectExterno">                             
+                                                        <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                                        <f:selectItems value="#{wpnGestionServiciosController.cuentasCliente}" var="cta" itemValue="#{cta.numeroCuentaEnc}" itemLabel="#{cta.nombreProducto} - #{wpnGestionServiciosController.formatoAsteriscosWeb(cta.numeroCuenta)} - #{wpnGestionServiciosController.capitalizarTexto(cta.siglasTipoMoneda)}. #{wpnGestionServiciosController.formatearMonto(cta.saldoDisponible)}"/>
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="selectCtaDebitar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.montoRecarga', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <p:inputText id="txtMtoRecarga" value="#{wpnGestionServiciosController.montoRecarga}" styleClass="solo-numero float-left" maxlength="5"/>
+                                                    <p:tooltip id="toolTipTxtMtoRecarga" for="txtMtoRecarga" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                                    <h:panelGroup id="divToolTipMtoRecarga" layout="block" styleClass="paddin-left10 imgIconoTooltips float-left"/>
+                                                    <p:tooltip id="toolTipFade" for="divToolTipMtoRecarga"
+                                                               value="#{wpnTextosController.getNombreTexto('pnw.global.title.mtoDigitelDetalle', wpnInicioSesion.idCanal)}" 
+                                                               trackMouse="true" style="font-size: 0.8em; max-width: 60%;" escape="false"/>
+                                                </h:panelGroup>   
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtMtoRecarga" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="2">
+                                                <p:message for="divRecarga" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                    <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px" rendered="false">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                    </h:panelGroup>                                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                    <p:commandLink actionListener="#{wpnGestionServiciosController.recargarPaso2()}" update="@all @(.ui-message)">                                            
+                                        <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+                <h:panelGroup rendered="#{wpnGestionServiciosController.mostrarMensajeCierre}" layout="block" class="fondoCabeceraTabla centrado negro bold font-size-1punto2em">
+                    <h:form id="formtdsPaso2MensajeCierre">
+                        <h:panelGroup rendered="true">
+                            <h:panelGroup layout="block" styleClass="font-size-08em" >   
+                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.alerta.transaccionesCerradas', wpnInicioSesion.idCanal)}" class=" bold" />
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="margin-top-10 width-100 centrado" >
+                            <p:commandLink actionListener="#{wpnGestionServiciosController.regresarPaso1()}" immediate="true">
+                                <h:panelGroup layout="block" id="divBotonRegresarInicio2" class="boton negro font-size-08em float-right centrado">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.volver', wpnInicioSesion.idCanal)}" class=" bold" />
+                                </h:panelGroup>
+                            </p:commandLink>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>
+

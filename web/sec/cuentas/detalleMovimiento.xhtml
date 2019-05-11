@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formDetalleMov">                
+                    <h:panelGroup layout="block" id="divDetalleMovCta" >
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/>                        
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <br/>
+                            <h:outputText class="titulos-tabla azul font-size-1em" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.detMovCta', wpnInicioSesion.idCanal)}" id="divDetaMovCtaTit"/>
+                            <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                                <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                    <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                        <p:commandLink actionListener="#{wpnCuentaController.detalleCuentaPDF}" ajax="false" styleClass="vertical-sub">
+                                            <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                            <h:panelGroup layout="block">
+                                                <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                            </h:panelGroup>
+                                        </p:commandLink>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block">
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                        <p:commandLink action="#" styleClass="vertical-sub">
+                                            <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                            <h:panelGroup layout="block">
+                                                <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                            </h:panelGroup>
+                                            <p:printer target="divDetalleMovCta2"/>
+                                        </p:commandLink>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block">
+                                    </h:panelGroup>
+                                </h:panelGrid> 
+                                <div class="lineaGrisOscuro clear"  ></div>  
+                            </h:panelGroup>                            
+                            <h:panelGroup id="divMjs" layout="block" styleClass="float-left clear">
+                                <p:message for="divMjs" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" styleClass="width-100 " id="divDetalleMovCta2">
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">                                    
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.consultaHistTran.fechaHora', inicioSesion.idCanal)}"/> 
+                                    </h:panelGroup>                                    
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnCuentaController.formatFechaTransaccion}"/>                       
+                                    </h:panelGroup>
+                     
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.tipoOperacion', inicioSesion.idCanal)}"/> 
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                        <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.descripcionTipoOp}"/>                        
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.numReferencia', inicioSesion.idCanal)}"/>                         
+                                    </h:panelGroup>          
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                        <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.numeroReferencia}"/>                        
+                                    </h:panelGroup>
+
+                                    <c:choose>
+                                        <c:when test="#{wpnCuentaController.tipoTransaccionMov != 'CTP2P'}">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.agencia', inicioSesion.idCanal)}"/>                                 
+                                            </h:panelGroup>
+
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreAgencia}"/>
+                                            </h:panelGroup>
+                                        </c:when>
+                                    </c:choose>
+
+                                    <c:choose>
+                                        <c:when test="#{ wpnCuentaController.movimientoCuentaDTO.debitoCredito.equalsIgnoreCase('A')}">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.ctaOrigen', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatoAsteriscosWeb( wpnCuentaController.movimientoCuentaDTO.numeroCuentaOrigen)}"/>                        
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.ctaDestino', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatoAsteriscosWeb( wpnCuentaController.movimientoCuentaDTO.numeroCuentaDestino)}"/>                        
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreEmisor', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreEmisor}"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.consultaHistTran.nomBeneficiario', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreBeneficiario}"/>
+                                            </h:panelGroup> 
+                                        </c:when>
+                                        <c:when test="#{ wpnCuentaController.movimientoCuentaDTO.debitoCredito.equalsIgnoreCase('D')}">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.ctaOrigen', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatoAsteriscosWeb( wpnCuentaController.movimientoCuentaDTO.numeroCuentaOrigen)}"/>                        
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreEmisor', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreEmisor}"/>
+                                            </h:panelGroup> 
+                                        </c:when>
+                                        <c:when test="#{ wpnCuentaController.movimientoCuentaDTO.debitoCredito.equalsIgnoreCase('O')}">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.ctaOrigen', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatoAsteriscosWeb( wpnCuentaController.movimientoCuentaDTO.numeroCuentaOrigen)}"/>                        
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreEmisor', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreEmisor}"/>
+                                            </h:panelGroup>                            
+                                        </c:when>
+                                        <c:when test="#{ wpnCuentaController.movimientoCuentaDTO.debitoCredito.equalsIgnoreCase('C')}">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.ctaDestino', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatoAsteriscosWeb( wpnCuentaController.movimientoCuentaDTO.numeroCuentaDestino)}"/>                        
+                                            </h:panelGroup>                            
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.consultaHistTran.nomBeneficiario', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreBeneficiario}"/>
+                                            </h:panelGroup> 
+                                        </c:when>
+                                    </c:choose>
+                                    <c:choose>
+                                        <!-- CODIGOS DE TRANSFERENCIA P2P 821, 738, 822, 739, 758, 719, 759, 720  -->
+                                        <c:when test="#{wpnCuentaController.tipoTransaccionMov == 'CTP2P'}">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.numTeleOrigen', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatoAsteriscosWeb( wpnCuentaController.movimientoCuentaDTO.numeroCuentaOrigen)}"/>                        
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.numTeleDestino', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatoAsteriscosWeb( wpnCuentaController.movimientoCuentaDTO.numeroCuentaDestino)}"/>                        
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreBcoOrigen', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreBancoOrigen}"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreBcoDestino', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreBancoDestino}"/>
+                                            </h:panelGroup> 
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreEmisor', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreEmisor}"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.consultaHistTran.nomBeneficiario', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreBeneficiario}"/>
+                                            </h:panelGroup> 
+                                        </c:when>
+                                        <c:when test="#{wpnCuentaController.tipoTransaccionMov == 'CMT'}">
+                                            <!-- AGREGAR NUMERO PLANILLA 
+                                            <h:panelGroup layout="block" styleClass="margin-top-10 table-head titulos-tabla azul bold paddin-left25">
+                                                <h:outputText styleClass="vertical-sub" value="# {wpnTextosController.getNombreTexto('tabla.numeroPlanilla', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-07em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="# { wpnCuentaController.movimientoCuentaDTO.numeroPlanilla}"/>
+                                            </div-->
+
+
+
+                                            <!-- 
+                                            
+                                            AGREGAR TIPO DE DEPOSITO CHEQUE O EFECTIVO
+                                            
+                                            
+                                            -->
+                                        </c:when>
+                                        <c:when test="#{ wpnCuentaController.tipoTransaccionMov == 'CTBDS'}">  
+                                            <!--  SE PASARON LOS CAMPOS EMISOR Y BENEFICIARIO A LA VALIDACION DEL TIPO DE DEBITO/CREDITO 
+                                                  POR SOLICITUD DE MARYERYS PARA QUE LAS TRANSACCIONES NO SE AFECTARAN AL CAMBIAR EL TIPO DE TRANSACC -->
+                                            <!--div class="margin-top-10 table-head titulos-tabla azul bold paddin-left25">
+                                                <h:outputText styleClass="vertical-sub" value="# {wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreEmisor', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-07em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="# { wpnCuentaController.movimientoCuentaDTO.nombreEmisor}"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="margin-top-10 table-head titulos-tabla azul bold paddin-left25">
+                                                <h:outputText styleClass="vertical-sub" value="# {wpnTextosController.getNombreTexto('pnw.consultaHistTran.nomBeneficiario', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-07em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="# { wpnCuentaController.movimientoCuentaDTO.nombreBeneficiario}"/>
+                                            </div-->                            
+                                        </c:when>
+                                        <c:when test="#{ wpnCuentaController.tipoTransaccionMov == 'CTR'}"> 
+
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreBcoOrigen', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreBancoOrigen}"/>
+                                            </h:panelGroup>                                
+                                            <!--div class="margin-top-10 table-head titulos-tabla azul bold paddin-left25">
+                                                <h:outputText styleClass="vertical-sub" value="# {wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreEmisor', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-07em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="# { wpnCuentaController.movimientoCuentaDTO.nombreEmisor}"/>
+                                            </h:panelGroup>             
+                                            <h:panelGroup layout="block" styleClass="margin-top-10 table-head titulos-tabla azul bold paddin-left25">
+                                                <h:outputText styleClass="vertical-sub" value="# {wpnTextosController.getNombreTexto('pnw.consultaHistTran.nomBeneficiario', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-07em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="# { wpnCuentaController.movimientoCuentaDTO.nombreBeneficiario}"/>
+                                            </div-->  
+                                        </c:when>
+                                        <c:when test="#{ wpnCuentaController.tipoTransaccionMov == 'CTE'}">   
+
+                                            <!--div class="margin-top-10 table-head titulos-tabla azul bold paddin-left25">
+                                                <h:outputText styleClass="vertical-sub" value="# {wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreEmisor', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-07em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="# { wpnCuentaController.movimientoCuentaDTO.nombreEmisor}"/>
+                                            </div--> 
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.nombreBcoDestino', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.nombreBancoDestino}"/>
+                                            </h:panelGroup>
+                                            <!-- div class="margin-top-10 table-head titulos-tabla azul bold paddin-left25">
+                                                <h:outputText styleClass="vertical-sub" value="# {wpnTextosController.getNombreTexto('pnw.consultaHistTran.nomBeneficiario', inicioSesion.idCanal)}"/> 
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-07em paddin-left10">
+                                                <h:outputText styleClass="vertical-sub" value="# { wpnCuentaController.movimientoCuentaDTO.nombreBeneficiario}"/>
+                                            </div-->                                
+                                        </c:when>
+                                        <c:when test="#{wpnCuentaController.tipoTransaccionMov == 'CMME'}">      
+
+                                            <!-- 
+                                            
+                                            AGREGAR TIPO DE DEPOSITO CHEQUE O EFECTIVO
+                                            
+                                            -->
+
+                                        </c:when>
+                                    </c:choose>
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.descripcion', inicioSesion.idCanal)}"/>  
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                        <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.movimientoCuentaDTO.descripcion}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.detMov.titulo.monto', inicioSesion.idCanal)} #{ wpnCuentaController.capitalizarTexto( wpnCuentaController.cuentaDTO.siglasTipoMoneda)}"/> 
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                        <h:outputText styleClass="vertical-sub" value="#{ wpnCuentaController.formatearMonto( wpnCuentaController.movimientoCuentaDTO.monto)}"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                <h:panelGroup layout="block" id="botonAnt" class="width-20 float-right">
+                                    <p:commandLink actionListener="#{wpnCuentaController.actionAtrasMov()}" immediate="true">
+                                        <h:panelGroup layout="block" id="divBotonAtr" class="boton negro font-size-08em float-right centrado bold">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.regresar', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                        </h:panelGroup> 
+                    </h:panelGroup> 
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

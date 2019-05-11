@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnOTPController.limpiarOtp()}" type="preRenderView" />
+        <f:event listener="#{wpnExtraFmtoTDCController.limpiar()}" type="preRenderView" />
+        <f:event listener="#{wpnExtraFmtoTDCController.validarFlujoExtraFmto2()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formExtraFmto">
+                    <h:panelGroup layout="block" id="divBodyExtraFmto" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 1}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 0 or wpnInicioSesion.validacionOTP == 2}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="tres-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                        </c:choose>
+
+                        <h:panelGroup layout="block" id="avanceEfectDiv">
+
+                            <h:panelGroup layout="block" styleClass="width-100">
+                                <h:panelGroup layout="block">
+                                    <h:panelGrid columns="3">
+                                        <h:panelGroup layout="block" styleClass="negro font-size-09em">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.campo.extFmto', wpnInicioSesion.idCanal)} "/>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block">
+                                            <h:selectOneMenu id="selectTDC" value="#{wpnExtraFmtoTDCController.tdcSeleccionada}" styleClass="font-size-09em selectExterno marging-left-10px">                             
+                                                <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                                <f:selectItems value="#{wpnExtraFmtoTDCController.tdcCliente}" var="tdc" itemValue="#{tdc.numeroTarjetaEnc}" itemLabel="#{tdc.nombreProducto} - #{wpnExtraFmtoTDCController.formatoAsteriscosWeb(tdc.numeroTarjeta)}"/>
+                                                <p:ajax event="change" process="@this" update="@form" resetValues="true" listener="#{wpnExtraFmtoTDCController.consultarDetalleTDC()}"/>
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>  
+                                        <h:panelGroup layout="block" styleClass="margin-top-10">  
+                                            <p:message for="selectTDC" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                        </h:panelGroup>   
+                                    </h:panelGrid>                                        
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10" rendered="#{!wpnExtraFmtoTDCController.tdcSeleccionada.equalsIgnoreCase('-1')}">
+                                    <p:panelGrid styleClass="width-100 sinBorde" id="afiliacionEditar">
+                                        <p:row>
+                                            <p:column colspan="3">
+                                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.paso2', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>       
+                                        
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.campo.cuenta', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <h:selectOneMenu class="marging-left-30px" id="selectCtaDestino" value="#{wpnExtraFmtoTDCController.ctaSeleccionada}"
+                                                                     validator="#{wpnInicioSesion.validarSelectOneMenu}">
+                                                        <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>    
+                                                        <f:selectItems value="#{wpnExtraFmtoTDCController.cuentasCliente}" var="ctaDestino" itemValue="#{ctaDestino.numeroCuentaEnc}"  itemLabel="#{ctaDestino.detalleProdLista}" />
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="selectCtaDestino" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        
+                                        <p:row id="divRadioMonto" rendered="#{wpnExtraFmtoTDCController.mostrarMontoCuotaPago}">
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);" >
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.campo.monto', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                    <h:selectOneRadio id="radioMonto" value="#{wpnExtraFmtoTDCController.radioMontoaPagar}" rendered="#{wpnExtraFmtoTDCController.mostrarMontoCuotaPago}" validator="#{wpnExtraFmtoTDCController.validarRadio}">
+                                                        <f:selectItem itemLabel="Cuota a pagar: Bs. #{wpnExtraFmtoTDCController.montoMin}" itemValue="pagoMin"/>
+                                                        <f:selectItem itemLabel="Saldo total: Bs. #{wpnExtraFmtoTDCController.montoTotal}" itemValue="pagoTotal"/>
+                                                        <f:selectItem itemLabel="Otro monto:" itemValue="pagoOtro"/>
+                                                        <f:ajax event="click" render="@form" execute="@this" listener="#{wpnExtraFmtoTDCController.activarOtroMonto}"/>
+                                                    </h:selectOneRadio>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="radioMonto" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.campo.monto', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <p:inputText id="txtMonto" value="#{wpnExtraFmtoTDCController.monto}" required="true"  styleClass="txtMonto" maxlength="15" onkeypress="formatoMonto(this);" onkeyup="formatoMonto(this);"
+                                                                 requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarMonto}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtMonto" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.campo.cantCuotas', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <h:selectOneMenu class="marging-left-30px" id="selectCuota" value="#{wpnExtraFmtoTDCController.cuotaPagoSeleccionada}"
+                                                                     validator="#{wpnInicioSesion.validarSelectOneMenu}">
+                                                        <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>    
+                                                        <f:selectItems value="#{wpnExtraFmtoTDCController.cuotasPago}" var="cuota" itemValue="#{cuota}"  itemLabel="#{cuota}" />
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="selectCuota" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagExtraFmtoTDC.campo.codTDC', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <p:inputText id="txtCodTDC" value="#{wpnExtraFmtoTDCController.codTDC}" required="true" styleClass="solo-numero font-size-09em" 
+                                                                 onkeyup="soloNumero(this);" onkeypress="soloNumero(this);" maxlength="3" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloNumero}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtCodTDC" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>  
+                                        
+                                        <p:row>
+                                            <p:column colspan="2">
+                                                <p:message for="avanceEfectDiv" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px" rendered="false">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                <p:commandLink actionListener="#{wpnExtraFmtoTDCController.extraFmtoPaso3()}" update="@all @(.ui-message)">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" class="gris float-left margin-top-25 paddin-right25 paddin-left25 margin-bottom-10 clear justificado" id="divMsjExtrFmto">
+                            <p:message rendered="true" for="divMsjExtrFmto" id="msjAvcEfect"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>
+
+

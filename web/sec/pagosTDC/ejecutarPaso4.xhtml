@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnPagosTDCController.validarFlujoEjecutarPaso4()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formDetalleTrans">
+
+                    <h:panelGroup layout="block" id="divBodyDetalleTrans" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 1 and !wpnInicioSesion.validarTransaccionClaveEspecial()}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosTransf" class="cuatro-pasos">
+                                        <p:steps activeIndex="3" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{(wpnInicioSesion.validacionOTP == 0 or wpnInicioSesion.validacionOTP == 2) and !wpnInicioSesion.validarTransaccionClaveEspecial()}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosTransf" class="cuatro-pasos">
+                                        <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.validarTransaccionClaveEspecial()}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosPagosTDC" class="cuatro-pasos">
+                                        <p:steps activeIndex="3" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.ingreso.clave.operacionesEspeciales', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.confirmPaso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.finPaso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                        </c:choose>
+
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <h:panelGrid columns="1" styleClass="width-100 sinBorde" rendered="#{wpnPagosTDCController.errorConfirmacion.equalsIgnoreCase('')}">
+                                    <h:panelGroup layout="block" styleClass="notificaciones-exitoso">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.operacionFinalizada', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                <h:panelGroup layout="block" styleClass="fondoCabeceraTablaOpFin" rendered="#{wpnPagosTDCController.errorConfirmacion.equalsIgnoreCase('')}">
+                                    <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('U') and wpnPagosTDCController.errorConfirmacion.equalsIgnoreCase('')}">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.transfExitosa', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                    </c:if>   
+                                    <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('A') and wpnPagosTDCController.errorConfirmacion.equalsIgnoreCase('')}">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.transfAgendaExitosa', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                    </c:if>                                    
+                                </h:panelGroup>
+                                <h:panelGroup layout="block"  id="divCabeceraDetalle">
+                                    <c:if test="#{!wpnPagosTDCController.errorConfirmacion.equalsIgnoreCase('')}">
+                                        <p:message rendered="true" for="divCabeceraDetalle" id="msjTranferencias"/> 
+                                    </c:if>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                            <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                <h:panelGroup layout="block" styleClass="botonImpresion" rendered="#{wpnPagosTDCController.numConfirmacion != null and wpnPagosTDCController.numConfirmacion.trim() != '' and wpnPagosTDCController.numConfirmacion != '0'}">                                        
+                                    <p:commandLink actionListener="#{wpnPagosTDCController.detallePagosTDCPDF}" ajax="false" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink action="#" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                        <p:printer target="divEjecutarPaso4"/>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                            </h:panelGrid> 
+                            <div class="lineaGrisOscuro clear"  ></div>  
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="width-100" rendered="#{wpnPagosTDCController.errorConfirmacion.equalsIgnoreCase('')}">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10" id="divEjecutarPaso4">
+                                <p:panelGrid styleClass="width-100 sinBorde">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso4', wpnInicioSesion.idCanal)} A #{wpnInicioSesion.nombreTransaccion}:"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('U') and wpnPagosTDCController.transaccionExitosa()}">
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.nroRef', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                    <h:outputText value="#{wpnPagosTDCController.numConfirmacion}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                    </c:if>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('U')}">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.fechaEjec', wpnInicioSesion.idCanal)}"/>
+                                                </c:if>
+                                                <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('A')}">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.fechaAgendada', wpnInicioSesion.idCanal)}"/>
+                                                </c:if>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnPagosTDCController.formatearFecha(wpnPagosTDCController.fechaTransaccion,'dd/MM/yyyy hh:mm:ss a')}"/>
+                                            </h:panelGroup>                                                
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.ctaDebitada', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnPagosTDCController.ctaOrigenMascara}"/>                                                
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.ptdc.campo.tdcAbonar', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnPagosTDCController.TDCDestinoMascara}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.nombreBenef', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <c:if test="#{wpnPagosTDCController.tipoPago.equalsIgnoreCase('PPDS')}">
+                                                    <h:outputText value="#{wpnInicioSesion.usuario.nombre}"/>
+                                                </c:if>
+                                                <c:if test="#{!wpnPagosTDCController.tipoPago.equalsIgnoreCase('PPDS')}">
+                                                    <h:outputText value="#{wpnPagosTDCController.datosAfiliacionSeleccionada.nombreBeneficiario}"/>
+                                                </c:if>                                                
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.bancoDestino', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <c:if test="#{wpnPagosTDCController.tipoPago.equalsIgnoreCase('PPDS')}">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.banco', wpnInicioSesion.idCanal)}"/>
+                                                </c:if>
+                                                <c:if test="#{!wpnPagosTDCController.tipoPago.equalsIgnoreCase('PPDS')}">
+                                                    <h:outputText value="#{wpnPagosTDCController.datosAfiliacionSeleccionada.nombreBanco}"/>
+                                                </c:if>                                                 
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.monto', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{ibParametrosFacade.textoParametro('pnw.global.tipoMoneda.Bs', inicioSesion.idCanal)} #{wpnPagosTDCController.monto}"/> 
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.motivo', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnPagosTDCController.motivo}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagosTransfejecutar.campo.email', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <c:if test="#{wpnPagosTDCController.tipoPago.equalsIgnoreCase('PPDS')}">
+                                                    <h:outputText value="#{wpnInicioSesion.usuario.email}"/>
+                                                </c:if>
+                                                <c:if test="#{!wpnPagosTDCController.tipoPago.equalsIgnoreCase('PPDS')}">
+                                                    <h:outputText value="#{wpnPagosTDCController.datosAfiliacionSeleccionada.email}"/>
+                                                </c:if>                                                 
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('A')}">
+                                        <p:row>
+                                            <p:column colspan="2">
+                                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.ptdc.titulo.tipoEjec', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="width-100" colspan="2">
+                                                <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('U')}">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.ptdc.titulo.ejecUnica', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </c:if>
+                                                <c:if test="#{wpnPagosTDCController.tipoEjecPagTDC.equalsIgnoreCase('A')}">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.ptdc.titulo.agendaPeriodica', wpnInicioSesion.idCanal)}"/>&#160;<h:outputText value="#{wpnPagosTDCController.frecSeleccionadaString}"/><h:outputText value=", el día "/>
+                                                        <h:outputText value="#{wpnPagosTDCController.fechaSeleccionadaString}"/>
+                                                        <c:if test="#{wpnPagosTDCController.frecSeleccionada == 2}">
+                                                            <h:outputText value=" y el día "/><h:outputText value="#{wpnPagosTDCController.segundoDiaQuincena}"/>
+                                                        </c:if>
+                                                        <h:outputText value=", Hasta el "/><h:outputText value="#{wpnPagosTDCController.formatearFecha(wpnPagosTDCController.fechaHasta,'dd/MM/yyyy')}"/>
+                                                    </h:panelGroup>
+                                                </c:if>
+                                            </p:column>                                        
+                                        </p:row>
+                                    </c:if>
+                                </p:panelGrid> 
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+
+                        <br/>
+                        <br/>
+                        <h:panelGroup rendered="#{wpnPagosTDCController.tipoPago.equalsIgnoreCase('PTOB') and wpnPagosTDCController.tipoPago.equalsIgnoreCase('PPOB')}" >
+                            <div class="margin-top-10 texto-footer negro izquierda">
+                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.global.texto.infoComisionTrans1',inicioSesion.nombreCanal)}"/>
+                            </div>
+                            <div class="margin-top-10 texto-footer negro izquierda">
+                                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.global.texto.infoComisionTrans2',inicioSesion.nombreCanal)}"/>
+                            </div>
+                        </h:panelGroup> 
+
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

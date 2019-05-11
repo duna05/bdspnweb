@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">    
+    <f:metadata>
+        <f:event listener="#{wpnDesbloquearUsuarioController.validarFlujo2()}" type="preRenderView" />
+        <f:event listener="#{wpnDesbloquearUsuarioController.limpiarRespuestas()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formDesbUsuario2">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-30 vertical-top">
+                                <h:panelGroup layout="block" id="divLogin"  class="data-left">
+                                    <div class=" negro bold font-size-08em">
+                                        #{wpnTextosController.getNombreTexto('pnw.desbUsr.titulo.desbUsr', wpnInicioSesion.idCanal)} 
+                                    </div>
+                                    <br/>
+                                    <div class=" grisOsc font-size-07em justificado">    
+                                        #{wpnTextosController.getNombreTexto('pnw.desbUsr.texto.info1', wpnInicioSesion.idCanal)}                                        
+                                    </div>
+                                </h:panelGroup>
+                            </p:column>
+
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divDesbUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosDesbUsr" class="cuatro-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desbUsr.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desbUsr.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desbUsr.paso3', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block" styleClass="width-100  margin-top-5">   
+
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10" id="divTDD" rendered="#{!wpnDesbloquearUsuarioController.mostrarPreguntas}">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desbUsr.paso3', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desbUsr.campo.cta', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <p:inputText id="txtNroCta" value="#{wpnDesbloquearUsuarioController.flujoExternaUsuarioDTO.numeroCuenta}" 
+                                                                     maxlength="20"
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                     validator="#{wpnInicioSesion.validarCta}" styleClass="solo-numero"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtNroCta" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <p:message for="divTDD" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjTDD"/>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" id="divMsjsBoton1" class="width-100 margin-top-8" rendered="#{!wpnDesbloquearUsuarioController.mostrarPreguntas}">
+                                        <h:panelGroup layout="block" id="divMsjs1" class="float-left width-58">
+                                            <h:panelGroup layout="block" id="divMsjsData1" class="botonAzul azul font-size-08em marging-right-50px">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" styleClass="" />
+                                            </h:panelGroup>                                        
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" id="divBoton1" class="width-42 float-right">
+                                            <p:commandLink actionListener="#{wpnDesbloquearUsuarioController.generarPreguntasSeg()}" update="@all">                                            
+                                                <h:panelGroup layout="block" id="divBotonData12" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                                </h:panelGroup>
+                                            </p:commandLink>
+                                            <p:commandLink actionListener="#{wpnDesbloquearUsuarioController.regresarPaso1()}" immediate="true">
+                                                <h:panelGroup layout="block" id="divBotonData13" class="boton negro font-size-08em float-right centrado">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                                </h:panelGroup>
+                                            </p:commandLink>
+                                        </h:panelGroup>
+                                    </h:panelGroup> 
+
+
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10  margin-top-5" id="divPreguntas" rendered="#{wpnDesbloquearUsuarioController.mostrarPreguntas}">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desbUsr.paso2', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla grisOsc font-size-06em margin-top-5 paddin-left10">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.validacionPositiva.tituloPDD', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+
+                                            <c:forEach items="#{wpnDesbloquearUsuarioController.preguntasDD}" varStatus="pregunta" var="preg">
+                                                <p:row>
+                                                    <p:column colspan="3">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{preg.pregunta}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column colspan="2">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                            <p:password id="txtRespDD#{pregunta.index}" value="#{wpnDesbloquearUsuarioController.respuestasDD[pregunta.index]}" 
+                                                                         maxlength="20" autocomplete="false"/>
+                                                            <div style="width: 0px; height: 0px;">  
+                                                                <p:commandLink onmouseover="showPassword('formDesbUsuario2:txtRespDD#{pregunta.index}');" onmouseout="hidePassword('formDesbUsuario2:txtRespDD#{pregunta.index}');" onclick="return false;" immediate="true">
+                                                                    <h:panelGroup layout="block" styleClass="imgIconoMostrar" >                                                
+                                                                    </h:panelGroup>
+                                                                </p:commandLink>
+                                                            </div>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">   
+                                                            <p:message for="txtRespDD#{pregunta.index}" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" />
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </c:forEach>                                          
+
+                                            <c:forEach items="#{wpnDesbloquearUsuarioController.preguntasDA}" varStatus="pregunta" var="preg">
+                                                <p:row>
+                                                    <p:column colspan="3">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{preg.descripcion}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column colspan="2">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                            <p:password id="txtRespDA#{pregunta.index}" value="#{wpnDesbloquearUsuarioController.respuestasDA[pregunta.index]}" 
+                                                                         maxlength="20" autocomplete="false"/>
+                                                            <div style="width: 0px; height: 0px;">  
+                                                                <p:commandLink onmouseover="showPassword('formDesbUsuario2:txtRespDA#{pregunta.index}');" onmouseout="hidePassword('formDesbUsuario2:txtRespDA#{pregunta.index}');" onclick="return false;" immediate="true">
+                                                                    <h:panelGroup layout="block" styleClass="imgIconoMostrar" >                                                
+                                                                    </h:panelGroup>
+                                                                </p:commandLink>
+                                                            </div>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">   
+                                                            <p:message for="txtRespDA#{pregunta.index}" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" />
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </c:forEach>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <p:message for="divPreguntas" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjPreguntas"/>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8" rendered="#{wpnDesbloquearUsuarioController.mostrarPreguntas}">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" styleClass="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                        <p:remoteCommand name="rcEncriptarRPDD" actionListener="#{wpnDesbloquearUsuarioController.encriptarRespuestasWeb()}" global="false"/>                                         
+                                        <p:commandLink actionListener="#{wpnDesbloquearUsuarioController.desbloquearPaso3()}" update="@form" resetValues="true" onclick="rcEncriptarRPDD();
+                                                asignarRespuestas('formDesbUsuario2:txtRespDD', '********',#{wpnDesbloquearUsuarioController.preguntasDD.size()});">                                        
+                                            <h:panelGroup layout="block" id="divBotonSig" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.aceptar', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                            </h:panelGroup>
+
+                                        </p:commandLink>
+                                        <p:commandLink actionListener="#{wpnDesbloquearUsuarioController.regresarPaso1()}" immediate="true">
+                                            <h:panelGroup layout="block" id="divBotonData1" class="boton negro font-size-08em float-right centrado">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                            </h:panelGroup>
+                                        </p:commandLink>
+                                    </h:panelGroup>
+                                </h:panelGroup>  
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

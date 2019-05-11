@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:event listener="#{wpnSuscripcionSMSController.inicio()}" type="preRenderView" />
+        <f:event listener="#{wpnSuscripcionSMSController.validarFlujo2()}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formSuscripcionSMSPaso2">
+
+                    <h:panelGroup layout="block" id="divBodyCambioPDD" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla negro font-size-7em float-left margin-left-15px" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.paso3', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.paso4', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup id="divMensaje" layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <p:panelGrid id="tabla" styleClass="width-100 sinBorde">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.paso2', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla grisOsc font-size-06em margin-top-5 paddin-left10">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.texto.informativo', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.campo.celular', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" colspan="2">                                            
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:outputText value="#{wpnSuscripcionSMSController.celular}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt vertical-top" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup id="divEventos" layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText id="labelEvento" value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.campo.eventos', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+
+                                        <p:column styleClass="max-widthTxt" colspan="2" style="background: white; border-top: 5px solid rgb(247,247,246);">
+
+                                            <c:forEach items="#{wpnSuscripcionSMSController.listEventosNotificacionDTO.ibEventosNotificacionDTO}" varStatus="eventoIndex" var="evento">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row style="background: white;">
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:selectBooleanCheckbox id="chk#{eventoIndex.index}" value="#{evento.checkEvento}" itemLabel="#{evento.nombreEvento}" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+
+                                                        <p:column colspan="2">     
+                                                            <c:if test="#{evento.poseeMonto == '1'}">
+                                                                <h:panelGroup layout="block" >
+                                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suscripcionSMS.campo.eventos.montoMin', wpnInicioSesion.idCanal)}" styleClass="cuerpoTabla font-size-07em izquierda grisOsc"/>
+                                                                    <p:inputText id="txtMontoMin#{eventoIndex.index}"  styleClass="izquierda grisOsc paddin-left10 margin-top-5 marging-left-3px txtMonto" value="#{evento.montoMin}" maxlength="21"/>
+                                                                </h:panelGroup>
+                                                            </c:if>
+                                                        </p:column>                                                        
+                                                    </p:row>
+                                                    <c:if test="#{evento.poseeMonto == '1'}">
+                                                        <p:row style="background: white;">
+                                                            <p:column colspan="3">
+                                                                <p:message id="msjMontoMin#{eventoIndex.index}" for="txtMontoMin#{eventoIndex.index}" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />                                                                                                                            
+                                                            </p:column>
+                                                        </p:row>
+                                                    </c:if>
+                                                </p:panelGrid>
+                                            </c:forEach> 
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt" colspan="3">
+                                            <p:message id="msjEventos" for="divMensaje" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" /> 
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" styleClass="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                <p:commandLink actionListener="#{wpnSuscripcionSMSController.suscripcionSMSPaso3()}" update="@all @(.ui-message)">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

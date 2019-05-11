@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <f:metadata>
+        <f:event listener="#{wpnLimitesController.validarFlujo3()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formLimites3">
+
+                    <h:panelGroup layout="block" id="divBodyLimites" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cinco-pasos">
+                                <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.limites.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.limites.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.limites.paso3', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.limites.paso4', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.limites.paso5', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <p:panelGrid styleClass="width-100 sinBorde">                                    
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.limites.paso3', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+
+                                    <p:row>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.limites.campo.limitePDS', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <p:inputText id="txtLimitePDS" value="#{wpnLimitesController.limitesPDS}" required="true" maxlength="21"
+                                                             requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                             validator="#{wpnLimitesController.validarMonto}" styleClass="txtMonto"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtLimitePDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.limites.campo.limiteTDS', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <p:inputText id="txtLimiteTDS" value="#{wpnLimitesController.limitesTDS}" required="true" maxlength="21"
+                                                             requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                             validator="#{wpnLimitesController.validarMonto}" styleClass="txtMonto"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtLimiteTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.limites.campo.limitePOB', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <p:inputText id="txtLimitePOB" value="#{wpnLimitesController.limitesPOB}" required="true" maxlength="21"
+                                                             requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                             validator="#{wpnLimitesController.validarMonto}" styleClass="txtMonto" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtLimitePOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.limites.campo.limiteTOB', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <p:inputText id="txtLimiteTOB" value="#{wpnLimitesController.limitesTOB}" required="true" maxlength="21"
+                                                             requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                             validator="#{wpnLimitesController.validarMonto}" styleClass="txtMonto"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtLimiteTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" styleClass="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                <p:commandLink actionListener="#{wpnLimitesController.paso4()}" update="@all @(.ui-message)" oncomplete="PF('statusDialog').hide()" onsuccess="PF('statusDialog').hide()">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                                <p:commandLink actionListener="#{wpnLimitesController.regresarPaso2()}" immediate="true">
+                                    <h:panelGroup layout="block" id="divBotonData1" class="boton negro font-size-08em float-right centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

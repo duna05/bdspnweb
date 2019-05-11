@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:event listener="#{wpnCambioPDDController.validarFlujo3()}" type="preRenderView" />
+        <f:event listener="#{wpnCambioPDDController.limpiarRespuestasPDD()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formCambioPDD">
+
+                    <h:panelGroup layout="block" id="divBodyCambioPDD" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioPdd.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioPdd.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioPdd.paso3', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioPdd.paso4', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100" >                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10" id="divPreguntas">
+                                <p:panelGrid styleClass="width-100 sinBorde" id="tabla">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.tituloPDDSeleccion', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <c:forEach items="#{wpnCambioPDDController.listPDDSelectedDTO}" varStatus="pregunta" var="preg">
+                                        <p:row>
+                                            <p:column colspan="2">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <h:selectOneMenu styleClass="selectPreg marging-left-30px actualizaCombo" id="txtPdd#{pregunta.index}" value="#{preg.preguntaDD}" validator="#{wpnCambioPDDController.validarSelectPreg}" >
+                                                        <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1" noSelectionOption="true"/> 
+                                                        <f:selectItems value="#{preg.listPreguntaDD}" var="pdd" itemLabel="#{pdd.pregunta}" itemValue="#{pdd.id}"/>                                                        
+                                                        <p:ajax event="change" listener="#{wpnCambioPDDController.eliminarPDDSelect(pregunta.index)}" process="@this" update="@(.actualizaCombo)" global="false"/>
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtPdd#{pregunta.index}" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="2">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <p:password id="txtRespDD#{pregunta.index}" value="#{preg.respuestaPDD}"  maxlength="20"
+                                                                autocomplete="false"></p:password>
+                                                    <div style="width: 0px; height: 0px;">  
+                                                        <p:commandLink onmouseover="showPassword('formCambioPDD:txtRespDD#{pregunta.index}');" onmouseout="hidePassword('formCambioPDD:txtRespDD#{pregunta.index}');" onclick="return false;" immediate="true">
+                                                            <h:panelGroup layout="block" styleClass="imgIconoMostrar" >                                                
+                                                            </h:panelGroup>
+                                                        </p:commandLink>
+                                                    </div>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtRespDD#{pregunta.index}" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                    </c:forEach>
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <p:message for="divPreguntas" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjPreguntas"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" styleClass="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                <p:remoteCommand name="rcEncriptarRPDD" actionListener="#{wpnCambioPDDController.encriptarRespuestasNuevasWeb()}" global="false"/>                                         
+                                <p:commandLink actionListener="#{wpnCambioPDDController.paso4()}" resetValues="true" update="@form" onclick="rcEncriptarRPDD();
+                                        asignarRespuestas('formCambioPDD:txtRespDD', '********',#{wpnCambioPDDController.listPDDSelectedDTO.size()});">                                                                      
+                                    <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                                <p:commandLink actionListener="#{wpnCambioPDDController.regresarPaso2}" immediate="true">
+                                    <h:panelGroup layout="block" id="divBotonData1" class="boton negro font-size-08em float-right centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" styleClass=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event listener="#{wpnFichaController.datosRegulatorios()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa_ficha_cliente.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formFichaClienteComplementario">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="4" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="Datos Básicos Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Referencias Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Datos Adicionales Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Representantes Legales" style="font-size:80%;"/>
+                                            <p:menuitem value="Información Económica" style="font-size:80%;"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">                                            
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Complemento de Datos Información Economica"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Categoria Especial"  />
+                                                            <h:selectOneMenu id="destinoFondos" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                                <f:selectItem itemValue="VENEZUELA" itemLabel="Venezuela"/>                                                                  
+                                                            </h:selectOneMenu>
+                                                        </h:panelGroup>
+                                                    </p:column> 
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column colspan="3">
+                                                        <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                            <h:outputText value="Datos de Negocio Propio"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Nombre "/>
+
+                                                            <p:inputText value="VENEZUELA" id="nombrePais" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Numero de Rif"/>
+
+                                                            <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nombreDepartamento}" id="nombreDpto" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Direccion Fiscal "/>
+
+                                                            <p:inputText value="VENEZUELA" id="direccionFiscal" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Telefono"/>
+
+                                                            <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nombreDepartamento}" id="telefono" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Ramo"/>
+
+                                                            <p:inputText value="VENEZUELA" id="ramo" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Ingresos Mensuales"/>
+
+                                                            <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nombreDepartamento}" id="ingresoMensual" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Nombre de Registro"/>
+
+                                                            <p:inputText value="VENEZUELA" id="nombreRegistro" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Fecha Constitucion"/>
+
+                                                            <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nombreDepartamento}" id="fechaConstitucion" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Numero de Registro"/>
+
+                                                            <p:inputText value="VENEZUELA" id="numRegistro" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Numero de Libro"/>
+
+                                                            <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nombreDepartamento}" id="nroLibro" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Numero de Folio"/>
+
+                                                            <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nombreDepartamento}" id="nroFolio" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" 
+                                                                         title="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt" colspan="3">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                            <p:dataTable id="dirEmpleos" var="item5" value="#{wpnFichaController.ibFichaClienteEmpleosList}" editable="true" editMode="cell" >
+
+                                                                <p:column headerText="Tipo de Identificacion">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.nombreEmpresa}"/></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.nombreEmpresa}" /></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+
+                                                                <p:column headerText="Nro. de Identificacion">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.cargo}" /></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.cargo}" /></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                                <p:column headerText="Nombre">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.ultimoSueldo}" /></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.ultimoSueldo}" /></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>                                                                 
+                                                                <p:column headerText="Lugar de Nacimiento">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.fechaEntrada}" /></f:facet> 
+                                                                        <f:facet name="input"><p:inputText value="#{item5.fechaEntrada}" /></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                                <p:column headerText="Fecha de Nacimiento">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"> <h:outputText value="#{item5.rif}" >
+                                                                                <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                                                                            </h:outputText></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.rif}" /></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                                <p:column headerText="Telefono Contacto">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.ramo}" /></f:facet> 
+                                                                        <f:facet name="input"><p:inputText value="#{item5.ramo}" /></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                                <p:column headerText="Numero de Poder">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.direccion}" /></f:facet>  
+                                                                        <f:facet name="input"><p:inputText value="#{item5.direccion}" /></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                            </p:dataTable>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column colspan="3">
+                                                        <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                            <h:outputText value="Complemento de Datos Otros Ingresos"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <h:outputText value="Actividad Generadora de Otros Ingresos"  />
+                                                            <h:selectOneMenu id="actEconomicaGeneradora" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                                <f:selectItem itemValue="VENEZUELA" itemLabel="Venezuela"/>                                                                  
+                                                            </h:selectOneMenu>
+                                                        </h:panelGroup>
+                                                    </p:column> 
+                                                </p:row>
+                                            </p:row>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                        <p:remoteCommand name="rcEncriptarPin" actionListener="#{wpnRegistroUsuariosController.encriptarPinFase1()}" global="false"/>
+
+
+                                        <p:link outcome="paso3_p" value="Siguiente">
+                                            <f:param name="codigocliente" value="10" />                                           
+                                        </p:link>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

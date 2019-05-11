@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnCuentaController.iniciar()}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formDetalleTDC">                
+                    <h:panelGroup layout="block" id="divBodyDetalleTDC" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla azul font-size-1em" value="#{wpnTDCController.tdcDTO.nombreProducto} #{wpnTDCController.formatoAsteriscosWeb(wpnTDCController.tdcDTO.numeroTarjeta)}"/>                   
+                        </h:panelGroup>
+
+
+                        <h:panelGroup layout="block" id="cabeceraTDC" styleClass="width-100">
+
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+
+                                <h:panelGrid columns="5" styleClass="width-100 sinBorde">
+
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.tipo', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.nroTdc', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.moneda', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.limiteCredito', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.fechaCorte', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.tdcDTO.codigoTipoProducto}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc ">
+                                        <c:choose>
+                                            <c:when test="#{wpnTDCController.TDCPropias.size() > 1}">
+                                                <h:selectOneMenu value="#{wpnTDCController.tdcSeleccionada}" styleClass="font-size-09em selectExterno">
+                                                    <f:selectItems value="#{wpnTDCController.TDCPropias}" var="tdc" itemLabel="#{wpnTDCController.formatoAsteriscosWeb(tdc.numeroTarjeta)}" 
+                                                                   itemValue="#{tdc.numeroTarjetaEnc}" />
+                                                    <p:ajax event="change" update="formDetalleTDC" listener="#{wpnTDCController.actDetalleTDCInicial}"></p:ajax>
+                                                </h:selectOneMenu>
+                                            </c:when> 
+                                            <c:otherwise>
+                                                <h:panelGroup layout="block" styleClass="font-size-075em">
+                                                    <h:outputText value="#{wpnTDCController.formatoAsteriscosWeb(wpnTDCController.tdcDTO.numeroTarjeta)}" styleClass=""/>
+                                                </h:panelGroup>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.tdcDTO.siglasTipoMoneda}"/>
+                                    </h:panelGroup>                                    
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(wpnTDCController.tdcDTO.limiteCredito)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.tdcDTO.fechaCorteDate}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.saldoTotal', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.saldoDisp', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>                                     
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.saldoAnterior', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.pagoMinimo', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.fechaPagLimit', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(wpnTDCController.tdcDTO.saldoTotal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(wpnTDCController.tdcDTO.montoDisponible)}"/>
+                                    </h:panelGroup>                                    
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(wpnTDCController.tdcDTO.saldoAlCorte)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(wpnTDCController.tdcDTO.pagoMinimo)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnTDCController.tdcDTO.fechaLimiteDate}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5 clear">   
+                            <p:message for="divDetTDC" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjTDC"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                            <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink actionListener="#{wpnTDCController.detalleTDCPDF}" ajax="false" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink action="#" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                        <p:printer target="divDetTDC"/>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                            </h:panelGrid> 
+                            <div class="lineaGrisOscuro clear"  ></div>  
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="width-100" id="divDetCta">
+                            <h:panelGroup layout="block">
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup layout="block" styleClass="negro font-size-09em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.titulo.mesAFiltrar', wpnInicioSesion.idCanal)} "/>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:selectOneMenu id="mesFiltro" value="#{wpnInicioSesion.mesAnoSelected.mes}" styleClass="font-size-09em selectExterno marging-left-10px">  
+                                            <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemDisabled="true" />
+                                            <f:selectItems value="#{wpnInicioSesion.listMesesAnos}" var="var" itemValue="#{var.mes}" itemLabel="#{wpnInicioSesion.obtenerMesCalendar(var.mes)}"/> 
+                                            <f:ajax event="change" render="divDetTDC" execute="@this" listener="#{wpnTDCController.filtroMeses}"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>   
+                                </h:panelGrid>                                        
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="dataTableEstilos clear" id="divDetTDC">   
+                            <h:panelGroup class="cambioFondo" layout="block" rendered="#{!wpnTDCController.mesCerrado}">
+                                <h:panelGroup layout="block" styleClass="negro font-size-09em">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.titulo.movsPorFact', wpnInicioSesion.idCanal)} "/>
+                                </h:panelGroup>
+                                <p:dataTable id="datalist1" value="#{wpnTDCController.tdcDTO.movimientosDTO}" var="item"
+                                             selectionMode="single" 
+                                             paginator="true"
+                                             paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                             paginatorPosition="bottom"
+                                             rowKey="#{item.monto}"
+                                             rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                             emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}">
+
+                                    <f:facet name="{anterior}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+                                    <f:facet name="{siguiente}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.fecha', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaOperacionDate}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.tipoOp', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.descripcion}" />
+                                    </p:column>
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.monto', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(item.monto)}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGroup>
+                            
+                            
+                            <h:panelGroup class="cambioFondo" layout="block" rendered="#{wpnTDCController.mesCerrado}">
+                                <h:panelGroup layout="block" styleClass="negro font-size-09em">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.titulo.mesCerrado', wpnInicioSesion.idCanal)} "/>
+                                </h:panelGroup>
+                                <p:dataTable id="datalist2" value="#{wpnTDCController.tdcDTO.movimientosDTO}" var="item"
+                                             selectionMode="single" 
+                                             paginator="true"
+                                             paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                             paginatorPosition="bottom"
+                                             rowKey="#{item.monto}"
+                                             rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                             emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}">
+
+                                    <f:facet name="{anterior}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+                                    <f:facet name="{siguiente}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.fecha', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaTransString}"/>
+                                    </p:column>
+                                    
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.fechaReg', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaRegString}" />
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.tipoOp', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.descripcion}" />
+                                    </p:column>
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.montoDiv', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(item.montoDivisa)}" />
+                                    </p:column>
+                                    
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.montoBs', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(item.monto)}" />
+                                    </p:column>
+                                    
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.intereses', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{wpnTDCController.formatearMonto(item.intereses)}" />
+                                    </p:column>
+                                    
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detTdc.titulo.referencia', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.referencia}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGroup>
+                            
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

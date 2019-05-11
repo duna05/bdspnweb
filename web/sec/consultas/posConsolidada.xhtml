@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnPosicionConsolidadaController.iniciarPosCons()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formPosConsolidada">                
+                    <h:panelGroup layout="block" id="divPosConsolidada" >
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/>
+                            <h:outputText class="titulos-tabla grisOsc font-size-06em izquierda paddin-top40" value="#{wpnTextosController.getNombreTexto('pnw.posCon.textoInfo', wpnInicioSesion.idCanal)}"/>                        
+                        </h:panelGroup>
+
+                        <ui:fragment rendered="#{wpnPosicionConsolidadaController.posicionDTO.cuentasAhorro.size() > 0}">
+                            <h:panelGroup layout="block" styleClass="width-100">
+                                <br/>
+                                <h:outputText class="titulos-tabla azul font-size-1em paddin-left20" value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.ctaAhorro', wpnInicioSesion.idCanal)}" id="divCuentasA"/>
+                                <h:panelGroup layout="block" styleClass="width-100 ">
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                          
+                                            
+                                           <f:facet name="header">
+                                                <p:row>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nroCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoMoneda', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.saldoDisp', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>  
+                                                   
+                                                </p:row>
+                                            </f:facet>    
+
+                                            <c:forEach items="#{wpnPosicionConsolidadaController.posicionDTO.cuentasAhorro}" var="ctaA">
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{ctaA.nombreProducto}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:commandLink actionListener="#{wpnCuentaController.obtenerDetalleCuentaCA(ctaA.numeroCuentaEnc)}">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla textoEnlacesAzul centrado font-size-08em paddin-left10 margin-top-5">
+                                                                <h:outputText value="#{wpnPosicionConsolidadaController.formatoAsteriscosWeb(ctaA.numeroCuenta)}"/>
+                                                            </h:panelGroup>
+                                                        </p:commandLink>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{ctaA.siglasTipoMoneda}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla derecha grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(ctaA.saldoDisponible)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    
+                                                     <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla derecha grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputLink id="track" value="#">
+                                                                <h:outputText value="petro" />
+                                                            </h:outputLink>
+                                                           <p:tooltip id="toolTipTrack" for="track" value="#{wpnPosicionConsolidadaController.formatearMonto(ctaA.saldoDisponible/9)}" trackMouse="true" /> 
+                                                        </h:panelGroup>
+                                                          
+                                                    </p:column>
+                                                   
+                                                </p:row>
+                                            </c:forEach>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block">                                    
+                                                    </h:panelGroup>
+                                                </p:column>                                        
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="textoFondoAzul titulos-tabla derecha negro bold font-size-07em padding-right10 margin-top-5">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.texto.totalBs', wpnInicioSesion.idCanal)} #{wpnPosicionConsolidadaController.formatearMonto(wpnPosicionConsolidadaController.posicionDTO.totalDispCuentasAhorro)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup> 
+                        </ui:fragment>
+
+                       <ui:fragment rendered="# {wpnPosicionConsolidadaController.posicionDTO.cuentasCorriente.size() > 0}">
+                            <h:panelGroup layout="block" styleClass="width-100">
+                                <br/>
+                                <h:outputText class="titulos-tabla azul font-size-1em paddin-left20" value="# {wpnTextosController.getNombreTexto('pnw.posCon.titulo.ctaCorriente', wpnInicioSesion.idCanal)}" id="divCuentasC"/>
+                                <h:panelGroup layout="block" styleClass="width-100 ">
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <f:facet name="header">
+                                                <p:row>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nroCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoMoneda', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.saldoDisp', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>                                         
+                                                </p:row>
+                                            </f:facet>                                         
+                                            <c:forEach items="#{wpnPosicionConsolidadaController.posicionDTO.cuentasCorriente}" var="ctaC">
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{ctaC.nombreProducto}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:commandLink actionListener="#{wpnCuentaController.obtenerDetalleCuentaCC(ctaC.numeroCuentaEnc)}">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla textoEnlacesAzul centrado font-size-08em paddin-left10 margin-top-5">
+                                                                <h:outputText value="#{wpnPosicionConsolidadaController.formatoAsteriscosWeb(ctaC.numeroCuenta)}"/>
+                                                            </h:panelGroup>
+                                                        </p:commandLink>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{ctaC.siglasTipoMoneda}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla derecha grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(ctaC.saldoDisponible)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </c:forEach>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block">                                    
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="textoFondoAzul titulos-tabla derecha negro bold font-size-07em padding-right10 margin-top-5">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.texto.totalBs', wpnInicioSesion.idCanal)} #{wpnPosicionConsolidadaController.formatearMonto(wpnPosicionConsolidadaController.posicionDTO.totalDispCuentasCorriente)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{wpnPosicionConsolidadaController.posicionDTO.cuentasME.size() > 0}">
+                            <h:panelGroup layout="block" styleClass="width-100">
+                                <br/>
+                                <h:outputText class="titulos-tabla azul font-size-1em paddin-left20" value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.ctaME', wpnInicioSesion.idCanal)}" id="divCuentasME"/>
+                                <h:panelGroup layout="block" styleClass="width-100 ">
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <f:facet name="header">
+                                                <p:row>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nroCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoMoneda', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.saldoDisp', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>                                         
+                                                </p:row>
+                                            </f:facet> 
+                                            <c:forEach items="#{wpnPosicionConsolidadaController.posicionDTO.cuentasME}" var="ctaME">
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{ctaME.nombreProducto}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:commandLink actionListener="#{wpnCuentaController.obtenerDetalleCuentaME(ctaME.numeroCuentaEnc)}">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla textoEnlacesAzul centrado font-size-08em paddin-left10 margin-top-5">
+                                                                <h:outputText value="#{wpnPosicionConsolidadaController.formatoAsteriscosWeb(ctaME.numeroCuenta)}"/>
+                                                            </h:panelGroup>
+                                                        </p:commandLink>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{ctaME.siglasTipoMoneda}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla derecha grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(ctaME.saldoDisponible)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </c:forEach>
+                                            <p:row>
+                                                <p:column>
+                                                    <h:panelGroup layout="block">                                    
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block">                                    
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block">                                    
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="textoFondoAzul titulos-tabla derecha negro bold font-size-07em padding-right10 margin-top-5">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.texto.totalUSD', wpnInicioSesion.idCanal)} #{wpnPosicionConsolidadaController.formatearMonto(wpnPosicionConsolidadaController.posicionDTO.totalDispCuentasME)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>                                      
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup> 
+                        </ui:fragment>  
+
+                        <ui:fragment rendered="#{wpnPosicionConsolidadaController.posicionDTO.tarjetasCredito.size() > 0}">
+                            <h:panelGroup layout="block" styleClass="width-100">
+                                <br/>
+                                <h:outputText class="titulos-tabla azul font-size-1em paddin-left20" value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.TDC', wpnInicioSesion.idCanal)}" id="divTDC"/>
+                                <h:panelGroup layout="block" styleClass="width-100 ">
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <f:facet name="header">
+                                                <p:row>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nombreProd', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoTDC', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nroTDC', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoMoneda', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.saldoDisp', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column> 
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.saldoTotal', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column> 
+                                                </p:row>
+                                            </f:facet>                                          
+                                            <c:forEach items="#{wpnPosicionConsolidadaController.posicionDTO.tarjetasCredito}" var="tdc">
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{tdc.nombreProducto}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{tdc.codigoTipoProducto}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:commandLink actionListener="#{wpnTDCController.obtenerDetalleTarjetaCredito(tdc.numeroTarjetaEnc)}">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla textoEnlacesAzul centrado font-size-08em paddin-left10 margin-top-5">
+                                                                <h:outputText value="#{wpnPosicionConsolidadaController.formatoAsteriscosWeb(tdc.numeroTarjeta)}"/>
+                                                            </h:panelGroup>
+                                                        </p:commandLink>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{tdc.siglasTipoMoneda}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla derecha grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(tdc.saldoDisponible)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla derecha grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(tdc.saldoTotal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </c:forEach>
+                                            <p:row>
+                                                <p:column colspan="4">
+                                                    <h:panelGroup layout="block">                                    
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="textoFondoAzul titulos-tabla derecha negro bold font-size-07em padding-right10 margin-top-5">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.texto.totalBs', wpnInicioSesion.idCanal)} #{wpnPosicionConsolidadaController.formatearMonto(wpnPosicionConsolidadaController.posicionDTO.totalDispTDC)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="textoFondoAzul titulos-tabla derecha negro bold font-size-07em padding-right10 margin-top-5">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.texto.totalBs', wpnInicioSesion.idCanal)} #{wpnPosicionConsolidadaController.formatearMonto(wpnPosicionConsolidadaController.posicionDTO.saldoTotalTDC)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>     
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{wpnPosicionConsolidadaController.posicionDTO.prestamos.size() > 0}">
+                            <h:panelGroup layout="block" styleClass="width-100">
+                                <br/>
+                                <h:outputText class="titulos-tabla azul font-size-1em paddin-left20" value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.prestamo', wpnInicioSesion.idCanal)}" id="divPrestamos"/>
+                                <h:panelGroup layout="block" styleClass="width-100 ">
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <f:facet name="header">
+                                                <p:row>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nombreProd', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nroCredito', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoMoneda', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.saldoAct', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>                                         
+                                                </p:row>
+                                            </f:facet>                                          
+                                            <c:forEach items="#{wpnPosicionConsolidadaController.posicionDTO.prestamos}" var="prestamo">
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{prestamo.nombreProducto}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:commandLink actionListener="#{wpnPrestamoController.obtenerDetallePrestamo(prestamo.numeroPrestamoEnc)}">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla textoEnlacesAzul centrado font-size-08em paddin-left10 margin-top-5">
+                                                                <h:outputText value="#{wpnPosicionConsolidadaController.formatoAsteriscosWeb(prestamo.numeroPrestamo)}"/>
+                                                            </h:panelGroup>
+                                                        </p:commandLink>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{prestamo.siglasTipoMoneda}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla derecha grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(prestamo.saldoPrestamo)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </c:forEach>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block">                                    
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="textoFondoAzul titulos-tabla derecha negro bold font-size-07em padding-right10 margin-top-5">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.texto.totalBs', wpnInicioSesion.idCanal)} #{wpnPosicionConsolidadaController.formatearMonto(wpnPosicionConsolidadaController.posicionDTO.totalDispPrestamos)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>                                       
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </ui:fragment> 
+
+                        <ui:fragment rendered="#{wpnPosicionConsolidadaController.posicionDTO.fideicomisos.size() > 0}">
+                            <h:panelGroup layout="block" styleClass="width-100">
+                                <br/>
+                                <h:outputText class="titulos-tabla azul font-size-1em paddin-left20" value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.fideicomiso', wpnInicioSesion.idCanal)}" id="divFideicomisos"/>
+                                <h:panelGroup layout="block" styleClass="width-100 ">
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <f:facet name="header">
+                                                <p:row>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.codigoPlan', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.nombrePlan', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.tipoPlan', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.saldoDisponible', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column> 
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.totalAporte', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column> 
+                                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                                        <h:panelGroup styleClass="margin-top-5">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.posCon.titulo.totalRetiro', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column> 
+                                                </p:row>
+                                            </f:facet>                                          
+                                            <c:forEach items="#{wpnPosicionConsolidadaController.posicionDTO.fideicomisos}" var="fideicomiso">
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                            <h:outputText value="#{fideicomiso.codigoPlan}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{fideicomiso.nombrePlan}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{fideicomiso.tipoPlan}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(fideicomiso.saldoDisponible)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(fideicomiso.totalAporte)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla centrado grisOsc font-size-07em padding-right10 margin-top-5">
+                                                            <h:outputText value="#{wpnPosicionConsolidadaController.formatearMonto(fideicomiso.totalRetiro)}"/>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </c:forEach>                                                                                   
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </ui:fragment> 
+                    </h:panelGroup> 
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

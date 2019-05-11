@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:event listener="#{wpnHistTransController.limpiarHistTransacciones()}" type="preRenderView" />
+        <f:event listener="#{wpnHistTransController.cargaGeneralHistTransacciones()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formHistTrans">                
+                    <h:panelGroup layout="block" id="divBodyHistTrans" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100">
+
+                            <h:panelGroup layout="block" styleClass="textoFondoAzul azul padding7 margin-top-5 float-left">
+                                <h:panelGroup layout="block" style="width:100%">
+                                    <h:panelGroup styleClass="negro bold font-size-06em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.rango', wpnInicioSesion.idCanal)}"/> 
+                                    </h:panelGroup>
+                                    <h:panelGrid columns="4">                                        
+                                        <h:panelGroup styleClass="negro bold font-size-06em">
+                                            <p:outputLabel value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.desde', wpnInicioSesion.idCanal)}" for="txtFechaDesde"/> 
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="height-detCta">
+                                            <p:calendar id="txtFechaDesde" value="#{wpnHistTransController.txtFechaDesde}" pattern="dd/MM/yyyy" readonlyInput="true"
+                                                        mindate="#{wpnHistTransController.calendarFechaMin}" maxdate="#{wpnHistTransController.calendarFechaMax}" 
+                                                        locale="es" showOn="button" autocomplete="off" navigator="true"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="negro bold font-size-06em">
+                                            <p:outputLabel value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.hasta', wpnInicioSesion.idCanal)}" for="txtFechaHasta"/> 
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="height-detCta">
+                                            <p:calendar id="txtFechaHasta" value="#{wpnHistTransController.txtFechaHasta}" pattern="dd/MM/yyyy" readonlyInput="true"                                                         
+                                                        mindate="#{wpnHistTransController.calendarFechaMin}" maxdate="#{wpnHistTransController.calendarFechaMax}" 
+                                                        locale="es" showOn="button" autocomplete="off" navigator="true"/>
+                                        </h:panelGroup>
+                                    </h:panelGrid>                                        
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+
+                            <h:panelGroup layout="block" styleClass="float-left filtro-detalle-btnFiltrar">
+                                <h:panelGrid columns="4">
+
+                                    <h:panelGroup layout="block">
+                                        <h:selectOneMenu id="selectCanal" value="#{wpnHistTransController.canalSelected}" styleClass="font-size-09em selectExterno">                            
+                                            <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.label.canal', wpnInicioSesion.idCanal)}" />
+                                            <f:selectItems value="#{wpnHistTransController.listCanales.ibCanalDTO}" var="item" itemValue="#{item.id}" itemLabel="#{item.nombre}"/>
+                                            <p:ajax event="change" listener="#{wpnHistTransController.cambiarListTrans}" update="divTipoTransac"/>
+                                        </h:selectOneMenu>                                                                                
+                                    </h:panelGroup>
+
+                                    <h:panelGroup id="divTipoTransac" layout="block">
+                                        <c:choose>
+                                            <c:when test="#{wpnHistTransController.listSelectTrans.size() > 0}">
+                                                <h:selectOneMenu id="selectTransSelectedaccion" value="#{wpnHistTransController.selectTransSelected}" styleClass="font-size-09em selectExterno">                            
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.label.tipoTransaccion', wpnInicioSesion.idCanal)}" />
+                                                    <f:selectItems value="#{wpnHistTransController.listTrans()}" />
+                                                </h:selectOneMenu>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <h:selectOneMenu id="selectTransVacio" value="#{wpnHistTransController.selectTransSelected}" styleClass="font-size-09em selectExterno">                            
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.errores.texto.seleccioneCanal', wpnInicioSesion.idCanal)}" />                                                    
+                                                </h:selectOneMenu>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" style="float: right;padding-left: 20px;">
+                                        <p:commandLink id="ingresar" action="#{wpnHistTransController.filtrar()}" update="divDataTable @(.ui-message)">
+                                            <div class="boton negro centrado bold font-size-08em">                                            
+                                                <div>
+                                                    #{wpnTextosController.getNombreTexto('pnw.histTransacciones.boton.filtrar', wpnInicioSesion.idCanal)}
+                                                </div>
+                                            </div>                                        
+                                        </p:commandLink>                                    
+                                    </h:panelGroup>                           
+                                </h:panelGrid>                                        
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5 clear">   
+                            <p:message for="divDataTable" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjHistTrans"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                            <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink actionListener="#{wpnHistTransController.detalleHistoricoTransaccionesPDF}" ajax="false" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink action="#" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                        <p:printer target="datalist"/>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                            </h:panelGrid> 
+                            <div class="lineaGrisOscuro clear"  ></div>  
+                        </h:panelGroup>
+                        <h:panelGroup id="divDataTable" layout="block" styleClass="dataTableEstilos clear">   
+                            <div class="cambioFondo">
+                                <p:dataTable id="datalist" value="#{wpnHistTransController.ibLogsDTO.ibLogsDTO}" var="item"
+                                             paginator="true"
+                                             paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                             paginatorPosition="bottom"
+                                             rowKey="#{item.id}"
+                                             rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                             emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}"
+                                             >
+
+                                    <f:facet name="{anterior}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+                                    <f:facet name="{siguiente}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+
+                                    <p:column styleClass="fondoCabeceraTabla negro bold font-size-08em centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.fechaTransaccion', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{wpnHistTransController.formatearFecha(item.fechaHoraDate, 'dd/MM/yyyy hh:mm:ss a')}" />
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.canal', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idCanalDTO.nombre}" />
+                                    </p:column>
+
+                                    <p:column styleClass="textoEnlacesAzul centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.nroRef', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+
+                                        <p:commandLink action="#{wpnHistTransController.verDetalleHistorico(item)}">
+                                            <h:outputText value="#{item.referencia}" />
+                                        </p:commandLink>
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.tipoOp', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>                                        
+                                        <h:outputText value="#{item.descripcion}" />                                                   
+                                    </p:column>
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.histTransacciones.titulo.monto', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{item.montoTransaccion}" />
+
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

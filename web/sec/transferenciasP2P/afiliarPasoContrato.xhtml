@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnGestionP2PController.validarFlujoAfiliar2()}" type="preRenderView" />
+        <f:event listener="#{wpnGestionP2PController.limpiarContrato()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5" rendered="#{wpnGestionP2PController.usuarioHabilitadoP2P}">
+                <h:form id="formAfiliarServ2">
+                    <h:panelGroup layout="block" id="divBodyAfiliarP2P" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 1}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiliarP2P" class="seis-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.pasoContrato', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso5', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 0 or wpnInicioSesion.validacionOTP == 2}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cinco-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.pasoContrato', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso5', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                        </c:choose>
+
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                        <h:outputText value="#{ibTextosFacade.textoParametro('pnw.afilarP2P.paso2', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                    </h:panelGroup>
+                                    <h:panelGrid columns="2" styleClass="width-100 sinBorde">
+                                        <h:panelGroup layout="block" styleClass="font-size-07em" style="background-color: white;">                                                
+                                            <p:scrollPanel mode="native" styleClass="contrato cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <center><b><h5>CONDICIONES GENERALES<br/> DEL CONTRATO <br/>PARA LA PRESTACION DEL SERVICIO PAGO D-2</h5></b></center>
+                                                <p class="justificarTexto"> Yo, <b>CESAR NAVARRETE RIOBUENO</b>, venezolano, mayor de edad, abogado, domiciliado en la ciudad de Caracas, titular de la cédula de identidad número V-2.078.855, 
+                                                    procediendo en este acto en mi carácter de Presidente de <b>DEL SUR BANCO UNIVERSAL, C.A.</b>, sociedad mercantil domiciliada en la ciudad de Caracas, 
+                                                    constituida según consta de documento inscrito por ante la Oficina de Registro Mercantil Primero de la Circunscripción Judicial del Distrito Federal y Estado Miranda el 10 de enero de 1973, bajo el N° 5, Tomo 18-A, 
+                                                    con la denominación de Sociedad Financiera Exterior, C.A., habiendo cambiado su denominación social en varias oportunidades, 
+                                                    de la original antes señalada a Exterior Banco de Inversión, C.A., luego a Del Sur Banco de Inversión, C.A., 
+                                                    hasta llegar a su denominación actual de DEL SUR BANCO UNIVERSAL, C.A., como consecuencia de su transformación en Banco Universal; 
+                                                    siendo DEL SUR BANCO UNIVERSAL, C.A. la entidad resultante de la fusión por absorción de Del Sur Entidad de Ahorro y Préstamo, C.A. y de  Mérida Entidad de Ahorro y Préstamo, C.A. por parte de Del Sur Banco De Inversión, C.A. 
+                                                    y de la transformación de Del Sur Banco de Inversión, C.A en Banco Universal; fusión y transformación éstas autorizadas por la Superintendencia de Bancos y Otras Instituciones Financieras según Resolución N° 218.01, de fecha 18 de Octubre de 2001, 
+                                                    publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 37.311, de fecha 26 de Octubre de 2001,  
+                                                    y que constan en documentos inscritos por ante la Oficina de Registro Mercantil Primero de la Circunscripción Judicial del Distrito Capital y Estado Miranda en fecha 23 de Noviembre de 2001, bajo el N° 26, Tomo 223-A-Pro., cuyos estatutos sociales fueron modificados por última vez y refundidos en un solo texto, 
+                                                    según se evidencia de asiento inscrito por ante el Registro Mercantil Primero del Distrito Capital el 26 de enero de 2016, bajo el N° 50, Tomo 10-A,  inscrita en el Registro de Información Fiscal (RIF) bajo el N° J-00079723-4, suficientemente autorizado a estos efectos por los estatutos sociales del citado  Instituto Bancario, <b>DECLARO:</b> DEL SUR BANCO UNIVERSAL, C.A., 
+                                                    ha decidido establecer las <b>CONDICIONES GENERALES DEL CONTRATO PARA LA PRESTACION DEL SERVICIO PAGO D-2</b> que se  regirá por las siguientes cláusulas:
+                                                </p>
+                                                <b><u>PRIMERA: DEFINICIONES:</u></b>
+                                                <p class="justificarTexto">
+                                                    Para una mejor interpretación, integración y ejecución de este contrato y de las relaciones contractuales que surjan entre las partes y demás participantes del <b>SERVICIO PAGO D-2</b> al cual se refiere estas Condiciones Generales, 
+                                                    se establecen las siguientes definiciones, en el entendido que, los términos definidos podrán ser presentados indistintamente en singular o plural, en mayúsculas o en minúsculas, resaltados o no según el caso:
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    1.	<u>“Condiciones Generales”, “Contrato”,  “este documento”; y expresiones similares</u>: significa las CONDICIONES GENERALES DEL CONTRATO PARA LA PRESTACION DEL SERVICIO PAGO D-2  contenidas en el presente documento, así como a sus futuras modificaciones, 
+                                                    ampliaciones, anexos o reglamentaciones.
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    2.	<u>EL BANCO</u>: Significa DEL SUR BANCO UNIVERSAL, C.A., ampliamente identificado en el encabezamiento de este documento.
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    3.	<u>CLIENTE:</u> Se refiere a toda persona, natural o jurídica, que sea titular de una cuenta o cualquiera otro producto financiero en el BANCO y acepte el presente SERVICIO.  
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    4.	<u>PARTES:</u> Significa el CLIENTE y el BANCO, denominados en forma conjunta.</p>
+                                                <p class="justificarTexto">
+                                                    5.	<u>PARTE:</u> Significa  el CLIENTE o el BANCO, según el caso.</p>
+                                                <p class="justificarTexto">
+                                                    6.	<u>SERVICIO PAGO D-2, o simplemente EL SERVICIO</u>: SERVICIO ofrecido por EL BANCO que permite al CLIENTE efectuar las transacciones señaladas en la cláusula tercera, utilizando el número de TELÉFONO CELULAR previamente afiliado al SERVICIO, como medio de pago para movilizar los fondos.</p>
+                                                <p class="justificarTexto">
+                                                    7.	<u>TRANSACCIONES</u>: Se refiere a las transacciones señaladas en la cláusula tercera que pueden ser ejecutadas por EL CLIENTE a través del SERVICIO.  </p>
+                                                <p class="justificarTexto">
+                                                    8.	<u>TELÉFONO CELULAR</u>: Dispositivo inalámbrico electrónico que permite tener acceso a la red de telefonía celular.                                                </p>
+                                                <p class="justificarTexto">
+                                                    9.	<u>MENSAJES SMS (Short Message Service, por sus siglas en inglés, SERVICIO de mensajes cortos</u>): servicio disponible en los teléfonos celulares que permite el envío de mensajes cortos (también conocidos como mensajes de texto) entre teléfonos móviles, teléfonos fijos y otros dispositivos de mano.  </p>
+                                                <p class="justificarTexto">
+                                                    10.	<u>DEL SUR ONLINE</u>: Sistema de banca por internet implementado por el BANCO, mediante el cual el CLIENTE podrá, a través de dispositivos o canales electrónicos conectados a INTERNET, acceder a los servicios de Banca Electrónica ofrecidos por el BANCO, los cuales le permitirán recibir información, realizar consultas y operaciones y enviar instrucciones y solicitudes e intercambiar MENSAJES DE DATOS concernientes a las relaciones que el CLIENTE mantuviere con el BANCO</p>
+                                                <p class="justificarTexto">
+                                                    11.	<u>DEL SUR MOVIL</u>: servicio de banca móvil implementado por EL BANCO mediante la cual El Cliente, a través de Dispositivos Móviles, o cualquier otro dispositivo conectados a Internet, podrá acceder a los servicios de DELSUR ONLINE donde podrá realizar transacciones, sujetas a las limitaciones, términos y modalidades establecidos por el Banco, y anunciadas a través de  los medios de que disponga a tal efecto.</p>
+                                                <p class="justificarTexto">
+                                                    12.	<u>PROVEEDOR DE TELEFONÍA CELULAR</u>: Operador que presta el SERVICIO de telefonía celular al cual EL CLIENTE se encuentra adscrito.</p>
+                                                <p class="justificarTexto">
+                                                    13.	<u>INTERNET:</u> significa la red de redes de computadoras interconectadas alrededor del mundo.</p>
+                                                <p class="justificarTexto">
+                                                    14.	<u>CONTRASEÑA SECRETA</u>: Se refiere al código numérico de carácter personal, intransferible y de uso exclusivo de EL CLIENTE que le permitirá realizar las transacciones desde su teléfono celular, a través del SERVICIO.  </p>
+                                                <p class="justificarTexto">
+                                                    15.	<u>LEY, DISPOSICIONES LEGALES, NORMATIVA LEGAL VIGENTE O EXPRESIONES SIMILARES</u>: significa todas las leyes, decretos, reglamentos, resoluciones, providencias, circulares, actos administrativos, y demás disposiciones de rango legal o sublegal que se encuentren en vigor en la República Bolivariana de Venezuela y las que pudieran dictarse en el futuro, a cuyo cumplimiento se encuentran sujetas las partes.</p>
+                                                <p class="justificarTexto">
+                                                    16.	<u>CANALES ELECTRÓNICOS o simplemente LOS CANALES</u>: son los medios dispuestos por el BANCO para que EL CLIENTE pueda hacer uso del SERVICIO. Los CANALES por los cuales se prestará el SERVICIO serán DELSUR Online y DELSUR Móvil o cualquier otro que el BANCO implemente en el futuro, garantizando los estándares de seguridad estipulados en las normas y regulaciones vigentes.                       </p>
+                                                <b><u>SEGUNDA: OBJETO DEL CONTRATO</u>.</b>
+                                                <p class="justificarTexto">
+                                                    Las presentes Condiciones Generales constituyen el contrato para la prestación por parte del BANCO del servicio   denominado PAGO D-2, por medio del cual EL CLIENTE podrá realizar las transacciones señaladas en la cláusula siguiente desde su teléfono celular, de forma ágil, segura y sencilla, conforme a lo establecido en estas Condiciones Generales y la normativa legal vigente. Las condiciones recogidas en el presente documento se encuentran disponibles y actualizadas, en todo momento, en la página web del BANCO www.desur.com.ve, 
+                                                    así como en las oficinas, agencias y sucursales del BANCO.</p>
+                                                <b><u>TERCERA: TRANSACCIONES PERMITIDAS</u>.</b>
+                                                <p class="justificarTexto">
+                                                    Mediante el SERVICIO PAGO D-2, EL CLIENTE podrá realizar las siguientes transacciones, únicamente desde el número de TELEFONO CELULAR afiliado:
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    1.	Recibir pagos de otros clientes o usuarios previamente afiliados al SERVICIO en el BANCO u otros Bancos , utilizando como medio para ejecutar la transacción el número de TELEFONO CELULAR afiliado por el CLIENTE en el SERVICIO  </p>
+                                                <p class="justificarTexto">
+                                                    2.	Realizar pagos a otros clientes o usuarios previamente afiliados al SERVICIO en EL BANCO u otros Bancos, utilizando como medio para ejecutar la transacción el número de TELEFONO CELULAR afiliado por el CLIENTE en el SERVICIO. </p>
+                                                <p class="justificarTexto">
+                                                    3.	Cualquier otra operación y/o servicio que EL BANCO llegare a autorizar en el futuro, tales como: (i) Consulta de saldo y movimientos en CUENTA; (ii) Pago de Tarjeta de Crédito; (iii) Pago de Tarjeta de Crédito de terceros previamente afiliados al SERVICIO; (iv) Pago de servicios; (v) Retiros por Cajeros Automáticos (ATM), (v) publicidad sobre productos y/o servicios que EL BANCO ofrezca o pudiera ofrecer en el futuro; todo lo cual será debidamente informado a los CLIENTES a través del propio sistema, así como cualquier otro medio dispuesto por el BANCO para tales fines.</p>
+
+                                                <b><u>CUARTA: CONDICIONES DE ACCESO AL SERVICIO (AFILIACIÓN)</u>.</b>
+                                                <p class="justificarTexto"> 
+                                                    1.	REQUISITOS: Para tener acceso al SERVICIO PAGO D-2, el CLIENTE debe cumplir los siguientes requisitos: 
+                                                </p>
+
+                                                <p class="justificarTexto">
+                                                    <ul>
+                                                        <li>a.	Ser titular de una cuenta activa en EL BANCO.</li>
+                                                        <li>b.	Contar con un teléfono celular que esté habilitado técnicamente para operar con este SERVICIO. </li>
+                                                        <li>c.	Asociar su número de teléfono celular a una cuenta activa de EL BANCO. No se podrán asociar dos o más cuentas del BANCO a un mismo número de celular, ni asociar dos líneas de teléfono celular a una misma cuenta del CLIENTE.</li>
+                                                        <li>d.	Estar previamente afiliado a DELSUR ONLINE o DEL SUR MOVIL</li>
+                                                        <li>e.	Aceptar las presentes Condiciones Generales para la prestación del SERVICIO.</li>
+                                                        <li>f.	Cumplir con cualquier otro requisito que pudiera solicitar el BANCO para hacer uso del SERVICIO.</li>
+                                                    </ul>
+                                                </p>
+
+                                                <p class="justificarTexto"> 
+                                                    2.	<u>PROCESO DE AFILIACIÓN</u>: La afiliación la efectuará directamente EL CLIENTE a través de DELSUR ONLINE, a cuyos efectos deberá proporcionar al BANCO los datos que indique el sistema, siguiendo los pasos establecidos en el mismo. En caso de que el BANCO identifique irregularidades en los datos del CLIENTE o si el CLIENTE presentara reportes o antecedentes negativos en el sistema financiero, el BANCO procederá a la desafiliación inmediata del Servicio.
+                                                </p>
+
+                                                <p class="justificarTexto"> 
+                                                    3.	<u>HABILITACIÓN Y PLAZO PARA LA PROVISIÓN DEL SERVICIO.</u>  A partir de que EL CLIENTE solicita el SERVICIO y cumple con las formalidades del BANCO para su afiliación, la disponibilidad del SERVICIO es inmediata.
+                                                </p>
+
+                                                <p class="justificarTexto"> 
+                                                    4.	<u>PLATAFORMA TECNOLOGICA</u>: EL SERVICIO cuenta con el respaldo de la plataforma tecnológica de DELSUR Online y DELSUR Móvil.
+                                                </p>
+
+                                                <b><u>QUINTA: PRESTACION DEL SERVICIO</u>.</b>
+                                                <p class="justificarTexto">
+                                                    Para la prestación del SERVICIO, EL CLIENTE y EL BANCO asumen las siguientes obligaciones y responsabilidades específicas, sin perjuicio de otras obligaciones previstas en el presente contrato o derivadas de la Ley:</p>
+                                                <p class="justificarTexto">
+                                                    1.	<u>LINEA DE TELEFONO</u>: EL CLIENTE sólo podrá realizar transacciones con el número de teléfono celular afiliado al Servicio.
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    2.	<u>CUENTA ACTIVA</u>: EL CLIENTE acepta que únicamente podrá realizar transacciones a través del SERVICIO en tanto la cuenta afiliada se encuentre en estado activa, sin ningún tipo de bloqueo o restricción que impida la utilización de la misma, debiendo contar con los fondos suficientes y disponibles al momento en que EL CLIENTE realice las transacciones. Adicionalmente la cuenta destino debe cumplir las mismas condiciones para poder procesar satisfactoriamente las transacciones.
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    3.	<u>INSTRUCCIONES</u>: EL BANCO ejecutará las transacciones con base en las instrucciones que imparta EL CLIENTE a través del SERVICIO. EL BANCO se reserva el derecho de autorizar o no una transacción solicitada por EL CLIENTE, cuando ésta a juicio de EL BANCO no sea clara, precisa o determinable, reserva que EL CLIENTE acepta. EL CLIENTE  deberá ejecutar la transacción prevista siguiendo las instrucciones y recomendaciones formuladas por EL BANCO en cuanto a la forma de operar y seguridades del SERVICIO.  
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    4.	<u>IRREVOCABILIDAD</u>: Las transacciones ordenadas no podrán revocarse.</p>
+                                                <p class="justificarTexto">
+                                                    5.	<u>DISPONIBILIDAD DE LOS FONDOS</u>: Los pagos realizados o recibidos a través de este SERVICIO son directos y en línea. Los fondos estarán disponibles en la cuenta del CLIENTE o del destinatario receptor una vez se confirme la transacción. El CLIENTE se obliga a verificar y brindar correctamente los números de destino y los montos a  debitar.</p>
+                                                <p class="justificarTexto">
+                                                    6.	<u>TELEFONO CELULAR Y CONTRASEÑA</u>: Queda entendido que el número teléfono celular que EL CLIENTE asocie al SERVICIO y la contraseña secreta, sirven de identificación en el sistema y son utilizados en lugar del nombre y la firma autógrafa de EL CLIENTE, y en consecuencia, tendrán el mismo valor probatorio, por lo que EL BANCO se basará en ellos de la misma manera y para los mismos propósitos y alcances en este SERVICIO. La contraseña secreta es personal, secreta, confidencial e intransferible, estando prohibida su divulgación a terceros por parte del cliente. El CLIENTE es y será el único responsable por el resguardo del teléfono celular adscrito al SERVICIO, y por ende de la confidencialidad de la información que a través del mismo se reciba sobre las transacciones o cualquier otra información que constituya el objeto del SERVICIO. Teniendo en cuenta lo anterior, se presumirá irrefragablemente que las instrucciones y/o transacciones realizadas a través del teléfono celular afiliado al SERVICIO y empleando la contraseña secreta, son realizadas directamente por EL CLIENTE, salvo que exista una notificación del CLIENTE a EL BANCO indicando que ha sido víctima de robo, hurto, pérdida, extravío o clonación de su teléfono celular o contraseña secreta. Si el CLIENTE llegara a saber y/o sospechar que cualquier tercero posee conocimiento de su contraseña secreta, deberá modificarla de inmediato o solicitar inmediatamente al BANCO el bloqueo o suspensión de los mismos. El BANCO no asume ningún tipo de responsabilidad por el alcance que pudieran tener terceras personas a la información transmitida a través de este SERVICIO derivada del acceso al teléfono celular y del uso que hagan del mismo, así como, de la información que pudiera tener almacenada en dicho dispositivo.</p>
+                                                <p class="justificarTexto">
+                                                    7.	<u>ROBO O EXTRAVIO DE LOS MEDIOS DE ACCESO AL SERVICIO</u>: En caso de pérdida, extravío, robo o hurto del teléfono celular o contraseña secreta, EL CLIENTE deberá dar aviso de inmediato a EL BANCO a fin de evitar que cualquier tercero no autorizado haga uso de los mismos, y proceder a la suspensión del SERVICIO, a través de los medios dispuestos por El BANCO para tal fin. Al momento del reporte EL BANCO proporcionará un número de reporte, desde ese momento cesa la responsabilidad de EL CLIENTE, por lo que cualquier cargo realizado a través de los medios electrónicos regulados en el presente contrato, con posterioridad al reporte, será imputable a EL BANCO.  </p>
+                                                <p class="justificarTexto">
+                                                    8.	<u>SUMINISTRO DE INFORMACION</u>: EL CLIENTE se obliga a proporcionar los datos requeridos por el BANCO en cumplimiento de lo establecido en la normativa legal vigente y a mantener actualizada la información solicitada suministrada con motivo de la prestación de este SERVICIO. El CLIENTE se compromete actualizar la información necesaria en caso de efectuar algún cambio en el número telefónico afiliado al SERVICIO, así como cualquier información requerida para su uso.</p>
+                                                <p class="justificarTexto">
+                                                    9.	<u>AUSENCIA DE SOPORTES FISICOS</u>: EL SERVICIO es automatizado sin necesidad de soporte físico (no emite papel).
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    10.	<u>ENRUTAMIENTO</u>: Las transacciones realizadas por EL CLIENTE en EL BANCO contará con el proceso de enrutamiento de SUICHE 7B. 
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    11.	<u>VERIFICACIÓN</u>: Las transacciones estarán sometidas a verificación por parte de EL BANCO. Desde ahora EL CLIENTE autoriza los ajustes, débitos o créditos que EL BANCO efectúe en las respectivas cuentas o créditos en razón de dicha verificación, que en todo caso será justificada. 
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    12.	<u>EQUIPOS</u>: El Teléfono Celular, sistemas, programas de navegación por Internet y cualquier otro programa requerido para poder disfrutar del SERVICIO, serán adquiridos y utilizados por el CLIENTE a su costo y riesgo, y deberán tener las características técnicas necesarias para permitir el acceso al SERVICIO. 
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    13.	<u>CONTINUIDAD DEL SERVICIO</u>: EL BANCO prestará el SERVICIO en forma permanente y sin interrupciones, salvo lo dispuesto en la cláusula undécima y numeral siguiente.
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    14.	<u>SUSPENSION</u>: Toda suspensión de las operaciones habituales del BANCO que pudiere restringir la relación con EL CLIENTE respecto al presente SERVICIO debe ser autorizada previamente por la Superintendencia de las Instituciones del Sector Bancario, con por lo menos diez días (10) hábiles bancarios, previos a la suspensión, de conformidad con lo dispuesto en la Circular N° SIB-II-GGR-GNP-34902 de fecha 30 de diciembre de 2016 emanada de ese Organismo, para lo cual EL BANCO dará cumplimiento a los requisitos establecidos en la mencionada Circular.  
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    15.	<u>INFORMACIÓN DEL SERVICIO</u>: EL BANCO proporcionará información relacionada con el SERVICIO, la calidad u otro factor relativo, de manera oportuna y clara. 
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    16.	<u>LIMITES TRANSACCIONALES</u>. EL BANCO establecerá límites en cuanto al número y monto(s) máximo(s), diario o mensual, de las transacciones a ser realizadas a través del  presente SERVICIO, de conformidad con lo dispuesto en la normativa aplicable. EL CLIENTE declara y reconoce que no podrá exceder los límites establecidos por EL BANCO, por lo que cualquier transacción que exceda los límites autorizados será rechazado sin que esto comprometa la responsabilidad de EL BANCO.    
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    17.	<u>ESTÁNDARES  DE CALIDAD Y SEGURIDAD</u>: EL BANCO procurará que los sistemas y/o plataformas cumplan en todo momento con los estándares de calidad y seguridad existentes en el mercado, en lo concerniente a la confidencialidad, autenticidad e integridad de la información, y para la creación y asignación de las claves secretas, que busquen reducir el riesgo de fraude y asegurar que las transacciones estén autorizadas, registradas y salvaguardadas apropiadamente.  En este sentido, EL BANCO, en cumplimiento de las normas emitidas por la Superintendencia de Instituciones del Sector Bancario en materia de Banca Electrónica, Tecnología de la Información, Servicios Financieros Desmaterializados, Virtual y en Línea, es responsable de implementar controles en la transmisión y almacenamiento de la información para garantizar la protección del Servicio contra el acceso no autorizado, estableciendo procedimientos idóneos de protección de datos y responsabilidades, para la administración de equipos remotos.
+                                                </p>
+                                                <p class="justificarTexto">
+                                                    18.	<u>NOTIFICACION DE LAS TRANSACCIONES</u>: EL BANCO se obliga a notificar de forma inmediata la transacción realizada al CLIENTE afiliado al SERVICIO.
+                                                </p>
+
+                                                <b><u>SEXTA: PRUEBA DE LAS TRANSACCIONES</u>.</b>
+                                                <p class="justificarTexto">
+                                                    El CLIENTE acepta como medio de prueba válida de su voluntad de haber realizado las transacciones mediante este SERVICIO, los registros, asientos, comprobantes electrónicos y archivos del Banco, cualquiera sea el soporte en el que estén establecidos o su modo de almacenamiento y procesamiento de la información. En caso de divergencia respecto a la veracidad de algún registro, archivo o asiento del BANCO relacionado con las transacciones efectuadas a través de este Servicio, EL CLIENTE tiene el derecho de presentar su reclamo ante EL BANCO, de conformidad con lo previsto en la cláusula vigésima cuarta de este documento, siendo indispensable la presentación por parte del CLIENTE de todos los elementos comprobatorios obtenidos en el momento de efectuar la transacción cuestionada.   </p>
+                                                <b><u>SEPTIMA: RIESGOS INHERENTES</u>.</b>
+                                                <p class="justificarTexto">
+                                                    El CLIENTE reconoce que el uso del SERVICIO y demás canales electrónicos así como el envío de información a través de los mismos implica, entre otros, los siguientes riesgos: errores de transmisión de mensajes de datos, fallas en las telecomunicaciones, errores de terceros incluyendo proveedores de servicios, mal uso de las contraseñas secretas, caída del sistema, cortes de energía, fallas en el servicio telefónico. Asimismo, el uso inadecuado del SERVICIO o de los canales electrónicos representa riesgos de seguridad que derivan en diversas modalidades de fraude en perjuicio del CLIENTE, riesgos que pueden ser mitigados siguiendo pautas básicas de protección de información personal y claves.
+                                                </p>
+                                                <b><u>OCTAVA: TARIFAS Y/O COMISIONES.</u></b>
+                                                <p class="justificarTexto">
+                                                    Las tarifas y/o comisiones que se generen con motivo de la prestación del SERVICIO, así como, por las transacciones que se realicen a través del mismo, serán determinadas por el Banco Central de Venezuela o cualquier otra autoridad competente. En el supuesto de ausencia de regulación expresa o derogación del marco legal que otorga la facultad de fijación de la referida contraprestación al Banco Central de Venezuela u otros entes competentes, la misma podrá ser fijada por El BANCO.  Las tarifas y/o comisiones serán del conocimiento del CLIENTE a través de la información disponible en el propio sistema, así como, por cualquier otro medio que el BANCO determine a tales fines, de manera que permita al CLIENTE el conocimiento de las mismas.</p>
+
+                                                <b><u>NOVENA: AUTORIZACIÓN PARA CARGO EN CUENTA</u>.</b>
+                                                <p class="justificarTexto">
+                                                    El CLIENTE autoriza a El BANCO para debitar en cualquier momento y sin previo aviso, de la cuenta asociada a EL SERVICIO o de otras cuentas o depósitos que mantuviere en el BANCO, las tarifas y/o comisiones y demás cantidades que se adeuden EL BANCO por la utilización del presente SERVICIO.</p>
+                                                <b><u>DECIMA: CASO FORTUITO Y FUERZA MAYOR.</u></b>
+                                                <p class="justificarTexto">
+                                                    Ninguna de las partes de este contrato será responsable ante la otra por el incumplimiento total o parcial de las obligaciones que se encuentran a cargo, cuando tal incumplimiento obedezca a razones de: (i) caso fortuito o fuerza mayor, (ii) hecho del príncipe,   (ii) hecho de la víctima, (iii) hecho de un tercero o (iv) a cualquier otra causa extraña no imputable al BANCO o al CLIENTE.  A manera de ejemplo, caso fortuito o fuerza mayor incluirá, entre otros eventos posibles, los siguientes: huelgas y disturbios laborales, sabotajes y terrorismo, actos de guerra, bloqueos, disturbios civiles, motines, insurrecciones, fenómenos de la naturaleza (tales como tormentas, inundaciones, deslaves, terremotos, incendios, erupción volcánica, u otras catástrofes naturales); fallas en el SERVICIO de transporte público, retrasos, fallas o problemas causados por cualquier prestador de servicios de energía eléctrica, de telecomunicaciones, o cualquier otra causa que por encontrarse fuera de la voluntad de las partes impidan el cumplimiento de alguna obligación. En estos supuestos, el cumplimiento de las obligaciones derivadas de este contrato se suspenderá durante la existencia de tal causa. Una vez que cese la causa extraña no imputable, se reanudarán de inmediato las obligaciones en suspenso. En caso de ello ser imposible el presente contrato se considerará resuelto y se procederá a su terminación
+                                                </p>
+                                                <b><u>UNDECIMA: LIMITACION DE RESPONSABILIDAD. </u></b>
+                                                <p class="justificarTexto">
+                                                    El CLIENTE reconoce que EL BANCO no será responsable en caso de que no pueda efectuar o cumplir alguna instrucción o transacción a través del presente SERVICIO, por las siguientes causas: </p>
+                                                <p class="justificarTexto">
+                                                    <ul>
+                                                        <li>1.	Caso fortuito o fuerza mayor. </li>
+                                                        <li>2.	Mandato judicial o de autoridad administrativa competente.</li>
+                                                        <li>3.	Fallas, interrupciones o retrasos de terceros que provean servicios relacionados con medios electrónicos y de telecomunicación u otros problemas de interconexión, no controlados por EL BANCO. </li>
+                                                        <li>4.	Transacciones que no puedan realizarse por causas imputables directamente al CLIENTE, tales como: a) cuentas embargadas, b) insuficiencia de fondos y c) uso incorrecto o inadecuado, negligente o imprudente del Servicio, debidamente comprobados. Se considera como uso  incorrecto o inadecuado del Servicio por parte del CLIENTE, los ejemplos que se citan a continuación, a título meramente enunciativo y no limitativo: (i) instrucciones o transacciones de EL CLIENTE que no se ajusten a, o que contravengan en cualquier forma, lo establecido en estas Condiciones Generales, en las normas y procedimientos internos del BANCO, o en cualesquiera otras disposiciones contractuales o legales que resulten aplicables; (ii) error en que incurriera el CLIENTE al no indicar correctamente los datos requeridos para efectuar las transacciones; (iii) transacciones que excedan los límites de aprobación establecidos por el BANCO para la respectiva transacción; (iv) transacciones que excedan del saldo disponible de la cuenta del CLIENTE; (v) transacciones se correspondan a una cuenta con restricciones para su movilización; (vi) no seguir las recomendaciones e instrucciones previstas en este contrato y en la normativa bancaria o que imparta EL BANCO para el manejo adecuado y seguro del Servicio y equipos remotos y (vii) se requiera el suministro de información adicional por parte del CLIENTE.</li>
+                                                        <li>5.	La falsedad o inexactitud en los datos, informaciones o cualquier elemento que aporte el CLIENTE durante la vigencia del presente contrato. </li>
+                                                        <li>6.	Cuando EL BANCO tenga sospecha fundada de que los recursos del CLIENTE son de procedencia ilícita.</li>
+                                                    </ul>
+                                                </p>
+
+                                                <b><u>DUODECIMA:  LUCRO CESANTE Y DAÑO MORAL. </u></b>
+                                                <p class="justificarTexto">
+                                                    EL BANCO no será responsable en ningún caso por los daños catalogados como lucro cesante, pérdidas de oportunidad de negocio, pérdida de reputación, daños indirectos, incidentales, consecuenciales, morales o análogos, de ninguna clase, derivados del presente contrato, o por cualquier otro daño o pérdida que no sean ocasionados en forma inmediata y directa por su incumplimiento, incluyendo daños que pudieren surgir de circunstancias especiales</p>
+
+                                                <b><u>DECIMA TERCERA: VIGENCIA</u>.</b>
+                                                <p class="justificarTexto">
+                                                    La vigencia del contrato a que se refiere las presentes Condiciones Generales es por tiempo indefinido y continuará vigente hasta que cualquiera de las partes a su sola decisión notifique a la otra su deseo de darlo por terminado, con la consiguiente interrupción definitiva del SERVICIO, de conformidad con lo señalado en la siguiente clausula. </p>
+
+
+                                                <b><u>DECIMA CUARTA: TERMINACION DEL CONTRATO</u>.</b>
+                                                <p class="justificarTexto">
+                                                    <u>(A) A solicitud del Cliente</u>: El CLIENTE podrá, en cualquier momento, disponer la terminación del contrato a que se refiere estas Condiciones Generales, con base en las causales previstas en los numerales 1 y 3 de la cláusula decima quinta siguiente, bastando para ello la presentación de una notificación por escrito dirigida al BANCO en cualquier sucursal o agencia del BANCO, o bien, a través de medios electrónicos, en caso de que EL BANCO implemente tal posibilidad a través del servicio de Banca Electrónica, con dos (2) días de anticipación a la fecha efectiva de terminación. (B) A solicitud del BANCO:  El BANCO tendrá la opción en cualquier momento de dar por terminado el contrato a que se refiere estas Condiciones Generales, por cualquiera de las causales previstas en los numerales 2 y 3 de la cláusula decima quinta siguiente, mediante notificación escrita dirigida al CLIENTE a través de cualquiera de los canales habilitados por EL BANCO que elija al efecto, incluyendo el uso de medios electrónicos en caso de que EL BANCO implemente tal posibilidad a través del servicio de Banca Electrónica, o mediante aviso publicado en un diario de circulación en el domicilio del CLIENTE, con quince (15) días de anticipación a la fecha efectiva de terminación. EL CLIENTE reconoce que este plazo no operará cuando la terminación se deba a: (i) dolo, fraude, o violaciones a las leyes o del presente contrato, debidamente comprobadas o (ii) disposición regulatoria, orden o mandato de autoridad judicial o administrativa competente que así lo autorice u ordene, en cuyos casos la notificación de terminación podrá ser incluso posterior al cierre.</p>
+                                                <b><u>DECIMA QUINTA: CAUSALES DE TERMINACION. </u>.</b>
+                                                <p class="justificarTexto">Serán causales de terminación de estas Condiciones Generales las siguientes:</p>
+                                                <p class="justificarTexto">1-) <u>Por decisión unilateral del CLIENTE</u> sin expresión de causa que lo justifique, adoptada en cualquier momento; sin que EL BANCO pueda cobrarle cantidad adicional alguna por este hecho, con excepción de los adeudos que ya se hubieren generado a la fecha en que EL CLIENTE solicite dar por terminado el presente Contrato. Igualmente se consideran causas de terminación a instancia del CLIENTE las siguientes: a) Incumplimiento grave e injustificado por parte del BANCO de una cualquiera de las obligaciones previstas en este contrato o de disposiciones legales o administrativas aplicables, al efecto bastará que se constate el incumplimiento. b) Cuando EL CLIENTE no acepte las modificaciones que se efectúen a las presentes Condiciones Generales de acuerdo con lo indicado en la cláusula decima octava.  </p>
+                                                <p class="justificarTexto">2-) <u>Por decisión unilateral del BANCO, cuando se produjera alguna de las circunstancias que a continuación se detallan</u>:</p>
+                                                <p class="justificarTexto">
+                                                    <ul>
+                                                        <li>a.	Incumplimiento  grave e injustificado por parte del Cliente de una cualquiera de las obligaciones previstas en este contrato o de disposiciones legales o administrativas aplicables, al efecto bastará que se constate el incumplimiento. </li>
+                                                        <li>b.	Uso ilícito, irregular o indebido del Servicio.  </li>
+                                                        <li>c.	Si EL BANCO detectare que el CLIENTE ha incurrido en situaciones de fraude, mala fe, omisión, negligencia o ha realizado transacciones que no pueda justificar, debidamente comprobadas, sin perjuicio de las acciones legales que sean pertinentes.</li>
+                                                        <li>d.	Cuando el BANCO detecte operaciones inusuales, irregulares o sospechosas en la cuenta del CLIENTE, o realizando o financiando actividades ilegales, y siempre que CLIENTE no haya acreditado la procedencia legal de sus fondos u operaciones en el plazo que se establezca, sin que para ello se requiera previo aviso.</li>
+                                                        <li>e.	Cuando el BANCO determine que la información suministrada por el CLIENTE en la oportunidad de afiliarse a este SERVICIO o para cualquier otro producto o servicio ofrecido por EL BANCO es inexacta, incompleta, falsa o inconsistente con la información previamente declarada o entregada, o cuando el CLIENTE no actualiza la información y documentación de acuerdo con la ley o se niega a actualizar o documentar la información existente cuando el BANCO lo requiera, o cuando el BANCO no pueda verificar dicha información o documentación.</li>
+                                                        <li>f.	Cambios en las disposiciones legales, reglamentarias o administrativas que imposibiliten la prestación del SERVICIO.</li>
+                                                        <li>g.	Cuando EL BANCO considere que deba actuar en interés y defensa del Sistema de Pago, en tanto a su juicio, cualquiera de los anteriores incumplimientos conlleven un riesgo reputacional, de legitimación de capitales y/o financiamiento al terrorismo, de fraude, de seguridad de la información, financiero o que en cualquier otra forma afecte al Sistema de Pago en general.</li>
+                                                    </ul>
+                                                </p>
+                                                <p class="justificarTexto">3-) <u>Otras causales de terminación</u>: Por cualquiera de las partes en los siguientes casos:</p>
+                                                <p class="justificarTexto">
+                                                    <ul>
+                                                        <li>a.	Por disposición legal, orden o mandato de autoridad judicial o administrativa competente que así lo autorice u ordene.</li>
+                                                        <li>b.	Caso fortuito o fuerza mayor.</li>
+                                                        <li>c.	La suspensión de pagos, quiebra, intervención administrativa o judicial, o cualquier otro procedimiento concursal del que se derivase para cualquier de las partes. </li>
+                                                        <li>d.	Fallecimiento del CLIENTE persona natural, siempre que EL BANCO tenga conocimiento formal de ello.</li>
+                                                        <li>e.	La disolución de las partes, cualquiera que sea su causa, excepto transformación y fusión. </li>
+                                                        <li>f.	Cualquier otra causa establecida en la normativa legal vigente de la República Bolivariana de Venezuela, y los acuerdos interbancarios, vigentes o que se dicten en el  futuro.</li>
+                                                    </ul>
+                                                </p>
+                                                <b><u>DECIMA SEXTA: LICITUD DE FONDOS</u>.</b>
+                                                <p class="justificarTexto">EL CLIENTE declara y reconoce que: A) los dineros de las transacciones son de origen y actividades lícitos y por tanto no tienen vinculación directa o indirectamente, con fondos provenientes de actividades ilícitas a que refiere la Ley Orgánica Contra la Delincuencia Organizada y Financiamiento al Terrorismo, La Ley Orgánica de Drogas, la Ley contra los Ilícitos Cambiarios, el Código Penal y demás Leyes de carácter penal vigentes en la República Bolivariana de Venezuela o en cualquier otra Ley o disposición que sustituya, modifique o complemente a los instrumentos legales previamente señalados, en consecuencia libera al BANCO, de cualquier responsabilidad que pudiera resultar de esta asociación comercial, B) Que no utilizará el SERVICIO que el BANCO coloca a su disposición para efectuar operaciones con fondos provenientes de actividades ilícitas o en favor de terceros relacionados, directa o indirectamente, con actividades de esa naturaleza y C) Que autoriza anticipadamente y de manera expresa al BANCO a informar a las autoridades que pudieran resultar competentes de la realización de cualquier operación que a su solo criterio y calificación constituya una transacción sospecha o inusual, de conformidad con la normativa legal que rige la materia. EL CLIENTE se compromete a ratificar esta declaración cada vez que sea requerido por el BANCO.</p>
+                                                <b><u>DECIMA SEPTIMA: NOTIFICACIONES.</u></b>
+                                                <p class="justificarTexto">Toda notificación que el BANCO deba enviar al CLIENTE relacionado con el contrato al que se refieren estas Condiciones Generales, será remitida por escrito a la(s) dirección(es) del CLIENTE que figure(n) en los registros o sistemas del BANCO. En tanto el BANCO no reciba aviso de cambio de la dirección del CLIENTE y la registre, las notificaciones que se envíen por escrito a la dirección registrada del CLIENTE se tendrán por validas a todos los efectos legales, liberando al BANCO de toda responsabilidad. Los avisos, notificaciones o comunicaciones al Cliente podrán ser enviados a través de: 1. Medios de comunicación directa como son: (i) carta con acuse de recibo, (ii) telegrama; (iii) correo electrónico; o (iv) mensajes de texto (SMS); u 2. Otros medios de comunicación que le permitan al cliente tomar conocimiento de cualquier información, como: (i) aviso(s) colocado(s) en lugar visible en las oficinas y agencias del Banco; (ii) Banca por Internet (www.delsur.com.ve); (iii) Publicación en cualquier diario de circulación nacional, en cuyo caso se tendrá por plenamente notificado el CLIENTE en la fecha de la publicación correspondiente o (vi) por cualquier otro medio que el Banco considere idóneo implementar en el futuro a estos efectos. El cliente conviene con el Banco en que corresponderá a éste último de manera exclusiva determinar entre los medios de comunicación establecidos para cada caso aquel que estime necesario utilizar, sin que sea admisible instrucción alguna en contrario del cliente. Las notificaciones se considerarán realizadas para todos los efectos legales pertinentes, en los plazos siguientes: 1) las realizadas por telegrama o por carta con acuse de recibo se considerarán efectivas en la fecha que conste en el citado acuse de recibo; 2) las realizadas por correo electrónico, la fecha de efectividad de la notificación será la que figure en el correo electrónico de envío. Por su parte, cualquier notificación, comunicación o instrucción que el CLIENTE desee enviar al BANCO, podrá efectuarla por escrito a las agencias, sucursales y oficinas del BANCO; o por correo electrónico a la dirección asociada al SERVICIO.</p>
+                                                <b><u>DECIMA OCTAVA: MODIFICACIÓN DE LAS CONDICIONES GENERALES. </u></b>
+                                                <p class="justificarTexto">El BANCO se reserva el derecho de modificar total o parcialmente las presentes Condiciones Generales,  tantas veces considere necesario, en cuyo caso, el BANCO someterá dichas modificaciones a la aprobación previa de la Superintendencia de las Instituciones del Sector Bancario, para posteriormente informarlas a los CLIENTES. El BANCO informara a los CLIENTES con al menos treinta (30) días continuos de anticipación la modificación de estas Condiciones Generales mediante publicación en su página web (www. delsur.com.ve) o aviso publicado en un diario de circulación nacional o a través de cualquier otro medio de información, impreso o electrónico, que el BANCO decida a estos efecto. El BANCO divulgará en la aludida notificación de modificación del contrato, los datos de registro del documento, la publicación de su texto en la página web del BANCO para su consulta, el vencimiento del plazo para rechazar la modificación y la dirección donde el CLIENTE podrá enviar la aceptación o su rechazo a la modificación. El CLIENTE puede rechazar la modificación mediante comunicación escrita o electrónica dirigida al BANCO dentro del mes siguiente a la notificación de la modificación hecha por el BANCO, dejando a salvo las modificaciones legalmente exigibles. En caso de rechazo a las modificaciones, el contrato quedara automáticamente resuelto. De no haber ninguna comunicación del CLIENTE dentro del plazo antes indicado, se entenderá que acepta sin reservas e íntegramente las modificaciones introducidas. Asimismo, el uso del SERVICIO por el CLIENTE en fecha posterior a aquella en que se le hayan notificado los cambios, comportará su aceptación. Las presentes Condiciones Generales quedan sujetas igualmente a las modificaciones que sean pertinentes por aplicación de leyes, decretos o resoluciones reglamentarias, dictadas con posterioridad a la entrada en vigencia de este documento. En estos casos, tales disposiciones sobrevinientes pasan de inmediato a ser aplicadas a las relaciones BANCO-CLIENTE.</p>
+                                                <b><u>DECIMA NOVENA: FALTA EJERCICIO DE LOS DERECHOS</u>.</b>
+                                                <p class="justificarTexto">La falta de ejercicio de los derechos en ningún caso podrá entenderse como renuncia a los mismos, a las acciones que de ellos podrían derivarse o como una aceptación o tolerancia de las circunstancias que lo facultan para ejercerlos.</p>
+                                                <b><u>VIGESIMA: RESOLUCION DE CONTROVERSIAS</u>.</b>
+                                                <p class="justificarTexto">El BANCO y el CLIENTE harán sus mayores esfuerzos a fin de resolver amistosamente cualquier inconveniente y/o controversia que surja en la ejecución y/o interpretación de este contrato. Igualmente convienen en que cualquier controversia que se llegare a suscitar entre el CLIENTE y el BANCO, que no pueda ser solucionada amistosamente, podrá ser resuelta por la autoridad competente o en los Tribunales competentes en cuanto a la materia y el territorio.</p>
+                                                <b><u>VIGESIMA PRIMERA: INDEPENDENCIA DE DISPOSICIONES.</u></b>
+                                                <p class="justificarTexto">Si alguna de las cláusulas de este contrato fuere total o parcialmente nula por alguna disposición legal, por un tribunal de jurisdicción competente o decisión administrativa, tal nulidad afectará únicamente a dicha disposición o cláusula. En todo lo demás, este contrato seguirá válido y vinculante debiendo ser interpretado y aplicado como si dicha cláusula violatoria no hubiese sido incluida en el mismo.</p>
+                                                <b><u>VIGESIMA SEGUNDA: NORMATIVA APLICABLE</u>.</b>
+                                                <p class="justificarTexto">Las presentes Condiciones Generales se regirán e interpretarán por las leyes aplicables vigentes de la República Bolivariana de Venezuela. Todo lo no previsto en este documento, se regirá por las disposiciones contenidas en el Código de Comercio, el Decreto con Rango, Valor y Fuerza de Ley de Instituciones del Sector Bancario, la Normas que Regulan el Uso de los Servicios de la Banca Electrónica, contenidas en la Resolución N° 641.10 emitida por la Superintendencia de las Instituciones del Sector Bancario, publicada en la Gaceta Oficial de la República Bolivariana de Venezuela N° 39.597 de fecha 19 de enero de 2011, Circular  SIB-II-GGR-GNP-15281 de fecha 25 de julio de 2107 emanada de ese Organismo, la normativa en materia de prevención y control de legitimación de capitales y financiamiento del terrorismo, y en general, por las demás disposiciones legales y administrativas aplicables, vigentes o que puedan dictarse en el futuro, los Acuerdos Interbancarios, las normas, procedimientos y políticas internas del BANCO relacionadas con el presente SERVICIO, y por los usos y costumbres conocidas como prácticas bancarias generalmente aceptadas. El CLIENTE se obliga a cumplir o facilitar lo necesario para dar cumplimiento, con las exigencias y requisitos que imponga la Superintendencia de las Instituciones del Sector Bancario y el Banco Central de Venezuela. </p>
+                                                <b><u>VIGESIMA TERCERA: TÍTULOS Y ENCABEZAMIENTOS</u>.</b>
+                                                <p class="justificarTexto">Los títulos, encabezamientos, secciones, apartados y otras sub-divisiones  del presente documento han sido incluidos únicamente como referencia, por lo que no pueden afectar o ser utilizados como elemento de interpretación de las disposiciones de este documento.</p>
+                                                <b><u>VIGESIMA CUARTA: CONSULTAS Y RECLAMOS. </u></b>
+                                                <p class="justificarTexto">El Cliente podrá presentar sus consultas o reclamos ante cualquiera de las sucursales o agencias de EL BANCO a nivel nacional, mediante comunicación escrita suscrita en original, o por vía telefónica o electrónica a través de los siguientes canales del Banco: a) 0500-DELSUR-0., b) www.delsur.com.ve, c) Buzón unidaddeatencionalcliente@delsur.com.ve. Toda reclamo realizado por vía telefónica, necesariamente deberá ser ratificado  por el cliente al Banco mediante comunicación escrita que deberá ser consignada en cualquiera de las oficinas y (o) agencias del Banco dentro de las cuarenta y ocho (48) horas hábiles siguientes a dicha notificación; y en caso que existan causas justificadas que impidan su consignación dentro de dicho plazo, el cliente deberá hacerlo, tan pronto los motivos que dieron origen al impedimento culminen o cesen. Todos los reclamos y quejas quedarán registrados en el sistema del Banco y les será asignado un código de atención, dejando constancia de la fecha de presentación del reclamo o queja, indistintamente si el reclamo o queja  se realiza directamente ante la red de oficinas a nivel nacional, por vía electrónica o telefónica, a efectos del cómputo del lapso establecido para tramitar dicha solicitud. El Banco dependiendo de la naturaleza del reclamo y su complejidad, requerirá documentos adicionales al Cliente para complementar la evaluación sobre dicho reclamo. El Cliente se obliga, en caso de serle requerido, a presentar ante las autoridades competentes, la denuncia correspondiente y consignar evidencias de la misma, ante el Banco. La Unidad de Atencion del Cliente y Usuario del Banco atenderá y dará respuesta al requerimiento formulado por el Cliente en un lapso no mayor de veinte (20) días continuos, según lo dispuesto en el numeral 3 del artículo 69 del Decreto con Rango, Valor y Fuerza de Ley de Instituciones del Sector Bancario. El Banco está obligado a suministrar al cliente toda la documentación certificada que éste solicite relacionado con el reclamo. Todos los servicios de atención son gratuitos y en forma presencial funcionan en el horario de atención establecido para las Agencias y Sucursales del Banco </p>
+                                                <b><u>VIGESIMA QUINTA: PROPIEDAD INTELECTUAL. </u></b>
+                                                <p class="justificarTexto">El BANCO no concede ninguna licencia o autorización de uso de ninguna clase sobre sus derechos de propiedad intelectual o sobre cualquier otra propiedad o derecho relacionado con el SERVICIO.</p>
+                                                <b><u>VIGESIMA SEXTA: ACEPTACION. </u></b>
+                                                <p class="justificarTexto">EL CLIENTE reconoce que el contrato a que se refiere las presentes Condiciones Generales es de adhesión, y en tal sentido, ha sido determinado con prelación por el BANCO. No obstante lo anterior, El CLIENTE, al momento de aceptar este SERVICIO a través de la plataforma  electrónica habilitada para tales efectos, expresamente manifiesta que ha leído íntegramente el contenido de este documento, EN ESPECIAL DE LA PRESENTE CLÁUSULA, lo ha entendido en todos sus términos, consecuencias e implicaciones, y lo acepta sin reparo u objeción alguna reconociendo su pleno valor y validez,  y se obliga al cumplimiento del mismo.</p>
+                                                <b><u>VIGESIMA SEPTIMA: APROBACION DE SUDEBAN.</u></b>
+                                                <p class="justificarTexto">Los términos y condiciones del presente documento fueron aprobados en su totalidad por la Superintendencia de Instituciones del Sector Bancario según oficio distinguido con la nomenclatura SIB-II-GGR-GA-22544 de fecha 26 de octubre de 2017.</p>
+                                                <b><u>VIGESIMA OCTAVA: DOMICILIO ESPECIAL. </u></b>
+                                                <p class="justificarTexto">Para todos los efectos del contrato al que se refieren estas Condiciones Generales, se elige como domicilio especial, único y exclusivo el lugar de su celebración o el del CLIENTE, a la jurisdicción de cuyos Tribunales las partes declaran someterse.</p>
+                                                <b><u>VIGESIMA NOVENA: REGISTRO Y NOTIFICACION. </u></b>
+                                                <p class="justificarTexto">El presente documento será inscrito en una oficina de Registro y comenzará a regir una vez que se realice la protocolización. Una vez registrado, se publicará en la página web del Banco (www. delsur.com.ve). 
+                                                    En Caracas a la fecha de su autenticación.
+                                                </p>
+                                            </p:scrollPanel>
+                                        </h:panelGroup>                                            
+                                        <h:panelGroup layout="block">                                                
+                                        </h:panelGroup>
+                                        <p:panelGrid columns="2" styleClass="sinBorde">
+                                            <p:row>
+                                                <p:column  style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTablaCh  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">                                                    
+                                                        <p:selectBooleanCheckbox id="checkContrato" value="#{wpnGestionP2PController.checkContrato}" validator="#{wpnInicioSesion.validarCheckBox}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column  style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">                                                                                                        
+                                                        <h:outputText value="#{ibTextosFacade.textoParametro('pnw.registro.campo.check.contrato', wpnInicioSesion.idCanal)}" styleClass="relative top-5"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row >
+                                                <p:column colspan="2"  style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block">   
+                                                        <p:message for="checkContrato" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                    <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                        <h:outputText value="#{ibTextosFacade.textoParametro('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                    </h:panelGroup>                                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                    <p:commandLink actionListener="#{wpnGestionP2PController.afiliarPaso2()}" update="@(.ui-message)">                                            
+                                        <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                            <h:outputText value="#{ibTextosFacade.textoParametro('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>                            
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{!wpnGestionP2PController.usuarioHabilitadoP2P}">
+                <h:form id="formOTPController">
+                    <h:panelGroup rendered="true">
+                        <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5" id="SinPermisoP2P">   
+                            <p:message for="SinPermisoP2P" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" rendered="true"/>
+                        </h:panelGroup>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="margin-top-10 width-100 centrado" >
+                            <p:commandLink actionListener="#{wpnGestionP2PController.doRegresar()}" immediate="true">
+                                <h:panelGroup layout="block" id="divBotonRegresarInicio2" class="boton negro font-size-08em float-right centrado">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.volver', wpnInicioSesion.idCanal)}" class=" bold" />
+                                </h:panelGroup>
+                            </p:commandLink>
+                        </div>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

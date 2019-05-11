@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+            <f:event listener="#{wpnChequeraController.inicioStsCheques()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formStsCheques">
+                    <h:panelGroup layout="block" id="divBodyStsCheques" >
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block">
+                            <br/>
+                            <h:outputText class="titulos-tabla azul font-size-1em" value="#{wpnInicioSesion.nombreTransaccion}"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">                                        
+                                <p:panelGrid styleClass="width-100 sinBorde" id="tabla">
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.stsCheques.campo.ctaCte', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneMenu value="#{wpnChequeraController.ctaCte}" styleClass="marging-left-30px" id="txtCtaCte" validator="#{wpnInicioSesion.validarSelectOneMenu}">
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>  
+                                                    <f:selectItems value="#{wpnChequeraController.cuentasCliente}" var="ctaOrigen" itemLabel="#{ctaOrigen.nombreProducto} - #{wpnChequeraController.formatoAsteriscosWeb(ctaOrigen.numeroCuenta)}" 
+                                                                   itemValue="#{ctaOrigen.numeroCuentaEnc}" />                                                    
+                                                    <p:ajax event="change" update="@form" listener="#{wpnChequeraController.consultarChequerasCuentaSts()}"></p:ajax>
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtCtaCte" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row id="divChequeras">
+                                        <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.stsCheques.campo.chequera', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneMenu class="marging-left-30px" id="txtChequeras" value="#{wpnChequeraController.chequera}" validator="#{wpnInicioSesion.validarSelectOneMenu}">
+                                                    <c:if test="#{wpnChequeraController.ctaCte == null or wpnChequeraController.ctaCte.equalsIgnoreCase('-1')}">
+                                                        <f:selectItem itemLabel="Seleccione una Cta. Corriente" itemValue="-1"/>  
+                                                    </c:if>
+                                                    <c:if test="#{!wpnChequeraController.ctaCte.equalsIgnoreCase('-1') and ( wpnChequeraController.ctaCteSeleccionada.chequerasDTO == null or wpnChequeraController.ctaCteSeleccionada.chequerasDTO.size() == 0 ) }">
+                                                        <f:selectItem itemLabel="Seleccione una Cta. Corriente valida" itemValue="-1"/>  
+                                                    </c:if> 
+                                                    <c:if test="#{!wpnChequeraController.ctaCte.equalsIgnoreCase('-1') and wpnChequeraController.ctaCteSeleccionada.chequerasDTO != null and wpnChequeraController.ctaCteSeleccionada.chequerasDTO.size() > 0 }">
+                                                        <f:selectItem itemLabel="Seleccione una Chequera" itemValue="-1"/> 
+                                                        <f:selectItems value="#{wpnChequeraController.ctaCteSeleccionada.chequerasDTO}" var="chequera" itemLabel=" Serie de Cheques: #{chequera.numeroPrimerCheque} al #{chequera.numeroUltimoCheque}" 
+                                                                       itemValue="#{chequera.numeroPrimerCheque}" />                                                        
+                                                    </c:if>
+                                                    <p:ajax event="change" update="@form" listener="#{wpnChequeraController.seleccionarChequera}"/>
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtChequeras" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row rendered="#{wpnChequeraController.renderedCheques}">
+                                        <p:column colspan="3" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="dataTableEstilos clear">   
+                                                <div class="cambioFondo">
+                                                    <p:dataTable id="datalist" value="#{wpnChequeraController.chequeraSeleccionada.chequesDTO}" var="item"
+                                                                 selectionMode="single"
+                                                                 paginator="true"
+                                                                 paginatorAlwaysVisible="false"
+                                                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                                                 paginatorPosition="bottom"
+                                                                 rowKey="#{item.numeroCheque}"
+                                                                 rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                                                 emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}"
+                                                                 >
+
+                                                        <f:facet name="{anterior}">
+                                                            Anterior
+                                                        </f:facet>
+                                                        <f:facet name="{siguiente}">
+                                                            Siguiente
+                                                        </f:facet>
+
+                                                        <p:column styleClass="centrado">
+                                                            <f:facet name="header" >
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.titulo.numeroCheque', wpnInicioSesion.idCanal)}"/>
+                                                            </f:facet>
+                                                            <h:outputText value="#{item.numeroCheque}"/>
+                                                        </p:column>
+
+                                                        <p:column styleClass="textoEnlacesAzul centrado">
+                                                            <f:facet name="header" >
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.titulo.conformado', wpnInicioSesion.idCanal)}"/>
+                                                            </f:facet>
+                                                            <ui:fragment rendered="#{item.conformado.equalsIgnoreCase('N')}">
+                                                                <h:outputText value="NO" />  
+                                                            </ui:fragment>
+                                                            <ui:fragment rendered="#{item.conformado.equalsIgnoreCase('S')}">
+                                                                <h:outputText value="SI" />  
+                                                            </ui:fragment>                                                            
+                                                        </p:column>
+
+                                                        <p:column styleClass="centrado">
+                                                            <f:facet name="header" >
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.titulo.estatus', wpnInicioSesion.idCanal)}"/>
+                                                            </f:facet>                                    
+                                                            <h:outputText value="#{item.textoEstado}" />                                    
+                                                        </p:column>
+
+                                                    </p:dataTable>
+                                                </div>
+                                            </h:panelGroup>
+                                        </p:column>                                        
+                                    </p:row>
+
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

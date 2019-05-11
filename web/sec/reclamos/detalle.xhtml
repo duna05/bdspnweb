@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:event listener="#{wpnReclamoController.validarFlujo2()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formDetalleReclamo">                
+                    <h:panelGroup layout="block" id="divDetalleReclamo" >
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/>                        
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <br/>
+                            <h:outputText class="titulos-tabla azul font-size-1em" value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamos.titulo.detalleReclamo', wpnInicioSesion.idCanal)}" id="divDetaMovCtaTit"/>
+
+                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5 clear">   
+                                <p:message for="divDetalleReclamo2" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjDetMovCta"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                                <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                    <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                        <p:commandLink actionListener="#{wpnReclamoController.detalleConsultaReclamosPDF}" ajax="false" styleClass="vertical-sub">
+                                            <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                            <h:panelGroup layout="block">
+                                                <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                            </h:panelGroup>
+                                        </p:commandLink>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block">
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                        <p:commandLink action="#" styleClass="vertical-sub">
+                                            <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                            <h:panelGroup layout="block">
+                                                <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                            </h:panelGroup>
+                                            <p:printer target="divDetalleReclamo2"/>
+                                        </p:commandLink>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block">
+                                    </h:panelGroup>
+                                </h:panelGrid> 
+                                <div class="lineaGrisOscuro clear"  ></div>  
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" styleClass="width-100 " id="divDetalleReclamo2">
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.nroSolicitud', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnReclamoController.reclamoSelected.numeroSolicitud}"/>                       
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.fechaReclamo', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnReclamoController.formatearFecha(wpnReclamoController.reclamoSelected.fechaSolicitudDate, 'dd/MM/yyyy hh:mm:ss a')}"/>                        
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.descripcion', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>          
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10" >
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnReclamoController.reclamoSelected.nombreReclamo}"/>                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.estatus', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnReclamoController.reclamoSelected.estatus}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.monto', inicioSesion.idCanal)}"/>  
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnReclamoController.formatearMonto(wpnReclamoController.reclamoSelected.montoReclamo)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-085em">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.fechaSolucion', inicioSesion.idCanal)}"/> 
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla titulos-tabla izquierda grisOsc font-size-075em paddin-left10">
+                                        <h:outputText styleClass="vertical-sub" value="#{wpnReclamoController.formatearFecha(wpnReclamoController.reclamoSelected.fechaSolucionDate, 'dd/MM/yyyy')}"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                <h:panelGroup layout="block" id="botonAnt" class="width-20 float-right">
+                                    <p:commandLink actionListener="#{wpnReclamoController.consultaReclamos()}" immediate="true">
+                                        <h:panelGroup layout="block" id="divBotonAtr" class="boton negro font-size-08em float-right centrado bold">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                        </h:panelGroup> 
+                    </h:panelGroup> 
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

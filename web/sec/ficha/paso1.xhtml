@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:event listener="#{wpnFichaController.datosBasicos()}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:composition template="/templates/externa_ficha_cliente.xhtml">  
+        <ui:define name="body" >
+            <h:form id="formFichaCliente" > 
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="Datos Básicos Cliente Juridico" style="font-size:80%;"/>
+                                            <p:menuitem value="Datos Complementarios Cliente Juridico" style="font-size:80%;"/>
+                                            <p:menuitem value="Referencias Cliente Juridico" style="font-size:80%;"/>                                            
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">                                            
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 99%;">
+                                                        <h:outputText value="Datos Básicos"  class="titulo-Ficha"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.TipoIdentificacion', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText id="desTipoIdentificacion" value="#{wpnFichaController.fichaclienteDTO.descTipoIdentificacion}" maxlength="9" required="true"  readonly="true" />
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText id="txtIdentificacion" value="#{wpnFichaController.fichaclienteDTO.numeroIdentificacion}" maxlength="9" 
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                     validator="#{wpnInicioSesion.validarIdentificacion}" styleClass="marging-left-ficha;"
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.nroDoc', wpnInicioSesion.idCanal)}" readonly="true"  />
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.SubTipoCliente', wpnInicioSesion.idCanal)}" class="primerCampo"/>                                                        
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText id="subtipocliente" value="#{wpnFichaController.fichaclienteDTO.tipoCliente}"  
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                     validator="#{wpnInicioSesion.validarIdentificacion}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.SubTipoCliente', wpnInicioSesion.idCanal)}" readonly="true"  />
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="" />
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoCliente', wpnInicioSesion.idCanal)}" />
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.codigoCliente}" id="codcliente"   
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoCliente', wpnInicioSesion.idCanal)}" readonly="true" style="margin-left:0%;"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoOnt', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.codigoOnt}" id="codigoont"  readonly="true" style="margin-left: 5%;"/> 
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.NombreComercial', wpnInicioSesion.idCanal)}" style="margin-left: 15.6%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.nombreComercial}" id="nombrecomercial"  placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.NombreComercial', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.NombreComercial', wpnInicioSesion.idCanal)}" readonly="true" style="width: 260px;"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.RazonSocial', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.razonSocial}" id="nomClienteFicha"  placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.RazonSocial', wpnInicioSesion.idCanal)}" readonly="true" style="margin-left: 5%; width: 250px;"/> 
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.GrupoEconomico', wpnInicioSesion.idCanal)}" style="margin-left: 7.4%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.descGrupoEconomico}" id="grpeconmico"  placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.GrupoEconomico', wpnInicioSesion.idCanal)}" readonly="true" style=" width: 260px; margin-left: 0.3%;"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Clasificacion', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.desClasificacion}" id="clasificacionFicha" style="margin-left: 5%; width: 250px;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Clasificacion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Clasificacion', wpnInicioSesion.idCanal)}" readonly="true" /> 
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.desSubClasificacion}" id="desclasificacionFicha"  placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Clasificacion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Clasificacion', wpnInicioSesion.idCanal)}" readonly="true" style="width: 158px;"/> 
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaclienteDTO.desSubSubClasificacion}" id="desdesclasificacionFicha"  placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Clasificacion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Clasificacion', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 99%;">
+                                                        <h:outputText value="Datos Direccion"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.TipoDireccion', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.descDireccion}" id="direccionFicha" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.TipoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.TipoDireccion', wpnInicioSesion.idCanal)}" readonly="true" style="margin-left: 4%; width: 147px;"/> 
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" style="margin-left: 14.5%;"/>
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.codigoTipoDireccion}" id="codigodireccion"  placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.DireccionPrincipal', wpnInicioSesion.idCanal)}" style="margin-left: 1%;"/>
+                                                        <p:spacer width="0.5%"/>
+                                                        <p:selectBooleanCheckbox value="true" disabled="true" />
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.DireccionValida', wpnInicioSesion.idCanal)}"/>
+                                                        <p:spacer width="0.5%"/>
+                                                        <p:selectBooleanCheckbox value="true" disabled="true" />
+                                                    </div>     
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:inputText value="VENEZUELA" id="nombrePais" style="margin-left: 8.4%; width: 147px;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <p:spacer width="0.5%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" style="margin-left: 15.3%; "/>
+                                                        <p:spacer width="0.5%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nombreDepartamento}" id="nombreDpto" style="margin-left: 4.7%;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <p:spacer width="0.5%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Municipio', wpnInicioSesion.idCanal)}" style="margin-left: 1.8%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.descSector}" id="nombreMunicipio" style="margin-left: 4.4%;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Municipio', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Municipio', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Parroquia', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.descSector}" id="nombreSector" style="margin-left: 2.6%;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Parroquia', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Parroquia', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Ciudad', wpnInicioSesion.idCanal)}" style="margin-left: 16%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.descSector}" id="ciudad" style="margin-left: 5%;" placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Urbanizacion', wpnInicioSesion.idCanal)}" style="margin-left: 2.6%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.urbanizacion}" id="urbanizacion" style="margin-left: 2.4%;" placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Avenida', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.calle}" id="avenida"  placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" readonly="true" style="margin-left: 3.1%;"/> 
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Edificio', wpnInicioSesion.idCanal)}" style="margin-left: 15%;"/>
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.edificio}" id="edificio"  placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Edificio', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Edificio', wpnInicioSesion.idCanal)}" readonly="true" style="margin-left: 2.6%;"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Manzana', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.manzana}" id="manzana" style="margin-left: 2.8%;"  placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Local', wpnInicioSesion.idCanal)}" style="margin-left: 14.9%;"/>
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.nroApartamento}" id="local"  placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Local', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Local', wpnInicioSesion.idCanal)}" readonly="true" style="margin-left: 1.8%;"/> 
+                                                        <p:spacer width="1%"/>
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Tenencia', wpnInicioSesion.idCanal)}" style="margin-left: 1.4%;"/>
+                                                        <p:spacer width="1%"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.tenencia}" id="tenencia"  placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Tenencia', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Tenencia', wpnInicioSesion.idCanal)}" readonly="true" style="margin-left: -0.4%;"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="8">
+                                                    <div class="filasFicha">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Zona', wpnInicioSesion.idCanal)}" class="primerCampo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.codigoPostal}" id="zona" style="margin-left: 4.8%;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Zona', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Zona', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Telefono', wpnInicioSesion.idCanal)}" style="margin-left: 1.4%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.telefonos}" id="telefono" style="margin-left: 1.4%;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.Telefono', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.Telefono', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.OtroTelefono', wpnInicioSesion.idCanal)}" style="margin-left: 1.4%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.telex}" id="otrotelefono" style="margin-left: 1.4%;" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.OtroTelefono', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.OtroTelefono', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Email', wpnInicioSesion.idCanal)}" style="margin-left: 1.4%;"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteDirPpalDTO.email}" id="email" style="margin-left: 3.4%;" placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" readonly="true"/> 
+                                                    </div>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                            </p:row>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                        <p:link outcome="paso2" value="Siguiente" style="background: #FFE88C;" >
+                                            <f:param name="codigocliente" value="10" />
+                                            <h:panelGroup layout="block" id="divBotonData"  >
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                            </h:panelGroup>
+                                        </p:link>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

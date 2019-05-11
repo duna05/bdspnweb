@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">    
+    <f:metadata>
+        <f:event listener="#{wpnGestionServiciosController.validarFlujoRecargar3()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formRecargarServ3">
+
+                    <h:panelGroup layout="block">
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla negro font-size-7em float-left margin-left-15px" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRecargServ" class="cuatro-pasos">
+                                <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <h:panelGrid columns="1" styleClass="width-100 sinBorde">
+
+                                    <h:panelGroup layout="block" styleClass="notificaciones-exitoso">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.operacionFinalizada', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+
+                                <h:panelGroup layout="block" styleClass="fondoCabeceraTablaOpFin">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.operacionFinalizada', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                            <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink actionListener="#{wpnGestionServiciosController.detalleRecargaPDF()}" ajax="false" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink action="#" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                         <p:printer target="divRecarga"/>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                            </h:panelGrid> 
+                            <div class="lineaGrisOscuro clear"  ></div>  
+                        </h:panelGroup>
+                                         
+                        <h:panelGroup layout="block" styleClass="width-100 margin-top-5" id="divRecarga">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <p:panelGrid styleClass="width-100 sinBorde">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>   
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.servicio', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnGestionServiciosController.servSeleccionadoCompleto.descripcionServicio}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.numeroRecibo', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnGestionServiciosController.numeroRecibo}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.fechaRecarga', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnGestionServiciosController.formatearFecha(wpnGestionServiciosController.fechaEjecucion,'dd/MM/yyyy hh:mm:ss a')}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.ctaDebitar', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnGestionServiciosController.formatoAsteriscosWeb(wpnGestionServiciosController.datosCuentaSeleccionada.numeroCuenta)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.cedulaBeneficiario', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnGestionServiciosController.afiliacion.beneficiario.tipoIdentificacion}#{wpnGestionServiciosController.afiliacion.beneficiario.identificacion}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.nombreBeneficiario', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnGestionServiciosController.afiliacion.beneficiario.nombre}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.monto', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{ibParametrosFacade.textoParametro('pnw.global.tipoMoneda.Bs', inicioSesion.idCanal)} #{wpnGestionServiciosController.montoRecarga}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.recargarServ.campo.numeroRecargar', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                <h:outputText value="#{wpnGestionServiciosController.afiliacion.codigoAbonado}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <p:message for="divRecarga" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

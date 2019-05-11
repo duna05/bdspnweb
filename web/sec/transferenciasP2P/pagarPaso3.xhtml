@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnGestionP2PController.validarFlujoPagar3()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formPagarP2P">
+                    <h:panelGroup layout="block" id="divBodyPagar" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>  
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 1}">
+                                <h:panelGroup layout="block" id="divCabeceraPagoP2P" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 0 or wpnInicioSesion.validacionOTP == 2}">
+                                <h:panelGroup layout="block" id="divCabeceraPagoP2P" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                        </c:choose>
+
+                        <h:panelGroup layout="block" id="pago">
+                            <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                    <p:panelGrid styleClass="width-100 sinBorde">
+                                        <p:row>
+                                            <p:column colspan="3">
+                                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.titulo.datosAfiliacion', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>   
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.telfOrig', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em"> 
+                                                    <h:outputText value="#{wpnGestionP2PController.infoAfiliacion}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column> 
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.saldoDisponible', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em"> 
+                                                    <h:outputText value="#{ibParametrosFacade.textoParametro('pnw.global.tipoMoneda.Bs', inicioSesion.idCanal)} #{wpnGestionP2PController.saldoDisponibleAfiliacion}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column> 
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.mtoDispP2PDia', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em" id="txtSaldoDispP2P"> 
+                                                    <h:outputText value="#{ibParametrosFacade.textoParametro('pnw.global.tipoMoneda.Bs', inicioSesion.idCanal)} #{wpnGestionP2PController.formatearMonto(wpnGestionP2PController.saldoDisponibleP2P)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column> 
+                                        </p:row>                                            
+                                        <p:row>
+                                            <p:column colspan="3">
+                                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.titulo.datosPago', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row >
+                                            <p:column  styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">                                           
+                                                <h:panelGroup  id="alias" layout="block" styleClass="cuerpoTabla-etiqueta" style= "display: #{wpnGestionP2PController.mostrarAlias2}" >                                                    
+                                                    <h:outputText value="Alias "/>
+                                                </h:panelGroup>
+                                            </p:column>  
+                                            <p:column  styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">                                           
+                                                <h:panelGroup  id="campoAlias" layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em" style= "display: #{wpnGestionP2PController.mostrarAlias2}" >                                                    
+                                                    <h:outputText value="#{wpnGestionP2PController.alias2}"/>
+                                                </h:panelGroup>
+                                            </p:column> 
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.telfDest', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em"> 
+                                                    <h:outputText value="#{wpnGestionP2PController.codTelfDestino}#{wpnGestionP2PController.telfDestino}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column> 
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.docBenef', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">     
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em"> 
+                                                    <h:outputText value="#{wpnGestionP2PController.tipoDocBeneficiario}#{wpnGestionP2PController.nroDocBeneficiario}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">                                                
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.bancoDest', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em"> 
+                                                    <h:outputText value="#{wpnGestionP2PController.nombreBanco}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.monto', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em"> 
+                                                    <h:outputText value="#{wpnGestionP2PController.montoPago}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.campo.descripcion', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em"> 
+                                                    <h:outputText value="#{wpnGestionP2PController.descripcionPago}"/>
+                                                </h:panelGroup>  
+                                            </p:column>
+                                            <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="3">
+                                                <p:message for="pago" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                <p:commandLink actionListener="#{wpnGestionP2PController.pagarPaso4()}" update="@all @(.ui-message)">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                                <p:commandLink  actionListener="#{wpnGestionP2PController.regresarPagarPaso2()}" immediate="true" >
+                                    <h:panelGroup layout="block" id="divBotonData1" class="boton negro font-size-08em float-right centrado" >
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" class=" bold"  />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" class="gris float-left margin-top-25 paddin-right25 paddin-left25 margin-bottom-10 justificado" id="divMsjSinAfiliaciones">
+                            <p:message rendered="true" for="divMsjSinAfiliaciones" id="msjSinAfiliaciones"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+            <br/>
+            <br/>
+            <div class="margin-top-10 texto-footer negro izquierda">
+                <h:outputText styleClass="vertical-sub" value="#{wpnTextosController.getNombreTexto('pnw.global.texto.infoPagoP2P',inicioSesion.nombreCanal)}" escape="false"/>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

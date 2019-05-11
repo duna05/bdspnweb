@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event listener="#{wpnFichaController.referenciasNatural()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa_ficha_cliente.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formFichaClienteComplementario">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="Datos Básicos Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Referencias Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Datos Adicionales Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Representantes Legales" style="font-size:80%;"/>
+                                            <p:menuitem value="Información Económica" style="font-size:80%;"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">                                            
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 130%;">
+                                                        <h:outputText value="Datos Empleos"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:row>
+                                                    <p:column styleClass="max-widthTxt" colspan="3">
+                                                        <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                            <p:dataTable id="dirEmpleos" var="item5" value="#{wpnFichaController.ibFichaClienteEmpleosList}" editable="true" editMode="cell" >
+                                                                <p:column headerText="Nombre Empresa" width="20%">
+                                                                    <h:outputText value="#{item5.nombreEmpresa}" />
+                                                                </p:column>
+                                                                <p:column headerText="Cargo" width="20%">
+                                                                    <h:outputText value="#{item5.cargo}" />
+                                                                </p:column>
+                                                                <p:column headerText="Ultimo Sueldo" width="20%">
+                                                                    <h:outputText value="#{item5.ultimoSueldo}" />
+                                                                </p:column>                                                                 
+                                                                <p:column headerText="Fecha Ingreso">
+                                                                    <h:outputText value="#{item5.fechaEntrada}" />
+                                                                </p:column>
+                                                                <p:column headerText="RIF">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.rif}" /></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.rif}" required="true" validator="#{wpnFichaController.validate}"/></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                                <p:column headerText="RAMO">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.ramo}" /></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.ramo}" required="true"/></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                                <p:column headerText="DIRECCION">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.direccion}" /></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.direccion}" required="true"/></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                                <p:column headerText="TELEFONO">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{item5.telefono}" /></f:facet>
+                                                                        <f:facet name="input"><p:inputText value="#{item5.telefono}" required="true" requiredMessage="Requerido"/></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                                            </p:dataTable>
+                                                        </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+
+                                            </p:row>
+
+
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Uso Productos y Servicios"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Motivo Solicitud"/>
+                                                        <h:selectOneMenu id="motivoSolicitud"  
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" >
+                                                            <f:selectItems value="#{wpnFichaController.motiListString}"   var="list"
+                                                                           itemValue="#{list}" itemLabel="#{list}" />
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Transferencia desde o hacia el Exterior (Moneda Extranjera)"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Enviar"/> 
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.pais_enviar}" id="paisEnviar" styleClass=" font-size-09em" placeholder="Pais Enviar" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+
+
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Recibir"/> 
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.pais_recibir}" id="paisRecibir" styleClass=" font-size-09em" placeholder="Pais Recibir" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Estimado a Movilizar en Cuenta (en Miles de Bsf)" />
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>    
+
+                                            <p:row>
+
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Depositos"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                                <p:column styleClass="max-widthTxt">
+
+
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectOneRadio id="console" value="#{wpnFichaController.fichaClienteComplementarioDTO.mov_dep}" >
+                                                            <f:selectItem itemLabel="0-5" itemValue="1" />
+                                                            <f:selectItem itemLabel="5-10" itemValue="2" />
+                                                            <f:selectItem itemLabel="10-50" itemValue="3" />
+                                                            <f:selectItem itemLabel="+50" itemValue="4" />
+                                                        </p:selectOneRadio>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Retiros"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                                <p:column styleClass="max-widthTxt">
+
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectOneRadio id="console2" value="#{wpnFichaController.fichaClienteComplementarioDTO.mov_ret}" >
+                                                            <f:selectItem itemLabel="0-5" itemValue="1" />
+                                                            <f:selectItem itemLabel="5-10" itemValue="2" />
+                                                            <f:selectItem itemLabel="10-50" itemValue="3" />
+                                                            <f:selectItem itemLabel="+50" itemValue="4" />
+                                                        </p:selectOneRadio>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value=""/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Transacciones Mensuales"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Efectivo"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cheque Pers"/>
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Transf M/N"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Depositos"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_cheq_ger}" id="transdepositos" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_efect}" id="motivosolicitud2" styleClass=" font-size-09em"  />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_cheq_per}" id="retirocheqpers" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_transf}" id="transdeposto" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Retiros"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_cheq_ger}" id="transretiros" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_efec}" id="efectivoretiro" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_cheq_per}" id="chequeretiro" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_transf}" id="transretiross" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Uso de la Cuenta"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_cta_ahorro}" disabled="TRUE" />
+                                                        <f:selectItem itemLabel="Ahorros" itemValue="S" />
+                                                        <h:outputText value="Ahorros"/> 
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_transferencia}" disabled="TRUE" />
+                                                        <h:outputText value="Transferencia"/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value=""/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_cta_prestamo}" disabled="TRUE" />
+                                                        <h:outputText value="Pago de Pestamos "/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_divisa}" disabled="TRUE" />
+                                                        <h:outputText value="Compra de Divisas"/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value=""/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_otros}" disabled="TRUE" />
+
+                                                        <h:outputText value="Otros"/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.comentariosOtros}" id="comentarios" styleClass=" font-size-09em" 
+                                                                     /> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Referencias"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Personales"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <p:dataTable id="dirTotales" var="item" value="#{wpnFichaController.listFichaClienteRefPersonalDTO}" editable="true" editMode="cell">
+                                                            <p:column headerText="Tipo de Documento">
+                                                                <h:outputText value="#{item.codigoTipoIdentificacion}" />
+                                                            </p:column>
+                                                             <p:column headerText="Numero de Documento">
+                                                                 <h:outputText value="#{item.numeroIdentificacion}" />
+                                                            </p:column>
+                                                            <p:column headerText="Nombre">
+                                                                <h:outputText value="#{item.nombre}" />
+                                                            </p:column>
+                                                            <p:column headerText="Primer Apellido">
+                                                                <h:outputText value="#{item.primerApellido}" />
+                                                            </p:column>
+                                                            <p:column headerText="Segundo Apellido">
+                                                                <h:outputText value="#{item.segundoApellido}" />
+                                                            </p:column>
+                                                            <p:column headerText="Parentesco">
+                                                                <h:outputText value="#{item.parentesco}" />
+                                                            </p:column>
+                                                            <p:column headerText="Telefono 1">
+                                                                <h:outputText value="#{item.telefono}" />
+                                                            </p:column>
+                                                            <p:column headerText="Telefono 2">
+                                                                <h:outputText value="#{item.telefono2}" />
+                                                            </p:column>
+                                                        </p:dataTable>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Bancarias"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <p:dataTable id="dirBancaria" var="item2" value="#{wpnFichaController.ibFichaClienteRefBancariaList}" editable="true" editMode="cell">
+
+                                                            <p:column headerText="Nombre Banco">
+                                                                <h:outputText value="#{item2.nombreBanco}" />
+
+                                                            </p:column>
+
+                                                            <p:column headerText="Tipo Cuenta">
+                                                                <h:outputText value="#{item2.descCuenta}" />
+
+                                                            </p:column>
+                                                            <p:column headerText="Numero Cuenta">
+                                                                <h:outputText value="#{item2.numeroCuentaReferencia}" />
+
+                                                            </p:column>                                                                 
+                                                            <p:column headerText="Fecha Apertura">
+                                                                <h:outputText value="#{item2.fechaApertura}" />
+
+                                                            </p:column>
+
+                                                            <p:column headerText="Saldo Promedio">
+                                                                <h:outputText value="#{item2.saldoPromedio}" />
+
+                                                            </p:column>
+
+                                                        </p:dataTable>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Tarjeta"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <p:dataTable id="dirTarjeta" var="item3" value="#{wpnFichaController.ibFichaClienteRefTarjetasList}" >
+
+                                                            <p:column headerText="Tipo TDC">
+                                                                <h:outputText value="#{item3.desTipoTarjeta}" />
+
+                                                            </p:column>
+                                                            <p:column headerText="Nombre Banco">
+                                                                <h:outputText value="#{item3.nomBancoTarjeta}" />
+
+                                                            </p:column>
+                                                            <p:column headerText="Numero TDC">
+                                                                <h:outputText value="#{item3.numeroTarjeta}" />
+
+                                                            </p:column>
+                                                            <p:column headerText="Fecha Emision">
+                                                                <h:outputText value="#{item3.fechaEmision}" />
+
+                                                            </p:column>
+                                                            <p:column headerText="Limite">
+                                                                <h:outputText value="#{item3.limiteTarjeta}" />
+
+                                                            </p:column>
+
+                                                        </p:dataTable>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Comerciales"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <p:dataTable id="diRefComercial" var="item4" value="#{wpnFichaController.ibFichaClienteRefComercialesList}" >
+                                                            <p:column headerText="Nombre Comercial">
+                                                                <h:outputText value="#{item4.casaComercial}" />
+                                                            </p:column>
+                                                            <p:column headerText="Fecha Adquisicion">
+                                                                <h:outputText value="#{item4.fechaConcesion}" />
+                                                            </p:column>
+                                                            <p:column headerText="Telefonos">
+                                                                <h:outputText value="#{item4.telefonos}" />
+                                                            </p:column>
+                                                        </p:dataTable>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                        <p:remoteCommand name="rcEncriptarPin" actionListener="#{wpnRegistroUsuariosController.encriptarPinFase1()}" global="false"/>
+
+
+                                        <p:link outcome="paso3_p" value="Siguiente">
+                                            <f:param name="codigocliente" value="10" />                                           
+                                        </p:link>
+
+
+
+
+
+
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

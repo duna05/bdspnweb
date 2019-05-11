@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnChequeraController.inicioSuspchequeras()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formSuspCheques1">
+
+                    <h:panelGroup layout="block" id="divBodySuspenderCheques" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.paso3', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">                                        
+                                <p:panelGrid styleClass="width-100 sinBorde" id="tabla">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.paso1', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.campo.ctaCte', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneMenu value="#{wpnChequeraController.ctaCte}" styleClass="marging-left-30px" id="txtCtaCte" validator="#{wpnInicioSesion.validarSelectOneMenu}">
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>  
+                                                    <f:selectItems value="#{wpnChequeraController.cuentasCliente}" var="ctaOrigen" itemLabel="#{ctaOrigen.nombreProducto} - #{wpnChequeraController.formatoAsteriscosWeb(ctaOrigen.numeroCuenta)}" 
+                                                                   itemValue="#{ctaOrigen.numeroCuentaEnc}" />                                                    
+                                                    <p:ajax event="change" update="@form" listener="#{wpnChequeraController.consultarChequerasCuenta}"></p:ajax>
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtCtaCte" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row id="divChequeras">
+                                        <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.campo.chequera', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneMenu class="marging-left-30px" id="txtChequeras" value="#{wpnChequeraController.chequera}" validator="#{wpnInicioSesion.validarSelectOneMenu}">
+                                                    <c:if test="#{wpnChequeraController.ctaCte == null or wpnChequeraController.ctaCte.equalsIgnoreCase('-1')}">
+                                                        <f:selectItem itemLabel="Seleccione una Cta. Corriente" itemValue="-1"/>  
+                                                    </c:if>
+                                                    <c:if test="#{!wpnChequeraController.ctaCte.equalsIgnoreCase('-1') and ( wpnChequeraController.ctaCteSeleccionada.chequerasDTO == null or wpnChequeraController.ctaCteSeleccionada.chequerasDTO.size() == 0 ) }">
+                                                        <f:selectItem itemLabel="Seleccione una Cta. Corriente valida" itemValue="-1"/>  
+                                                    </c:if> 
+                                                    <c:if test="#{!wpnChequeraController.ctaCte.equalsIgnoreCase('-1') and wpnChequeraController.ctaCteSeleccionada.chequerasDTO != null and wpnChequeraController.ctaCteSeleccionada.chequerasDTO.size() > 0 }">
+                                                        <f:selectItem itemLabel="Seleccione una Chequera" itemValue="-1"/> 
+                                                        <f:selectItems value="#{wpnChequeraController.ctaCteSeleccionada.chequerasDTO}" var="chequera" itemLabel=" Serie de Cheques: #{chequera.numeroPrimerCheque} al #{chequera.numeroUltimoCheque}" 
+                                                                       itemValue="#{chequera.numeroPrimerCheque}" />                                                        
+                                                    </c:if>
+                                                    <p:ajax event="change" update="@form" listener="#{wpnChequeraController.seleccionarChequera}"/>
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtChequeras" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row rendered="#{wpnChequeraController.renderedTipoSuspension}">
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.campo.tipoSuspension', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup id="divTipoSuspension" layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneRadio id="txtTipoChequera" value="#{wpnChequeraController.tipoSuspension}" 
+                                                                  required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.suspensionCheques.campo.suspCheque', wpnInicioSesion.idCanal)}" itemValue="U" />
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.suspensionCheques.campo.suspChequera', wpnInicioSesion.idCanal)}" itemValue="T" />
+                                                    <p:ajax event="change" listener="#{wpnChequeraController.accionRenderedCheques}" update="tabla"/>
+                                                </h:selectOneRadio>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtTipoChequera" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row rendered="#{wpnChequeraController.renderedCheques}">
+                                        <p:column styleClass="max-widthTxt vertical-top" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.suspenderCheques.campo.chequesSelected', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column colspan="2" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup id="divCheckBox" layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <p:selectManyCheckbox layout="grid" columns="5" id="txtCheques" value="#{wpnChequeraController.chequesSelected}"
+                                                                      required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">
+                                                    <f:selectItems value="#{wpnChequeraController.chequeraSeleccionada.chequesDTO}" var="item" itemLabel="#{item.numeroCheque}" 
+                                                                       itemValue="#{item.numeroCheque}" />
+                                                </p:selectManyCheckbox>
+                                            </h:panelGroup>
+                                        </p:column>                                        
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3"> 
+                                            <p:message for="txtCheques" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                        </p:column>
+                                    </p:row>
+
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                <p:commandLink actionListener="#{wpnChequeraController.suspenderChequesPaso2()}" update="@all @(.ui-message)">
+                                    <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

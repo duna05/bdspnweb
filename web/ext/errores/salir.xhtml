@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/externa.xhtml">  
+        <ui:define name="body" >
+            <h:form id="formSalir">                
+                <h:panelGroup layout="block" id="divSalir" styleClass="paddin-top40">
+                    <h:panelGroup layout="block" styleClass="width-100 centrado">
+                        <h:outputText styleClass="titulos-tabla azul font-size-1em centrado" value="#{wpnTextosController.getNombreTexto('pnw.timeOut.texto.inactividad', wpnInicioSesion.idCanal)}"/>
+                        <br/><br/>
+                        <h:outputText styleClass="titulos-tabla negro bold font-size-07em centrado" value="#{wpnTextosController.getNombreTexto('pnw.timeOut.texto.segCierre', wpnInicioSesion.idCanal)}"/>
+                        <br/>
+                        <h:outputText styleClass="titulos-tabla negro bold font-size-07em centrado" value="#{wpnTextosController.getNombreTexto('pnw.timeOut.texto.msjCierre', wpnInicioSesion.idCanal)}"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="paddin-top20">
+                        <p:commandLink actionListener="#{wpnInicioSesion.salirTimeOut()}" update="@(.ui-message)"  immediate="true">                                            
+                            <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em width-20 autoHorz centrado">
+                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.timeOut.boton.cierre', wpnInicioSesion.idCanal)}" class="bold" />
+                            </h:panelGroup>
+                        </p:commandLink>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="width-100 centrado">
+                        <br/>
+                        <h:outputText styleClass="titulos-tabla azul font-size-07em centrado" value="#{wpnTextosController.getNombreTexto('pnw.timeOut.texto.reingreso', wpnInicioSesion.idCanal)}"/>
+                    </h:panelGroup>    
+                    <h:panelGroup layout="block" styleClass="paddin-top20">
+                        <p:commandLink actionListener="#{wpnInicioSesion.redireccionInicio()}" update="@(.ui-message)"  immediate="true">                                            
+                            <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em width-20 autoHorz centrado">
+                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.timeOut.boton.login', wpnInicioSesion.idCanal)}" class="bold" />
+                            </h:panelGroup>
+                        </p:commandLink>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

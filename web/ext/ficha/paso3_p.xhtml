@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event listener="#{wpnFichaController.datosAdicionales()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa_ficha_cliente.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formFichaClienteComplementario">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="Datos Básicos Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Referencias Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Datos Adicionales Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Representantes Legales" style="font-size:80%;"/>
+                                            <p:menuitem value="Información Económica" style="font-size:80%;"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">                                            
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Datos Adicionales"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                
+                                                
+                                                <p:row>
+                                                    
+                                                    <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Otra Nacionalidad"  />
+                                                        <h:selectOneMenu id="nivelEduca" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                            <f:selectItem itemValue="P" itemLabel="PRIMARIA"/>                                                           
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                    </p:column>
+                                                    
+                                                    <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Fuente de Ingreso"  />
+                                                        <h:selectOneMenu id="fuenteDeIngreso"  value="#{wpnFichaController.actividadEconomicaDto.actividadEconomicaList}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" >
+                                                            <f:selectItems value="#{wpnFichaController.actividadEconomicaList}"   />
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                    </p:column>
+                                                </p:row>
+                                            </p:row>
+                                           <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Persona Expuesta Politicamente"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                    <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cliente es PEP"  />
+                                                        <h:selectOneMenu id="clientePEP" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                            <f:selectItem itemValue="S" itemLabel="Si"/>  
+                                                            <f:selectItem itemValue="N" itemLabel="No"/>  
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                    </p:column>                                                 
+                                                    <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Tiene Parentesco PEP"  />
+                                                        <h:selectOneMenu id="parentescoPEP" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                            <f:selectItem itemValue="S" itemLabel="Si"/>  
+                                                            <f:selectItem itemValue="N" itemLabel="No"/>  
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                    </p:column>
+                                                    <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Es Asociado PEP"  />
+                                                        <h:selectOneMenu id="asociadoPEP" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                            <f:selectItem itemValue="S" itemLabel="Si"/>  
+                                                            <f:selectItem itemValue="N" itemLabel="No"/>  
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                    </p:column>                                                
+                                            </p:row>                                            
+                                            <p:row>
+                                               <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Institucion"/> 
+                                                        <p:inputText value="" id="institucionCliente" styleClass=" font-size-09em" placeholder="Institucion Cliente" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Institucion"/> 
+                                                        <p:inputText value="" id="institucionParentesco" styleClass=" font-size-09em" placeholder="Institucion Parentesco" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                 <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Institucion"/> 
+                                                        <p:inputText value="" id="institucionAsociado" styleClass=" font-size-09em" placeholder="Institucion Asociado" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                             </p:row>
+                                             <p:row>
+                                                  <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cargo"/> 
+                                                        <p:inputText value="" id="cargoCliente" styleClass=" font-size-09em" placeholder="Cargo Cliente" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                 </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cargo"/> 
+                                                        <p:inputText value="" id="cargoParentesco" styleClass=" font-size-09em" placeholder="Cargo Parentesco" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                 </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cargo"/> 
+                                                        <p:inputText value="" id="cargoAsociado" styleClass=" font-size-09em" placeholder="Cargo Asociado" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                 </p:column>
+                                            </p:row>                                            
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Pais"  />
+                                                        <h:selectOneMenu id="paisCliente" value="#{wpnFichaController.paisDTO.paisList}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                     >
+                                                            <f:selectItems value="#{wpnFichaController.paises}" />
+                                                        </h:selectOneMenu> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                               <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Pais"  />
+                                                       <h:selectOneMenu id="paisesparentesco" value="#{wpnFichaController.paisDTO.paisList}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                     >
+                                                            <f:selectItems value="#{wpnFichaController.paises}" />
+                                                        </h:selectOneMenu> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Pais"  />
+                                                       <h:selectOneMenu id="paisesCercano" value="#{wpnFichaController.paisDTO.paisList}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                     >
+                                                            <f:selectItems value="#{wpnFichaController.paises}" />
+                                                        </h:selectOneMenu> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                             </p:row>                                           
+                                             <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Nombre"/> 
+                                                        <p:inputText value="" id="nombreParentesco" styleClass=" font-size-09em" placeholder="Nombre" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                 <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Nombre"/> 
+                                                        <p:inputText value="" id="NombreAsociado" styleClass=" font-size-09em" placeholder="Nombre" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                             </p:row>    
+                                            <p:row>                                                
+                                            </p:row>
+                                            <p:row>
+                                            </p:row>
+                                            <p:row>
+                                            </p:row>
+                                            <p:row>
+                                           </p:row>
+                                            <p:row>
+                                            </p:row>
+                                            <p:row>
+                                            </p:row>
+                                            <p:row>
+                                            </p:row>
+                                            <p:row>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value=""/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                               <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Origen Fondos"  />
+                                                        <h:selectOneMenu id="origenFondos" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                            <f:selectItem itemValue="VENEZUELA" itemLabel="Venezuela"/>                                                                  
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Destino Fondos"  />
+                                                        <h:selectOneMenu id="destinoFondos" value="#{wpnFichaController.fichaclienteDTO.nivelEducativo}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                        >
+                                                            <f:selectItem itemValue="VENEZUELA" itemLabel="Venezuela"/>                                                                  
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Monto Promedio Mensual de Movilización"/> 
+                                                        <p:inputText value="" id="montoPromedo" styleClass=" font-size-09em" placeholder="Nombre" 
+                                                                     title=""/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Uso Moneda Virtual"  />
+                                                        <h:selectOneMenu id="paises" value="#{wpnFichaController.paisDTO.paisList}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"                                                                     >
+                                                         
+                                                            <f:selectItems value="#{wpnFichaController.paises}" />
+                                                        </h:selectOneMenu> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                            <p:row>
+                                                
+                                            </p:row>
+                                            <p:row>
+                                                
+                                            </p:row>
+                                            
+                                            
+                                            <p:row>
+                                               
+                                            </p:row>
+                                            <p:row>
+                                                
+                                            </p:row>
+                                            <p:row>
+                                                
+                                            </p:row>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                        
+                                        
+                                        
+                                         <p:link outcome="paso2_p" value="Siguiente">
+                                            <f:param name="codigocliente" value="10" />                                           
+                                        </p:link>
+                                        
+                                        
+                                        
+                                       
+                                        
+                                        
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnReferenciaBancariaController.validarFlujo2()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formReferenciaBancariaPaso2">
+
+                    <h:panelGroup layout="block" id="divBodyDetalleTDC" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.paso3', wpnInicioSesion.idCanal)}"/>                                    
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id="divMensaje" layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <p:panelGrid id="tabla" styleClass="width-100 sinBorde">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.paso1', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoRef', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" colspan="2">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <c:if test="#{wpnReferenciaBancariaController.tipoRef == 'U'}">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoRef.individual', wpnInicioSesion.idCanal)}"/> 
+                                                </c:if>
+                                                <c:if test="#{wpnReferenciaBancariaController.tipoRef == 'T'}">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoRef.consolidada', wpnInicioSesion.idCanal)}"/> 
+                                                </c:if>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+                                    
+                                    <p:row rendered="#{wpnReferenciaBancariaController.tipoRefIndividual and wpnReferenciaBancariaController.refCuenta}">
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoRef.individual.cuentas', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" colspan="2">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:outputText value="#{wpnReferenciaBancariaController.cuentaSeleccionadaDTO.nombreProducto} - #{wpnReferenciaBancariaController.formatoAsteriscosWeb(wpnReferenciaBancariaController.cuentaSeleccionadaDTO.numeroCuenta)}"/>
+                                            </h:panelGroup>
+                                        </p:column>                                        
+                                    </p:row>
+                                    
+                                    <p:row rendered="#{wpnReferenciaBancariaController.tipoRefIndividual and wpnReferenciaBancariaController.refTdc}">
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoRef.individual.TDC', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" colspan="2">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:outputText value="#{wpnReferenciaBancariaController.TDCSeleccionadaDTO.nombreProducto} - #{wpnReferenciaBancariaController.TDCSeleccionadaDTO.codigoTipoProducto} - #{wpnReferenciaBancariaController.formatoAsteriscosWeb(wpnReferenciaBancariaController.TDCSeleccionadaDTO.numeroTarjeta)}"/>                                                
+                                            </h:panelGroup>
+                                        </p:column>                                        
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoDest', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" colspan="2">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <c:if test="#{wpnReferenciaBancariaController.tipoDest == '1'}">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoDest.todos', wpnInicioSesion.idCanal)}"/> 
+                                                </c:if>
+                                                <c:if test="#{wpnReferenciaBancariaController.tipoDest == '2'}">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoDest.personalizada', wpnInicioSesion.idCanal)}"/> 
+                                                </c:if>                                               
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+                                    
+                                    <p:row rendered="#{wpnReferenciaBancariaController.tipoDestNombreDest}">                                          
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup id="filaNombre1" layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.referenciaBancaria.campo.tipoDest.nombreDest', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        
+                                        <p:column styleClass="max-widthCampo" colspan="2">
+                                            <h:panelGroup id="filaNombre2" layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:outputText value="#{wpnReferenciaBancariaController.nombreDest}"/>                                                
+                                            </h:panelGroup>
+                                        </p:column>                                                                                 
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt" colspan="3">
+                                            <p:message id="msjGlobal" for="divMensaje" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" /> 
+                                        </p:column>
+                                    </p:row>
+                                    
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px" rendered="false">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                <p:commandLink actionListener="#{wpnReferenciaBancariaController.referenciaBancariaPaso3()}" update="@all @(.ui-message)" oncomplete="PF('statusDialog').hide()" onsuccess="PF('statusDialog').hide()">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.aceptar', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink> 
+                                <p:commandLink actionListener="#{wpnReferenciaBancariaController.referenciaBancariaPaso1()}" immediate="true">
+                                    <h:panelGroup layout="block" id="divBotonData1" class="boton negro font-size-08em float-right centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

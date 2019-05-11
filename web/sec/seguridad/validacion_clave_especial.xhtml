@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">   
+
+    <f:metadata>
+        <f:event listener="#{wpnClaveOperacioneEspecialesController.initController}" type="preRenderView" />
+    </f:metadata> 
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5" >
+                <h:form id="formOtp">
+                    <h:panelGroup layout="block" id="divBodyOtp">
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.codigoTransaccion.equalsIgnoreCase('pnw.submenu.transf.tercdelsur')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.clave.especial.validacionClave', wpnInicioSesion.idCanal)}"/>                                            
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.confirmPaso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.finPaso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup> 
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.codigoTransaccion.equalsIgnoreCase('pnw.submenu.transf.tercotrobanc')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.clave.especial.validacionClave', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.confirmPaso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.finPaso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.codigoTransaccion.equalsIgnoreCase('pnw.submenu.pagos.tercdelsur')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.clave.especial.validacionClave', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.confirmPaso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.finPaso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when> 
+                            <c:when test="#{wpnInicioSesion.codigoTransaccion.equalsIgnoreCase('pnw.submenu.pagos.tercotrobanc')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.clave.especial.validacionClave', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.confirmPaso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.finPaso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.codigoTransaccion.equalsIgnoreCase('pnw.submenu.seguridad.actualizacionDatos')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.clave.especial.validacionClave', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.actualizacionDatos.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.actualizacionDatos.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.actualizacionDatos.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                        </c:choose>
+                        <h:panelGroup layout="block" id="divCuerpoOtp" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.clave.especial', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                </h:panelGroup>
+                                <h:panelGrid columns="1" styleClass="width-100 sinBorde">
+                                    <h:panelGroup> 
+                                        <p:inputText id="clave"                                                          
+                                                     maxlength="8" autocomplete="off" style="min-width:160px; display: block;left: 500px" styleClass="margin-top-10" 
+                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.claveGenerico', wpnInicioSesion.idCanal)}"
+                                                     onkeyup="copiarValorSustituirXAstericos('formOtp:claveInputTextOculto', 'formOtp:clave', event);"
+                                                     required="true"                                                    
+                                                     requiredMessage="Campo Requerido"/> 
+
+                                        <p:inputText id="claveInputTextOculto" value="#{wpnClaveOperacioneEspecialesController.claveEnc}" 
+                                                     style="min-width:160px; display: none;" styleClass="font-size-09em" />
+                                    </h:panelGroup>                                    
+                                    <p:commandLink onmouseout="mostrarOcultarPassword('formOtp:claveInputTextOculto', 'formOtp:clave');" onmouseover="copiarValorSustituirXAstericos('formOtp:claveInputTextOculto', 'formOtp:clave', event); mostrarOcultarPassword('formOtp:claveInputTextOculto', 'formOtp:clave', event);" style="float: left;" styleClass="mostrar">
+                                        <p:spacer styleClass="mostrar" />
+                                    </p:commandLink>                                    
+                                </h:panelGrid>
+                                <h:panelGroup layout="block" styleClass="margin-top-10">  
+                                    <p:message for="clave" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                </h:panelGroup>
+                                <p:commandLink immediate="true" action="#{wpnClaveOperacioneEspecialesController.redirecCrearClaveOP()}">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="font-size-08em float-letf centrado marging-left-10px negro" rendered="#{!wpnClaveOperacioneEspecialesController.consultaExisteClaveOP()}">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.noPoseeOPCreada', wpnInicioSesion.idCanal)}" class=" bold" /><h:outputText value=" Aquí." class=" bold azul" style="text-decoration: underline"/>
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" id="divBoton" class="float-right" style="text-align: right">
+                            <p:remoteCommand name="rcEncriptarPass" actionListener="#{wpnClaveOperacioneEspecialesController.encriptarClaveWeb()}" global="false" process="@form"/>
+                            <p:commandLink id="ingresar" actionListener="#{wpnClaveOperacioneEspecialesController.doContinuar()}" update="@form"  onclick="rcEncriptarPass();
+                                        asignarPass('formOtp:clave', '********');">
+                                <div class="boton negro bold font-size-08em" style="width:140px;">                                    
+                                    <div class="centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" />
+                                    </div>
+                                </div>
+                            </p:commandLink>
+                            <p:defaultCommand target="ingresar"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

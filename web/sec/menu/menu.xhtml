@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <link rel="stylesheet" href="#{request.contextPath}/resources/css/font-awesome.min.css"/>
+    </h:head>
+    <!-- f:metadata>
+        <f:event listener="# {wpnNoticiasController.obtenerCantMsjsNuevos()}" type="preRenderView" />        
+    </f:metadata --> 
+    <body>
+        <h:panelGroup layout="block" styleClass="bodyGloblal padding-right10 paddin-left10">
+            <h:form id="formMenu" style="background: #F7F7F6;">
+                <h:inputHidden id="opcionMenu" value="#{wpnInicioSesion.idModuloAdm}"/>
+                <h:panelGroup layout="block" id="divNotificaciones" styleClass="paddin-bottom20 paddin-top40">
+                    <p:commandLink action="#{wpnNoticiasController.redireccionNoticias}" styleClass="noDecoTexto izquierda" onclick="PF('statusDialog').show();" resetValues="true">
+                        <p:ajax event="click" listener="#{wpnMenuController.reiniciarMenu()}" immediate="true"></p:ajax>
+                        <ui:fragment rendered="#{wpnNoticiasController.cantNoticiasNuevas.length() == 0}" >
+                            <h:panelGroup layout="block" styleClass="notificaciones"> 
+                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.noticias.texto.enlaceNoticias', wpnInicioSesion.idCanal)}" ></h:outputText>
+                            </h:panelGroup>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{wpnNoticiasController.cantNoticiasNuevas.contains('(1)')}" >
+                            <h:panelGroup layout="block" styleClass="notificaciones"> 
+                                <h:outputText value="Usted tiene #{wpnNoticiasController.cantNoticiasNuevas} NUEVA notificación" ></h:outputText>
+                            </h:panelGroup>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{wpnNoticiasController.cantNoticiasNuevas.length() > 0 and !wpnNoticiasController.cantNoticiasNuevas.contains('(1)')}" >
+                            <h:panelGroup layout="block" styleClass="notificaciones">
+                                <h:outputText value="Usted tiene #{wpnNoticiasController.cantNoticiasNuevas} NUEVAS notificaciones" ></h:outputText>
+                            </h:panelGroup>
+                        </ui:fragment>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" id="divMenu">
+                    <p:accordionPanel style="z-index:1000" id="menuPanel" widgetVar="menuPanelW" styleClass="menuCss" activeIndex="#{wpnMenuController.activoTab}" >
+                        <c:forEach items="#{wpnMenuController.listModulosDTO}" var="categoria" varStatus="categ">
+                            <p:tab title="#{wpnTextosController.getNombreTexto(categoria.nombre, wpnInicioSesion.idCanal)}" id="#{categoria.idMenu}">
+                                <h:panelGroup layout="block" styleClass="menuCategoria" > 
+                                    <c:forEach items="#{categoria.ibTransaccionesDTOCollection}" var="accion">
+                                        <h:panelGroup layout="block" styleClass="clear padding4 menuOpc" id="#{accion.idMenu}">
+                                            <p:commandLink actionListener="#{wpnMenuController.redirectModulo(categoria,accion)}" styleClass="noDecoTexto izquierda" onclick="PF('statusDialog').show();" resetValues="true">
+                                                <p:ajax listener="#{wpnMenuController.moduloActivo(categ.index)}" event="click"></p:ajax>                                                
+                                                <h:panelGroup layout="block" style="width: 100%; height:100%">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto(accion.nombre, wpnInicioSesion.idCanal)}" ></h:outputText>
+                                                    <h:outputText styleClass="rojo" value=" #{wpnMenuController.verificarTransaccionNueva(accion.nombre)} " ></h:outputText>
+                                                </h:panelGroup>
+                                            </p:commandLink>
+                                        </h:panelGroup>                               
+                                    </c:forEach>
+                                </h:panelGroup>
+                            </p:tab>     
+                        </c:forEach>
+                    </p:accordionPanel>                    
+                </h:panelGroup>
+            </h:form>
+        </h:panelGroup>
+    </body>
+</html>

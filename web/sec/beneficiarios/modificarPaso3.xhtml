@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnBeneficiarioController.validarFlujoModificarPaso3()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formModificarBeneficiario3">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <h:panelGroup layout="block">
+                        <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                        <br/><br/>
+                    </h:panelGroup>
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>                           
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosModificar" class="cuatro-pasos">
+                                        <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso3', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="1" styleClass="width-100 sinBorde">
+
+                                            <h:panelGroup layout="block" styleClass="notificaciones-exitoso">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.operacionFinalizada', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+
+                                        </h:panelGrid>
+
+                                        <h:panelGroup layout="block" styleClass="fondoCabeceraTablaOpFin">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.operacionFinalizada', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                
+                                <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                                    <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                        <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                            <p:commandLink actionListener="#{wpnBeneficiarioController.detalleBeneficiarioPDF}" ajax="false" styleClass="vertical-sub">
+                                                <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                                <h:panelGroup layout="block">
+                                                    <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                                </h:panelGroup>
+                                            </p:commandLink>
+                                        </h:panelGroup> 
+                                        <h:panelGroup layout="block">
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                            <p:commandLink action="#" styleClass="vertical-sub">
+                                                <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                                <h:panelGroup layout="block">
+                                                    <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                                </h:panelGroup>
+                                                <p:printer target="divPrincipalModificar"/>
+                                            </p:commandLink>
+                                        </h:panelGroup> 
+                                        <h:panelGroup layout="block">
+                                        </h:panelGroup>
+                                    </h:panelGrid> 
+                                    <div class="lineaGrisOscuro clear"  ></div>  
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block" id="modificar">
+                                    <h:panelGroup layout="block" styleClass="width-100">                                    
+                                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10" id="divPrincipalModificar">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row>
+                                                        <p:column colspan="3">
+                                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso2', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.fecTransaccion', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">
+                                                                <h:outputText value="#{wpnBeneficiarioController.formatearFecha(wpnBeneficiarioController.fechaEjecucion,'dd/MM/yyyy hh:mm a')}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.alias', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="txtAlias" value="#{wpnBeneficiarioController.afiliacionSelected.alias}" style="font-size: 0.7em;"  />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.cedulaRif', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="selectTipoDoc" value="#{wpnBeneficiarioController.afiliacionSelected.tipoDoc}-#{wpnBeneficiarioController.afiliacionSelected.documento}" style="width: 40px; background-color: #FFF; font-size: 0.7em;" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.nombre', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="txtNombreBenef" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBeneficiario}" style="font-size: 0.7em;"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.banco', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="txtBanco" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBanco}" style="font-size: 0.7em;"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                                <ui:fragment rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('3') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('1') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('7')}">
+                                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.nroCuenta', wpnInicioSesion.idCanal)}"/>
+                                                                </ui:fragment>
+
+                                                                <ui:fragment rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('4') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('5') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('8')}">
+                                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.nroTDC', wpnInicioSesion.idCanal)}"/>
+                                                                </ui:fragment>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="txtNroCta" value="#{wpnBeneficiarioController.afiliacionSelected.numeroCuenta}" style="font-size: 0.7em;"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.correo', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="txtEmail" value="#{wpnBeneficiarioController.afiliacionSelected.email}" style="font-size: 0.7em;"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.montoMax', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="txtMontoMax" value="#{wpnBeneficiarioController.formatearMonto(wpnBeneficiarioController.afiliacionSelected.montoMaximo)}" style="font-size: 0.7em;"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column colspan="2">
+                                                            <p:message for="modificar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

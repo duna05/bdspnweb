@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnGestionServiciosController.validarFlujoDesafiliar4()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formDesafiliarServ3">
+
+                    <h:panelGroup layout="block">
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 1}"> 
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="3" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>   
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 2}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>   
+                            </c:when>
+                        </c:choose>
+
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <h:panelGrid columns="1" styleClass="width-100 sinBorde">
+
+                                    <h:panelGroup layout="block" styleClass="notificaciones-exitoso">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.operacionFinalizada', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+
+                                <h:panelGroup layout="block" styleClass="fondoCabeceraTablaOpFin">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.operacionFinalizada', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="afiliaciones" styleClass="margin-top-5 ">   
+                            <c:forEach var="afiliacionD" items="#{wpnGestionServiciosController.afiliacionesDesafiliar}">
+                                <h:panelGroup layout="block" styleClass="dataTableEstilos bordeRedondeado" >
+                                    <h:panelGroup layout="block" rendered="#{wpnGestionServiciosController.servicioSeleccionado == 1}" >
+                                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row>
+                                                        <p:column colspan="3">
+                                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.titulo.desafiliacionDe', wpnInicioSesion.idCanal)} #{afiliacionD.beneficiario.nombre}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.campo.fechaTransaccion', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                                <h:outputText value="#{wpnGestionServiciosController.formatearFecha(wpnGestionServiciosController.fechaEjecucion,'dd/MM/yyyy hh:mm:ss a')}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.campo.servicio', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                                <h:outputText value="#{wpnGestionServiciosController.servSeleccionadoCompleto.descripcionServicio}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.titulo.nombreBenef', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                                <h:outputText value="#{afiliacionD.beneficiario.nombre}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.titulo.tipoDoc', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                                <h:outputText value="#{afiliacionD.beneficiario.tipoIdentificacion}"/>                                                        
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row> 
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.titulo.nroDoc', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                                <h:outputText value="#{afiliacionD.beneficiario.identificacion}"/>                                                        
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row> 
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.campo.nroTelf', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                                <h:outputText value="#{afiliacionD.codigoAbonado}"/>
+                                                            </h:panelGroup>
+                                                        </p:column> 
+                                                    </p:row>                                            
+                                                </p:panelGrid>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </c:forEach>
+                            <h:panelGroup layout="block" styleClass="margin-top-10">  
+                                <p:message for="afiliaciones" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                            </h:panelGroup> 
+                        </h:panelGroup> 
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>
+

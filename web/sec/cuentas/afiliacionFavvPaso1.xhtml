@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formAfiliacionesFavv1">
+
+                    <h:panelGroup layout="block" id="divBodyAfiliacionesFavv" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+
+                            <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                    <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                        <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afiliacionesFavv.paso1', wpnInicioSesion.idCanal)}"/>
+                                        <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afiliacionesFavv.paso2', wpnInicioSesion.idCanal)}"/>
+                                        <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afiliacionesFavv.paso3', wpnInicioSesion.idCanal)}"/>
+                                    </p:steps>
+                                </h:panelGroup>                        
+                            </h:panelGroup>
+
+                            
+
+                            <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                    <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                    </h:panelGroup>                                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                    <p:commandLink actionListener="#{wpnAfiliacionesFavvCargaController.doContinuarCommandButtonAction()}">
+                                        <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                        <a href="afiliacionFavvPaso2.xhtml"></a>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>                    
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" class="gris float-left margin-top-25 paddin-right25 paddin-left25 margin-bottom-10 clear justificado" id="divMsjSinCtas">
+                        <p:message rendered="true" for="divMsjSinCtas" id="msjSinCtas"/>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

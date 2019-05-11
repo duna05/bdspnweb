@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event listener="#{wpnFichaController.referenciasJuridico()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa_ficha_cliente.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formFichaClienteComplementario">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="2" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="Datos Básicos Cliente Juridico" style="font-size:80%;"/>
+                                            <p:menuitem value="Datos Complementarios Cliente Juridico" style="font-size:80%;"/>
+                                            <p:menuitem value="Referencias Cliente Juridico" style="font-size:80%;"/> 
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">   
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Referencias"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                           
+                                            
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Bancarias"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <p:dataTable id="dirBancaria" var="item2" value="#{wpnFichaController.ibFichaClienteRefBancariaList}" >
+
+                                                            <p:column headerText="Nombre Banco">
+                                                                <h:outputText value="#{item2.nombreBanco}" />
+                                                      
+                                                            </p:column>
+                                                            
+                                                            <p:column headerText="Tipo Cuenta">
+                                                                <h:outputText value="#{item2.descCuenta}" />
+                                                      
+                                                            </p:column>
+                                                            <p:column headerText="Numero Cuenta">
+                                                                <h:outputText value="#{item2.numeroCuentaReferencia}" />
+                                                      
+                                                            </p:column>                                                                 
+                                                                <p:column headerText="Fecha Apertura">
+                                                                    <h:outputText value="#{item2.fechaApertura}" />
+                                                      
+                                                            </p:column>
+                                                            
+                                                            <p:column headerText="Saldo Promedio">
+                                                                <h:outputText value="#{item2.saldoPromedio}" />
+                                                      
+                                                            </p:column>
+                                                           
+                                                        </p:dataTable>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                           
+                                            
+                                            
+                                           
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Comerciales"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <p:dataTable id="diRefComercial" var="item4" value="#{wpnFichaController.ibFichaClienteRefComercialesList}" >
+                                                        <p:column headerText="Nombre Comercial">
+                                                                <h:outputText value="#{item4.casaComercial}" />
+                                                       </p:column>
+                                                                 <p:column headerText="Fecha Adquisicion">
+                                                                     <h:outputText value="#{item4.fechaConcesion}" />
+                                                       </p:column>
+                                                                <p:column headerText="Telefonos">
+                                                                    <h:outputText value="#{item4.telefonos}" />
+                                                       </p:column>
+                                                        </p:dataTable>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                        <p:commandLink action="paso4?faces-redirect=true"  > 
+                                            <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado" >
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                            </h:panelGroup>                                            
+                                        </p:commandLink>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

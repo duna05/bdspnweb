@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">  
+    <!-- f:metadata>
+        <f:event listener="# {wpnNoticiasController.consultarNoticias()}" type="preRenderView" /> 
+        <f:event listener="# {wpnNoticiasController.validarEstsLectura()}" type="preRenderView" /> 
+    </f:metadata -->
+    <ui:composition template="/templates/interna.xhtml"> 
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formNoticias" > 
+                    <h:panelGroup layout="block" id="divBodyNoticias" >
+                        <!-- h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnTextosController.getNombreTexto('pnw.noticias.texto.titulo', wpnInicioSesion.idCanal)}"/>
+                            <br/><br/>
+                        </h:panelGroup -->
+                        <h:panelGroup id="divDataTable" layout="block" styleClass="dataTableEstilos clear">  
+                            <div class="cambioFondo dataTableSimple">
+                                <!-- p:dataTable id="datalist" value="# {wpnNoticiasController.mensaje.mensajes}" var="noticia"
+                                             selectionMode="single" 
+                                             paginator="true"
+                                             paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                             paginatorPosition="bottom"  
+                                             rowKey="# {noticia.id}"
+                                             rows="1"                                 
+                                             emptyMessage="# {wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}" 
+
+                                             >                                    
+                                    <f:facet name="{anterior}">
+                                        # {wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+                                    <f:facet name="{siguiente}">
+                                        # {wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+                                    <p:column styleClass="derecha">
+                                        <h:outputText escape="false" value="# {noticia.texto}" />                                        
+                                    </p:column>                                   
+                                </p:dataTable -->
+                                <p:commandLink action="#{wpnNoticiasController.redirecCrearClaveOP()}" onclick="PF('statusDialog').show();">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="font-size-08em float-letf centrado marging-left-10px negro" rendered="#{!wpnNoticiasController.consultaExisteClaveOP()}">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.noPoseeOPCreada', wpnInicioSesion.idCanal)}" class=" bold" /><h:outputText value=" Aquí." class=" bold azul" style="text-decoration: underline"/>
+                                    </h:panelGroup>
+                                </p:commandLink>
+                                <div class="imgLogo_OPE">                                                                    
+                                </div>
+                                <h:panelGroup layout="block" id="divBotonData3" class="font-size-09em float-letf centrado marging-left-10px negro">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.afiliacionPD2', wpnInicioSesion.idCanal)}" class=" bold" />
+                                </h:panelGroup>
+                            </div>
+                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                <p:message for="divDataTable" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

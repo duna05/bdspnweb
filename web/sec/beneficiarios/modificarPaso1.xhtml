@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnBeneficiarioController.validarFlujoModificarPaso1()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formModificarBeneficiario1">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+
+                    <h:panelGroup layout="block">
+                        <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                        <br/><br/>
+                    </h:panelGroup>
+
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>                           
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosModificar" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso3', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="modificar">
+                                    <ui:fragment rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('4') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('5')}">
+                                        <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row>
+                                                        <p:column colspan="3">
+                                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso1', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.alias', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtAlias" value="#{wpnBeneficiarioController.afiliacionSelected.alias}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloTexto}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtAlias" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                                         
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.nombre', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtNombreBenef" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBeneficiario}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarAlfaNumericoYEspacio}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtNombreBenef" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                     <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.correo', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtEmail" value="#{wpnBeneficiarioController.afiliacionSelected.email}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarEmail}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtEmail" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.montoMax', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtMontoMax" value="#{wpnBeneficiarioController.montoMaximo}" maxlength="21"
+                                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarMonto}" 
+                                                                             styleClass="txtMonto"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtMontoMax" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column colspan="2">
+                                                            <p:message for="modificar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </ui:fragment>
+                                    
+                                    <!--Transferencias Otros Bancos--> 
+                                     <ui:fragment rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('3')}">
+                                        <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row>
+                                                        <p:column colspan="3">
+                                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso1', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.alias', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtAliasTOB" value="#{wpnBeneficiarioController.afiliacionSelected.alias}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloTexto}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtAliasTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.cedulaRif', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                 <h:selectOneMenu id="selectTipoDocTOB" value="#{wpnBeneficiarioController.afiliacionSelected.tipoDoc}" style="width: 40px; background-color: #FFF;" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">
+                                                            <f:selectItem itemValue="V" itemLabel="V"/>
+                                                            <f:selectItem itemValue="E" itemLabel="E"/>
+                                                            <f:selectItem itemValue="P" itemLabel="P"/>                                                         
+                                                            <f:selectItem itemValue="J" itemLabel="J"/>                                                           
+                                                            <f:selectItem itemValue="G" itemLabel="G"/>                                                           
+                                                            <f:selectItem itemValue="C" itemLabel="C"/>   
+                                                        </h:selectOneMenu>
+                                                        <p:inputText id="txtIdentificacionTOB" value="#{wpnBeneficiarioController.afiliacionSelected.documento}"  
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                      validator="#{wpnInicioSesion.validarIdentificacionTOB}" maxlength="9" autocomplete="off" styleClass="font-size-09em" size="10"/>
+                                                                         
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtIdentificacionTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.nombre', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtNombreBenefTOB" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBeneficiario}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloTexto}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtNombreBenefTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.banco', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:selectOneMenu id="selectBancoTOB" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBancoCompleto}" styleClass="font-size-7em" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">                                                                                            
+                                                                <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemDisabled="true"/>
+                                                                <f:selectItems value="#{wpnBeneficiarioController.listBancos()}" var="banco" itemValue="#{banco.nombreBanco}--#{banco.codigoBanco}" itemLabel="#{banco.nombreBanco}"/>
+                                                            </h:selectOneMenu>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="selectBancoTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                     <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('3') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('1')}">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afiliar.campo.nroCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('4') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('5')}">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afiliar.campo.nroTDC', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('3') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('1')}">
+                                                            <p:inputText maxlength="20" id="txtNroCtaTOB" value="#{wpnBeneficiarioController.afiliacionSelected.numeroCuenta}" required="true" styleClass="solo-numero font-size-09em" 
+                                                                         requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnBeneficiarioController.validar20Digitos}" onkeyup="soloNumero(this);" onkeypress="soloNumero(this);"/>
+                                                        </h:panelGroup>                                                    
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('4') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('5')}">
+                                                            <p:inputText maxlength="16" id="txtNroTdcTOB" value="#{wpnBeneficiarioController.afiliacionSelected.numeroCuenta}" required="true" styleClass="solo-numero font-size-09em" 
+                                                                         requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarTDD}" onkeyup="soloNumero(this);" onkeypress="soloNumero(this);"/>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtNroCtaTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                        <p:message for="txtNroTdcTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                                    
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.correo', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtEmailTOB" value="#{wpnBeneficiarioController.afiliacionSelected.email}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarEmail}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtEmailTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.montoMax', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtMontoMaxTOB" value="#{wpnBeneficiarioController.montoMaximo}" maxlength="21"
+                                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarMonto}" 
+                                                                             styleClass="txtMonto"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtMontoMaxTOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column colspan="2">
+                                                            <p:message for="modificar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjafil1TOB"/>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </ui:fragment>
+                                    
+                                    <!--Transferencias Terceros del Sur--> 
+                                     <ui:fragment rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('1')}">
+                                        <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row>
+                                                        <p:column colspan="3">
+                                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso1', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.alias', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtAliasTDS" value="#{wpnBeneficiarioController.afiliacionSelected.alias}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloTexto}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtAliasTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.cedulaRif', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                 <h:selectOneMenu id="selectTipoDocTDS" value="#{wpnBeneficiarioController.afiliacionSelected.tipoDoc}" style="width: 40px; background-color: #FFF;" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">
+                                                            <f:selectItem itemValue="V" itemLabel="V"/>
+                                                            <f:selectItem itemValue="E" itemLabel="E"/>
+                                                            <f:selectItem itemValue="P" itemLabel="P"/>                                                         
+                                                            <f:selectItem itemValue="J" itemLabel="J"/>                                                           
+                                                            <f:selectItem itemValue="G" itemLabel="G"/>                                                           
+                                                            <f:selectItem itemValue="C" itemLabel="C"/>   
+                                                        </h:selectOneMenu>
+                                                        <p:inputText id="txtIdentificacionTDS" value="#{wpnBeneficiarioController.afiliacionSelected.documento}"  
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                      validator="#{wpnInicioSesion.validarIdentificacionTDS}" maxlength="9" autocomplete="off" styleClass="font-size-09em" size="10"/>
+                                                                         
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtIdentificacionTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.nombre', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtNombreBenefTDS" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBeneficiario}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloTexto}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtNombreBenefTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.banco', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:outputText id="selectBancoTDS" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBanco}" style="font-size: 0.7em;"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="selectBancoTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                     <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('3') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('1')}">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afiliar.campo.nroCta', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('4') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('5')}">
+                                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afiliar.campo.nroTDC', wpnInicioSesion.idCanal)}"/>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('3') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('1')}">
+                                                            <p:inputText maxlength="20" id="txtNroCtaTDS" value="#{wpnBeneficiarioController.afiliacionSelected.numeroCuenta}" required="true" styleClass="solo-numero font-size-09em" 
+                                                                         requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnBeneficiarioController.validar20Digitos}" onkeyup="soloNumero(this);" onkeypress="soloNumero(this);"/>
+                                                        </h:panelGroup>                                                    
+                                                        <h:panelGroup layout="block" rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('4') || wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('5')}">
+                                                            <p:inputText maxlength="16" id="txtNroTdcTDS" value="#{wpnBeneficiarioController.afiliacionSelected.numeroCuenta}" required="true" styleClass="solo-numero font-size-09em" 
+                                                                         requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarTDD}" onkeyup="soloNumero(this);" onkeypress="soloNumero(this);"/>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtNroCtaTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                        <p:message for="txtNroTdcTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                                    
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.correo', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtEmailTDS" value="#{wpnBeneficiarioController.afiliacionSelected.email}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarEmail}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtEmailTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.montoMax', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtMontoMaxTDS" value="#{wpnBeneficiarioController.montoMaximo}" maxlength="21"
+                                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarMonto}" 
+                                                                             styleClass="txtMonto"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtMontoMaxTDS" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column colspan="2">
+                                                            <p:message for="modificar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjafil1TDS"/>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </ui:fragment>
+                                    <!--Fin Transferencias Terceros Del Sur-->
+                                    
+                                    <!--Propias Otros Bancos-->
+                                    <ui:fragment rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('7')}">
+
+                                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row>
+                                                        <p:column colspan="3">
+                                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso1', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.alias', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtAliasTransP" value="#{wpnBeneficiarioController.afiliacionSelected.alias}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloTexto}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtAliasTransP" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>                                                                                        
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.banco', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <h:selectOneMenu id="selectBancoPOB" value="#{wpnBeneficiarioController.afiliacionSelected.nombreBancoCompleto}" styleClass="font-size-7em" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">                                                                                            
+                                                                <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemDisabled="true"/>
+                                                                <f:selectItems value="#{wpnBeneficiarioController.listBancos()}" var="banco" itemValue="#{banco.nombreBanco}--#{banco.codigoBanco}" itemLabel="#{banco.nombreBanco}"/>
+                                                            </h:selectOneMenu>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="selectBancoPOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                     <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afiliar.campo.nroCta', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <p:inputText maxlength="20" id="txtNroCtaPOB" value="#{wpnBeneficiarioController.afiliacionSelected.numeroCuenta}" required="true" styleClass="solo-numero font-size-09em" 
+                                                                     requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnBeneficiarioController.validar20Digitos}" onkeyup="soloNumero(this);"  onkeypress="soloNumero(this);"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtNroCtaPOB" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                                    
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.montoMax', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtMontoMaxTransP" value="#{wpnBeneficiarioController.montoMaximo}" maxlength="21"
+                                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarMonto}" 
+                                                                             styleClass="txtMonto"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtMontoMaxTransP" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column colspan="2">
+                                                            <p:message for="modificar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjafil2TPOB"/>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </ui:fragment>
+
+
+
+
+
+
+
+                                    <ui:fragment rendered="#{wpnBeneficiarioController.selectTransSelected.equalsIgnoreCase('8')}">
+
+                                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                                <p:panelGrid styleClass="width-100 sinBorde">
+                                                    <p:row>
+                                                        <p:column colspan="3">
+                                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.paso1', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.alias', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtAliasP" value="#{wpnBeneficiarioController.afiliacionSelected.alias}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSoloTexto}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtAliasP" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.correo', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtEmailP" value="#{wpnBeneficiarioController.afiliacionSelected.email}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarEmail}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtEmailP" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <p:row>
+                                                        <p:column styleClass="max-widthTxt">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.modificarBeneficiario.campo.montoMax', wpnInicioSesion.idCanal)}"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column styleClass="max-widthCampo">
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                                <p:inputText id="txtMontoMaxP" value="#{wpnBeneficiarioController.montoMaximo}" maxlength="21"
+                                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarMonto}" 
+                                                                             styleClass="txtMonto"/>
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                                <p:message for="txtMontoMaxP" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                            </h:panelGroup>
+                                                        </p:column>
+                                                    </p:row>
+                                                    <p:row>
+                                                        <p:column colspan="2">
+                                                            <p:message for="modificar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjafil3PPOB"/>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </ui:fragment>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                        <p:commandLink actionListener="#{wpnBeneficiarioController.modificarBeneficiarioPaso2()}"  update="@@(.ui-message)">                                           
+                                            <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                            </h:panelGroup>
+                                        </p:commandLink>
+                                        <p:commandLink actionListener="#{wpnBeneficiarioController.regresarListPaso2()}" immediate="true">
+                                            <h:panelGroup layout="block" id="divBotonData1" class="boton negro font-size-08em float-right centrado">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}" class=" bold" />
+                                            </h:panelGroup>
+                                        </p:commandLink>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

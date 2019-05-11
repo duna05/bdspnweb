@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event listener="#{wpnFichaController.datosComplementariosJuridico()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa_ficha_cliente.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formFichaClienteComplementario" >  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="Datos Básicos Cliente Juridico" style="font-size:80%;"/>
+                                            <p:menuitem value="Datos Complementarios Cliente Juridico" style="font-size:80%;"/>
+                                            <p:menuitem value="Referencias Cliente Juridico" style="font-size:80%;"/>  
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">                                            
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Datos Complementarios"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Nacionalidad"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+
+                                                    <h:panelGroup id="divTipoDoc" layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+
+                                                        <p:inputText id="desNacionalidad" value="#{wpnFichaController.fichaClienteComplementarioDTO.descNacionalidad}" 
+                                                                     styleClass="marging-left-ficha" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cantidad de Sucursales"/>
+
+                                                        <p:inputText id="cantsuc" value="#{wpnFichaController.fichaClienteComplementarioDTO.cantidadSucursales}" 
+                                                                     requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                      styleClass="marging-left-ficha"
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.nroDoc', wpnInicioSesion.idCanal)}"/>
+
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cantidad de Empleados"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.cantidadEmpleados}" id="cantempl" styleClass="solo-numero font-size-09em"  
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoCliente', wpnInicioSesion.idCanal)}"/> 
+
+                                                    </h:panelGroup>
+                                                </p:column>
+
+
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Actividad Economica Principal"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.actividadEconomica}" id="acteconomica" styleClass="solo-numero font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoOnt', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoOnt', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Facturacion del Mes"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.facturacionMensual}" id="factmes" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.NombreComercial', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.NombreComercial', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Fecha Ultimo I.S.R.L."/>
+
+                                                        <p:inputMask id="fechaisrl" value="#{wpnFichaController.fichaClienteComplementarioDTO.facturacioUltima}" mask="9999/99/99"/>
+
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Persona de Contacto"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.personaContactar}" id="percontact" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pjw.fic.RazonSocial', wpnInicioSesion.idCanal)}"/> 
+
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cargo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.cargoPersonaContacto}" id="cargoPersonaContacto" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                        title="#{wpnTextosController.getNombreTexto('pjw.fic.RazonSocial', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                                </p:column>
+
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Segmento de Mercado"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.segmento}" id="segmentoPJ" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}" 
+                                                                     /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Clalificacion"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.calificacionCliente}" id="clsf" styleClass=" font-size-09em"  
+                                                                     /> 
+                                                    </h:panelGroup>
+                                                </p:column>       
+
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.tiposCalificacion}" id="tipoclsf" styleClass=" font-size-09em"  
+                                                                     /> 
+                                                    </h:panelGroup>
+                                                </p:column>   
+
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Legal - Información Constitución"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Fecha "/>
+                                                        <p:inputMask id="inicioSociedad" value="#{wpnFichaController.fichaClienteComplementarioDTO.inicioSociedad}" mask="9999/99/99"/>
+
+
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Duración en Años"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.duracion}" id="duracion" styleClass=" font-size-09em" /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Finaliza"/>
+                                                        <p:inputMask id="finSociedad" value="#{wpnFichaController.fichaClienteComplementarioDTO.finSociedad}" mask="9999/99/99"/>
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Pais', wpnInicioSesion.idCanal)}"/>
+                                                        <p:inputText value="Venezuela" id="pais" styleClass=" font-size-09em" /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Estado', wpnInicioSesion.idCanal)}"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.nombreEstado}" id="estado" styleClass=" font-size-09em" /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pjw.fic.Municipio', wpnInicioSesion.idCanal)}"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.nombreMunicipio}" id="municipioPJ" styleClass=" font-size-09em" /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Patrimonio"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.capitalSocial}" id="patrimonio" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     validator="#{wpnInicioSesion.validarSoloNumero}" title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Capital Suscrito"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.capitalSuscrito}" id="captitalsu" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+
+
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Capital Pagado"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.capitalPagado}" id="capitalpa" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+
+
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Reservas"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.reservas}" id="reservas" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+
+
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                        <h:outputText value="Legal - Objetivo del Negocio"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Objetivo Social"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.objetivoSocial}" id="objsocial" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Limitacion Estatutaria"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.limitacionEstatutaria}" id="limitacione" styleClass=" font-size-09em"  
+                                                                     title="Limitacion Estatutaria"/> 
+
+
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Fecha Aumento de Capital"/>
+                                                        <p:inputMask id="fechaaumentoCap" value="#{wpnFichaController.fichaClienteComplementarioDTO.fechaAumentoCapital}" mask="9999/99/99"/>
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Valor Aumento"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.valorAumentoCapital}" id="valoraumento" styleClass=" font-size-09em" 
+                                                                     /> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Tipo de Compañia"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.tipoCompania}" id="tipocomp" styleClass=" font-size-09em" 
+                                                                     /> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Información Registro"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Numero de Registro"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.numeroRegistro}" id="nroregistro" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Tomo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.tomo}" id="tomo" styleClass=" font-size-09em"  
+                                                                     /> 
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.letraTomo}" id="tomon" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Protocolo"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.numeroRegistro}" id="protocolo" styleClass=" font-size-09em" 
+                                                                     /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Fecha de Registro"/>
+                                                        <p:inputMask id="fechaRegistroPJ" value="#{wpnFichaController.fichaClienteComplementarioDTO.fechaRegistro}" mask="9999/99/99"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Ciudad"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ciudad}" id="ciudad" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Uso de Productos y Servicios"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Motivo de Solicitud"/>
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.motivo}" id="motivosolicitud" styleClass=" font-size-09em" placeholder="#{wpnTextosController.getNombreTexto('pjw.fic.CodigoDireccion', wpnInicioSesion.idCanal)}" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Estimado a Movilizar en Cuenta (en Miles de Bsf)" />
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>    
+                                            
+                                            <p:row>
+                                                
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Depositos"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                
+                                                <p:column styleClass="max-widthTxt">
+                                                    
+                                                    
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectOneRadio id="console" value="#{wpnFichaController.fichaClienteComplementarioDTO.mov_dep}" >
+                                                            <f:selectItem itemLabel="0-5" itemValue="1" />
+                                                            <f:selectItem itemLabel="5-10" itemValue="2" />
+                                                            <f:selectItem itemLabel="10-50" itemValue="3" />
+                                                            <f:selectItem itemLabel="+50" itemValue="4" />
+                                                        </p:selectOneRadio>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Retiros"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                
+                                                <p:column styleClass="max-widthTxt">
+                                                    
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectOneRadio id="console2" value="#{wpnFichaController.fichaClienteComplementarioDTO.mov_ret}" >
+                                                            <f:selectItem itemLabel="0-5" itemValue="1" />
+                                                            <f:selectItem itemLabel="5-10" itemValue="2" />
+                                                            <f:selectItem itemLabel="10-50" itemValue="3" />
+                                                            <f:selectItem itemLabel="+50" itemValue="4" />
+                                                        </p:selectOneRadio>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Transferencia desde o hacia el Exterior (Moneda Extranjera)"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        
+                                                        <h:outputText value="Enviar"/> 
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.pais_enviar}" id="paisEnviar" styleClass=" font-size-09em" placeholder="Pais Enviar" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        
+                                                        <h:outputText value="Recibir"/> 
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.pais_recibir}" id="paisRecibir" styleClass=" font-size-09em" placeholder="Pais Recibir" 
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.detCta.placeHolder.nroRef', wpnInicioSesion.idCanal)}"/> 
+
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value=""/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Transacciones Mensuales"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Efectivo"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Cheque Pers"/>
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <h:outputText value="Transf M/N"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Depositos"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_cheq_ger}" id="transdepositos" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_efect}" id="motivosolicitud2" styleClass=" font-size-09em"  />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_cheq_per}" id="retirocheqpers" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.dep_transf}" id="transdeposto" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Retiros"/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_cheq_ger}" id="transretiros" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_efec}" id="efectivoretiro" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_cheq_per}" id="chequeretiro" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.ret_transf}" id="transretiross" styleClass=" font-size-09em"  /> 
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value="Uso de la Cuenta"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_cta_ahorro}" disabled="TRUE" />
+                                                       <f:selectItem itemLabel="Ahorros" itemValue="S" />
+                                                        <h:outputText value="Ahorros"/> 
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_transferencia}" disabled="TRUE" />
+                                                        <h:outputText value="Transferencia"/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value=""/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_cta_prestamo}" disabled="TRUE" />
+                                                        <h:outputText value="Pago de Pestamos "/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_divisa}" disabled="TRUE" />
+                                                        <h:outputText value="Compra de Divisas"/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <h:outputText value=""/>
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:selectBooleanCheckbox value="#{wpnFichaController.fichaClienteComplementarioDTO.uso_otros}" disabled="TRUE"/>
+                                                         
+                                                        <h:outputText value="Otros"/> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+                                                        <p:inputText value="#{wpnFichaController.fichaClienteComplementarioDTO.comentariosOtros}" id="comentarios" styleClass=" font-size-09em" 
+                                                                     /> 
+
+                                                    </h:panelGroup>
+
+                                                </p:column>
+
+                                            </p:row> 
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                       
+                                        
+                                       
+                                        
+                                        <p:commandLink action="paso3"  > 
+                                            <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado" >
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                            </h:panelGroup>                                            
+                                        </p:commandLink>
+                                            
+                                       
+                                        
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

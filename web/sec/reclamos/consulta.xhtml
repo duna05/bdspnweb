@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:event listener="#{wpnReclamoController.inicio}" type="preRenderView" />
+        <f:event listener="#{wpnReclamoController.obtenerReclamosCliente()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formConsultaReclamo">                
+                    <h:panelGroup layout="block" id="divConsultaReclamo" >
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block">
+                            <br/>
+                            <h:outputText class="titulos-tabla azul font-size-1em" value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.tituloPrincipal', wpnInicioSesion.idCanal)}"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5 clear">   
+                            <p:message for="datalist" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjconsReclamo"/>
+                        </h:panelGroup>                      
+                      
+
+                        <!--Botonera de impresiones-->
+                        <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                            <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink actionListener="#{wpnReclamoController.detalleConsultaReclamosPDF}" ajax="false" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="botonImpresion ">                                        
+                                    <p:commandLink id="printId1"  styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                        <p:printer target="datalist" />
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                            </h:panelGrid> 
+                            <div class="lineaGrisOscuro clear"  ></div>  
+                        </h:panelGroup>
+                        <!--Fin botonera de impresiones-->                        
+                        <h:panelGroup layout="block" styleClass="dataTableEstilos clear">   
+                            <div class="cambioFondo">
+                                <p:dataTable id="datalist" value="#{wpnReclamoController.reclamoDTO.reclamos}" var="item"
+                                             paginator="true"
+                                             paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                             paginatorPosition="bottom"
+                                             rowKey="#{item.numeroSolicitud}"
+                                             rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                             emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}"
+                                             >
+
+                                    <f:facet name="{anterior}">
+                                        Anterior
+                                    </f:facet>
+                                    <f:facet name="{siguiente}">
+                                        Siguiente
+                                    </f:facet>
+
+                                    <p:column styleClass="textoEnlacesAzul centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.nroSolicitud', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <p:commandLink actionListener="#{wpnReclamoController.detalleReclamos(item)}" >
+                                            <h:outputText value="#{item.numeroSolicitud}" />
+                                        </p:commandLink>
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.fechaReclamo', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaSolicitudDate}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>  
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.descripcion', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>                                    
+                                        <h:outputText value="#{item.nombreReclamo}" />                                    
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.consultaReclamo.titulo.estatus', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estatus}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event listener="#{wpnFichaController.datosRegulatorios()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa_ficha_cliente.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formFichaClienteComplementario">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="3" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="Datos Básicos Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Referencias Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Datos Adicionales Cliente Natural" style="font-size:80%;"/>
+                                            <p:menuitem value="Representantes Legales" style="font-size:80%;"/>
+                                            <p:menuitem value="Información Económica" style="font-size:80%;"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">                                            
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em" style="width: 132.5%;">
+                                                        <h:outputText value="Representantes Legales"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiquetaF">
+
+                                                        <p:dataTable id="dirEmpleos" var="item5" value="#{wpnFichaController.ibFichaClienteEmpleosList}" editable="true" editMode="cell" >
+
+                                                            <p:column headerText="Tipo de Identificacion">
+                                                                <p:cellEditor>
+                                                                <f:facet name="output"><h:outputText value="#{item5.nombreEmpresa}"/></f:facet>
+                                                                <f:facet name="input"><p:inputText value="#{item5.nombreEmpresa}" /></f:facet>
+                                                                </p:cellEditor>
+                                                            </p:column>
+                                                            
+                                                            <p:column headerText="Nro. de Identificacion">
+                                                                <h:outputText value="#{item5.cargo}" />
+                                                      
+                                                            </p:column>
+                                                            <p:column headerText="Nombre">
+                                                                <h:outputText value="#{item5.ultimoSueldo}" />
+                                                      
+                                                            </p:column>                                                                 
+                                                                <p:column headerText="Lugar de Nacimiento">
+                                                                    <h:outputText value="#{item5.fechaEntrada}" />
+                                                      
+                                                            </p:column>
+                                                            
+                                                            <p:column headerText="Fecha de Nacimiento">
+                                                                <h:outputText value="#{item5.rif}" />
+                                                      
+                                                            </p:column>
+                                                            <p:column headerText="Telefono Contacto">
+                                                                <h:outputText value="#{item5.ramo}" />
+                                                      
+                                                            </p:column>
+                                                            <p:column headerText="Numero de Poder">
+                                                                <h:outputText value="#{item5.direccion}" />
+                                                      
+                                                            </p:column>
+                                                            </p:dataTable>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            </p:row>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                        <p:remoteCommand name="rcEncriptarPin" actionListener="#{wpnRegistroUsuariosController.encriptarPinFase1()}" global="false"/>
+                                        
+                                        
+                                         <p:link outcome="paso3_p" value="Siguiente">
+                                            <f:param name="codigocliente" value="10" />                                           
+                                        </p:link>
+                                        
+                                        
+                                        
+                                       
+                                        
+                                        
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

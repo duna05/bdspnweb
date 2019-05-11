@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnOTPController.limpiarOtp()}" type="preRenderView" />
+        <f:event listener="#{wpnBeneficiarioController.limpiar()}" type="preRenderView" />
+        <f:event listener="#{wpnBeneficiarioController.validarFlujoListPaso2()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formBeneficiarios">
+
+                    <h:panelGroup layout="block" id="divBodyBeneficiarios" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 1}"> 
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listBenef.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listBenef.paso2', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>   
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 2}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listBenef.paso2', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>   
+                            </c:when>
+                        </c:choose>
+
+                        <h:panelGroup id="divMsjGlobal" layout="block">
+                            <p:message id="msjGlobal" for="divMsjGlobal" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" /> 
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:panelGroup layout="block">
+                                <h:panelGrid columns="3">
+                                    <h:panelGroup layout="block" styleClass="negro font-size-09em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.listBenef.titulo.filtroTransacciones', wpnInicioSesion.idCanal)} "/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <h:selectOneMenu id="selectTipoTransaccion" value="#{wpnBeneficiarioController.selectTransSelected}" styleClass="font-size-09em selectExterno marging-left-10px" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" >                            
+                                            <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.label.tipoTransaccion', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                            <f:selectItems value="#{wpnBeneficiarioController.listTrans()}" />
+                                            <p:ajax event="change" listener="#{wpnBeneficiarioController.obtenerBeneficiariosTransaccion()}" update="datalist @(.ui-message)"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>  
+                                    <h:panelGroup layout="block" styleClass="margin-top-10">  
+                                        <p:message for="selectTipoTransaccion" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                    </h:panelGroup>   
+                                </h:panelGrid>                                        
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="dataTableEstilos bordeRedondeado margin-top-5">   
+                            <div class="cambioFondo">
+                                <p:dataTable id="datalist" value="#{wpnBeneficiarioController.afiliacionesDTO.afiliaciones}" var="item"
+                                             paginator="true" 
+                                             paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                             paginatorPosition="bottom"
+                                             rowKey="#{item.idInt}"
+                                             rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                             emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}"
+                                             selection="#{wpnBeneficiarioController.listSelected}">
+
+                                    <f:facet name="{anterior}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.anterior', wpnInicioSesion.idCanal)}
+                                    </f:facet>
+                                    <f:facet name="{siguiente}">
+                                        #{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}
+                                    </f:facet>                                    
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.listBenef.titulo.alias', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.alias}" />
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.listBenef.titulo.banco', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombreBanco}" />
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.listBenef.titulo.nombreBenef', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombreBeneficiario}" />
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.listBenef.titulo.nroCtaTdc', wpnInicioSesion.idCanal)}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.numeroCuenta}" />
+                                    </p:column>
+
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton actionListener="#{wpnBeneficiarioController.editarBeneficiario(item)}" icon="ui-icon-pencil" title="Modificar" immediate="true"/>
+                                    </p:column>
+
+                                    <p:column selectionMode="multiple" style="width:32px;text-align: center;" />
+
+                                    <f:facet name="footer" >
+                                        <p:commandButton process="datalist" actionListener="#{wpnBeneficiarioController.borrarAfiliaciones()}" icon="ui-icon-trash" 
+                                                         value="#{wpnTextosController.getNombreTexto('pnw.global.boton.desafiliar', wpnInicioSesion.idCanal)}" 
+                                                         styleClass="negro centrado bold font-size-07em" update="@all @(.ui-message)"
+                                                         rendered="#{wpnBeneficiarioController.botonDesafiliar}"/>                                    
+                                    </f:facet>                                    
+                                </p:dataTable>
+                            </div>
+
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

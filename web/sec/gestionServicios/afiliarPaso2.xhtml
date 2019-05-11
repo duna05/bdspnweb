@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnOTPController.limpiarOtp()}" type="preRenderView" />
+        <f:event listener="#{wpnGestionServiciosController.limpiar()}" type="preRenderView" />
+        <f:event listener="#{wpnGestionServiciosController.validarFlujoAfiliar2()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formAfiliarServ2">
+                    <h:panelGroup layout="block" id="divBodyAfiliar" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 1}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.validacionOTP == 0 or wpnInicioSesion.validacionOTP == 2}">
+                                <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                        </c:choose>
+
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:panelGroup layout="block">
+                                <h:panelGrid columns="3">
+                                    <h:panelGroup layout="block" styleClass="negro font-size-09em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.titulo.servicioAAfiliar', wpnInicioSesion.idCanal)} "/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <h:selectOneMenu id="selectServAfiliar" value="#{wpnGestionServiciosController.servicioSeleccionado}" styleClass="font-size-09em selectExterno marging-left-10px">                             
+                                            <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                            <f:selectItems value="#{wpnGestionServiciosController.servicios}" var="servicio" itemValue="#{servicio.codigoServicio}" itemLabel="#{servicio.descripcionServicio}" />
+                                            <p:ajax event="change" process="@this" update="afiliacion @(.ui-message)" immediate="true" listener="#{wpnGestionServiciosController.limpiar}" resetValues="true"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>  
+                                    <h:panelGroup layout="block" styleClass="margin-top-10">  
+                                        <p:message for="selectServAfiliar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                    </h:panelGroup>   
+                                </h:panelGrid>                                        
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="afiliacion">
+                            <h:panelGroup layout="block" rendered="#{wpnGestionServiciosController.servicioSeleccionado == 1}" >
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.campo.nombreBenef', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <p:inputText id="txtNombreBenef" value="#{wpnGestionServiciosController.afiliacion.beneficiario.nombre}" required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarAlfaNumericoYEspacio}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtNombreBenef" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.campo.nroIdentificacion', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <h:selectOneMenu id="selectTipoDoc" value="#{wpnGestionServiciosController.afiliacion.beneficiario.tipoIdentificacion}" style="width: 40px; background-color: #FFF;" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">
+                                                            <f:selectItem itemValue="V" itemLabel="V"/>
+                                                            <f:selectItem itemValue="E" itemLabel="E"/>
+                                                            <f:selectItem itemValue="P" itemLabel="P"/>                                                         
+                                                            <f:selectItem itemValue="J" itemLabel="J"/>                                                           
+                                                            <f:selectItem itemValue="G" itemLabel="G"/>                                                           
+                                                            <f:selectItem itemValue="C" itemLabel="C"/>   
+                                                        </h:selectOneMenu>
+                                                        <p:inputText id="txtIdentificacion" value="#{wpnGestionServiciosController.afiliacion.beneficiario.identificacion}"  
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                     validator="#{wpnInicioSesion.validarIdentificacion}" maxlength="9" autocomplete="off" styleClass="font-size-09em" size="10"/>
+
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtIdentificacion" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>                                            
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.campo.nroTelf', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">                                                    
+                                                        <!--h:panelGroup layout="block" rendered="# {wpnGestionServiciosController.servicioSeleccionado}"-->
+                                                        <h:panelGroup layout="block" rendered="#{true}">
+                                                            <p:inputText maxlength="11" id="txtNroTelf" value="#{wpnGestionServiciosController.afiliacion.codigoAbonado}" required="true" styleClass="solo-numero font-size-09em" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarNumeroTelefonoCompleto}" onkeyup="soloNumero(this);" onkeypress="soloNumero(this);"/>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <p:message for="txtNroTelf" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+                                            <p:row>
+                                                <p:column colspan="2">
+                                                    <p:message for="afiliacion" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px" rendered="false">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                <p:commandLink actionListener="#{wpnGestionServiciosController.afiliarPaso3()}" update="@all @(.ui-message)">                                            
+                                    <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

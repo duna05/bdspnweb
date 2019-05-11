@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnRegistroUsuariosController.inicioRegistro()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formRegistroUsuario1">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-30 vertical-top">
+                                <h:panelGroup layout="block" id="divLogin"  class="data-left">
+                                    <div class=" negro bold font-size-08em">
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.titulo.tituloInformativo', wpnInicioSesion.idCanal)}
+                                    </div>
+                                    <br/>
+                                    <div class=" grisOsc font-size-07em justificado">    
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info1', wpnInicioSesion.idCanal)}
+                                        <br/>
+                                        <br/>
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info2', wpnInicioSesion.idCanal)}
+                                        <br/>
+                                        <br/>
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info3', wpnInicioSesion.idCanal)}
+                                        <br/>
+                                        <br/>
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info4', wpnInicioSesion.idCanal)}
+                                    </div>
+                                </h:panelGroup>
+                            </p:column>
+
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso4', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso5', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso6', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="3" styleClass="width-100 sinBorde">                                            
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.registro.paso1', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.registro.campo.tdd', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <p:inputText id="txtTdd" value="#{wpnRegistroUsuariosController.flujoExternaUsuarioDTO.tdd}" 
+                                                                     maxlength="16" styleClass="solo-numero font-size-09em"
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.TDD', wpnInicioSesion.idCanal)}"
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                     validator="#{wpnInicioSesion.validarTDDDelSur}"/>
+                                                        <p:tooltip id="toolTipTxtTdd" for="txtTdd" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtTdd" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.registro.campo.pin', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <p:password id="txtPin" value="#{wpnRegistroUsuariosController.flujoExternaUsuarioDTO.pin}" 
+                                                                    maxlength="4" autocomplete="off" styleClass="solo-numero font-size-09em"
+                                                                    title="#{wpnTextosController.getNombreTexto('pnw.global.title.pin', wpnInicioSesion.idCanal)}"
+                                                                    required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                    validator="#{wpnInicioSesion.validarPin}"/>
+                                                        <p:tooltip id="toolTipTxtPin" for="txtPin" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtPin" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.registro.campo.fechaVencimiento', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup id="divFechaVenc" layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <h:selectOneMenu id="mes" value="#{wpnInicioSesion.mes}" style="width: 110px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                                         title="#{wpnTextosController.getNombreTexto('pnw.global.title.fVencimientoTDD', wpnInicioSesion.idCanal)}">
+                                                            <f:selectItems value="#{wpnInicioSesion.listMeses}"
+                                                                           var="listMeses"
+                                                                           itemValue="#{listMeses}" itemLabel="#{listMeses}" />                                                            
+                                                        </h:selectOneMenu>
+                                                        <h:selectOneMenu id="ano" value="#{wpnInicioSesion.ano}" style="width: 70px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                                         title="#{wpnTextosController.getNombreTexto('pnw.global.title.fVencimientoTDD', wpnInicioSesion.idCanal)}">
+                                                            <f:selectItems value="#{wpnInicioSesion.listAnos}"
+                                                                           var="listAnos"
+                                                                           itemValue="#{listAnos}" itemLabel="#{listAnos}" />                                                            
+                                                        </h:selectOneMenu>
+                                                        <p:tooltip id="toolTipMes" for="mes" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                                        <p:tooltip id="toolTipAno" for="ano" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="mes" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                        <p:message for="ano" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                        <p:message for="divFechaVenc" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.registro.campo.identificacion', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup id="divTipoDoc" layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <h:selectOneMenu id="selectTipoDoc" value="#{wpnRegistroUsuariosController.flujoExternaUsuarioDTO.tipoIdentificacion}" style="width: 40px; background-color: #FFF;" 
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                                         title="#{wpnTextosController.getNombreTexto('pnw.global.title.tipoDoc', wpnInicioSesion.idCanal)}">
+                                                            <f:selectItem itemValue="V" itemLabel="V" />
+                                                            <f:selectItem itemValue="E" itemLabel="E"/>
+                                                            <f:selectItem itemValue="P" itemLabel="P"/>                                                         
+                                                            <f:selectItem itemValue="J" itemLabel="J"/>                                                           
+                                                            <f:selectItem itemValue="G" itemLabel="G"/>                                                           
+                                                            <f:selectItem itemValue="C" itemLabel="C"/>                                                        
+                                                        </h:selectOneMenu>
+                                                        <p:inputText id="txtIdentificacion" value="#{wpnRegistroUsuariosController.flujoExternaUsuarioDTO.identificacion}" maxlength="9" 
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                     validator="#{wpnInicioSesion.validarIdentificacion}" styleClass="marging-left-3px"
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.nroDoc', wpnInicioSesion.idCanal)}"/>
+                                                        <p:tooltip id="toolTipSelectTipoDoc" for="selectTipoDoc" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                                        <p:tooltip id="toolTipTxtIdentificacion" for="txtIdentificacion" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtIdentificacion" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" colspan="3">
+                                                    <p:message for="divTipoDoc" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" display="true"/> 
+                                                </p:column>
+                                            </p:row>
+
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                        <p:remoteCommand name="rcEncriptarPin" actionListener="#{wpnRegistroUsuariosController.encriptarPinFase1()}" global="false"/>
+                                        <p:commandLink actionListener="#{wpnRegistroUsuariosController.paso2}" update="@form" onclick="rcEncriptarPin();
+                                                asignarPin('formRegistroUsuario1:txtPin', '****')"> 
+                                            <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                            </h:panelGroup>
+                                            <p:resetInput target="txtPin"/>
+                                        </p:commandLink>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

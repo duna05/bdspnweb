@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event listener="#{wpnReclamoController.inicioRegReclamo()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formRegReclamo1">
+
+                    <h:panelGroup layout="block" id="divBodyRegReclamo" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.paso3', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">                                        
+                                <p:panelGrid styleClass="width-100 sinBorde">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.paso1', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.campo.email', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" colspan="2">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:outputText value="#{wpnReclamoController.email}"/>
+                                            </h:panelGroup>
+                                        </p:column>                                        
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.campo.nroTlf', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" colspan="2">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:outputText value="#{wpnReclamoController.nroTlf}"/>
+                                            </h:panelGroup>
+                                        </p:column>                                        
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.campo.mediosNotificacion', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneMenu class="marging-left-30px izquierda" id="mediosNotificacion" value="#{wpnReclamoController.mediosNotificacionSelected}">                                                    
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                                    <f:selectItems value="#{wpnReclamoController.listMediosNotificacionDTO.ibMediosNotificacionDTO}"
+                                                                   var="listMediosNotificacion"
+                                                                   itemValue="#{listMediosNotificacion.nombreMedio}" 
+                                                                   itemLabel="#{listMediosNotificacion.nombreMedio}" />
+                                                </h:selectOneMenu>                                                
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="mediosNotificacion" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.campo.TDD', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5" id="divTDD">
+                                                <h:selectOneMenu class="marging-left-30px izquierda" id="TDD" value="#{wpnReclamoController.TDDSelected}">                                                    
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                                    <f:selectItems value="#{wpnReclamoController.listTDD.tddsDTO}"
+                                                                   var="listTDD"
+                                                                   itemValue="#{listTDD.numeroTarjeta}" 
+                                                                   itemLabel="#{listTDD.numeroTarjeta} - #{listTDD.estado}" />
+                                                    <p:ajax event="change" update=" divCuentas divTipoReclamo  divDataTable divFiltroFecha" listener="#{wpnReclamoController.consultarCuentasPropiasActivasCanceladas()}"/>
+                                                </h:selectOneMenu>                                                
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="TDD" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.campo.cuentas', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup id="divCuentas"  layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneMenu class="marging-left-30px izquierda" id="cuentaSeleccionada" value="#{wpnReclamoController.cuentaSeleccionada}">                                                                                                        
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                                    <f:selectItems value="#{wpnReclamoController.cuentasCliente}"
+                                                                   var="cuentasCliente"
+                                                                   itemValue="#{cuentasCliente.codigoTipoProductoEnc}:#{cuentasCliente.numeroCuentaEnc}" 
+                                                                   itemLabel="#{wpnReclamoController.elimPrimerCaracter(cuentasCliente.codigoTipoProducto)} - #{wpnReclamoController.formatoAsteriscosWeb(cuentasCliente.numeroCuenta)}" />
+                                                    <p:ajax event="change" update="divTipoReclamo  divDataTable divFiltroFecha" listener="#{wpnReclamoController.cuentasInicializar()}"/>
+                                                </h:selectOneMenu>                                                
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup id="divMsjCuentas" layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="cuentaSeleccionada" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.campo.tipoReclamo', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup id="divTipoReclamo"  layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:selectOneMenu class="marging-left-30px izquierda" id="tipoReclamo" value="#{wpnReclamoController.idtipoReclamoSeleccionado}">                                                                                                        
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                                    <f:selectItems value="#{wpnReclamoController.listTipoReclamos}"
+                                                                   var="reclamo"
+                                                                   itemValue="#{reclamo.codigoReclamo}:#{reclamo.nombreReclamo}" 
+                                                                   itemLabel="#{reclamo.nombreReclamo}" />                                                    
+                                                </h:selectOneMenu>                                                
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup id="divMsjTipoReclamo" layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="tipoReclamo" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>                      
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.campo.observacion', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup id="divObservacion" layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 width-100">
+                                                <p:inputText id="txtAreaObservacion" value="#{wpnReclamoController.observacion}"  maxlength="200" size="50"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtAreaObservacion" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column  colspan="3" styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.titulo.movimientos', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                 
+                                    </p:row>
+
+                                </p:panelGrid>
+                            </h:panelGroup>
+                             
+
+                            <h:panelGroup  layout="block" styleClass="width-100" >
+                                <h:panelGroup id="divFiltroFecha">
+                                    <h:panelGroup layout="block" styleClass="textoFondoAzul azul padding7 margin-top-5 margin-bottom-5 margin-left-16px float-left" rendered="#{wpnReclamoController.activaMovimientosCuenta}">
+                                        <h:panelGroup layout="block" style="width: 100%">
+                                            <h:panelGrid columns="5">
+                                                <h:panelGroup styleClass="negro bold font-size-06em">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detCta.titulo.rango', wpnInicioSesion.idCanal)}"/> 
+                                                </h:panelGroup>
+                                                <h:panelGroup styleClass="negro bold font-size-06em">
+                                                    <p:outputLabel value="#{wpnTextosController.getNombreTexto('pnw.detCta.titulo.desde', wpnInicioSesion.idCanal)}" for="txtFechaDesde"/> 
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="height-detCta" style="width:130px;">
+                                                    <p:calendar id="txtFechaDesde" value="#{wpnReclamoController.txtFechaDesde}" pattern="dd/MM/yyyy" readonlyInput="true"
+                                                                mindate="#{wpnReclamoController.calendarFechaMin}" maxdate="#{wpnReclamoController.calendarFechaMax}" 
+                                                                locale="es" showOn="button" autocomplete="off" navigator="true"/>
+                                                </h:panelGroup>
+                                                <h:panelGroup styleClass="negro bold font-size-06em">
+                                                    <p:outputLabel value="#{wpnTextosController.getNombreTexto('pnw.detCta.titulo.hasta', wpnInicioSesion.idCanal)}" for="txtFechaHasta"/> 
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="height-detCta" style="width:130px;">
+                                                    <p:calendar id="txtFechaHasta" value="#{wpnReclamoController.txtFechaHasta}" pattern="dd/MM/yyyy" readonlyInput="true" mindate="#{wpnReclamoController.calendarFechaMin}" 
+                                                                maxdate="#{wpnReclamoController.calendarFechaMax}" locale="es" styleClass="marging-left-3px float-right" showOn="button" autocomplete="off" navigator="true"/>
+                                                </h:panelGroup>
+                                            </h:panelGrid>                                        
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup layout="block" styleClass="float-left filtro-detalle-btnFiltrar paddin-left10" rendered="#{wpnReclamoController.activaMovimientosCuenta}">
+                                        <h:panelGrid columns="4" >
+                                            <h:panelGroup layout="block" style=" width: 200px;float: right;padding-left: 20px;">
+                                                <p:commandLink id="ingresar" action="#{wpnReclamoController.filtrar}" update="divDataTable divMjs divMsjCuentas">
+                                                    <div class="boton negro centrado bold font-size-08em">                                            
+                                                        <div>
+                                                            #{wpnTextosController.getNombreTexto('pnw.detCta.boton.filtrar', wpnInicioSesion.idCanal)}
+                                                        </div>
+                                                    </div>                                        
+                                                </p:commandLink>                                    
+                                            </h:panelGroup>                           
+                                        </h:panelGrid>                                        
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="divMjs" layout="block" styleClass="float-left clear margin-left-11px">
+                                <p:message for="divFiltroFecha" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" rendered="#{wpnReclamoController.activaMovimientosCuenta}"/>
+                            </h:panelGroup>
+
+
+                            <h:panelGroup id="divDataTable" layout="block" styleClass="dataTableEstilos clear" >   
+                                <div class="cambioFondo">
+                                    <p:dataTable id="datalist" value="#{wpnReclamoController.listMovimientoCuentaDTO}" var="item"
+                                                 paginator="true"
+                                                 paginatorAlwaysVisible="false"
+                                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                                 paginatorPosition="bottom"
+                                                 rowKey="#{item.numeroReferencia}"
+                                                 rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                                 emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}"
+                                                 selection="#{wpnReclamoController.listMovimientoSeleccionado}" rendered="#{wpnReclamoController.activaMovimientosCuenta}"
+                                                 >
+
+                                        <f:facet name="{anterior}">
+                                            Anterior
+                                        </f:facet>
+                                        <f:facet name="{siguiente}">
+                                            Siguiente
+                                        </f:facet>
+
+                                        <p:column selectionMode="multiple" style="width:32px;text-align: center;" />
+
+                                        <p:column styleClass="centrado">
+                                            <f:facet name="header" >
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.titulo.fecha', wpnInicioSesion.idCanal)}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.fechaTransaccionString}" >
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </h:outputText>
+                                        </p:column>
+                                        
+                                        <p:column styleClass="centrado">
+                                            <f:facet name="header" >
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.titulo.numeroReferencia', wpnInicioSesion.idCanal)}"/>
+                                            </f:facet>                                    
+                                            <h:outputText value="#{item.numeroReferencia}" />                                    
+                                        </p:column>
+
+                                        <p:column styleClass="centrado">
+                                            <f:facet name="header" >
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.titulo.descripcion', wpnInicioSesion.idCanal)}"/>
+                                            </f:facet>                                    
+                                            <h:outputText value="#{item.descripcion}" />                                    
+                                        </p:column>
+
+                                        <p:column styleClass="derecha">
+                                            <f:facet name="header" >
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.regReclamo.titulo.monto', wpnInicioSesion.idCanal)}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{wpnReclamoController.obtieneMontoValido(item.ingreso, item.egreso)}" />
+                                        </p:column>                                         
+                                    </p:dataTable>
+                                </div>
+                            </h:panelGroup>
+
+
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                <p:commandLink actionListener="#{wpnReclamoController.registroPaso2()}">
+                                    <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+    <f:metadata>
+        <f:event listener="#{wpnPagosPrestamoController.consultaInicialPagPrestamo()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formPagosPrestamo">
+
+                    <h:panelGroup layout="block" id="divBodyPagPrest" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+
+
+                        <h:panelGroup layout="block" id="divCabeceraPagPrest" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosPagPrest" class="tres-pasos">
+                                <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.paso3', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100" rendered="#{wpnPagosPrestamoController.validaCierreOperaciones}">
+                            <h:panelGroup rendered="#{wpnPagosPrestamoController.tienePrestamos}">
+                                <h:panelGroup layout="block" styleClass="width-100">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10" id="divPagPrestamo">
+                                        <p:panelGrid styleClass="width-100 sinBorde">
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.paso1', wpnInicioSesion.idCanal)} para #{wpnInicioSesion.nombreTransaccion}:"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid styleClass="width-100 sinBorde" id="panelPrestamos">
+                                            <p:row>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.ctaDebitar', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">                                                
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                        <h:selectOneMenu class="marging-left-30px" id="txtCtaDebitar" value="#{wpnPagosPrestamoController.cuentaSeleccionada}" required="true" 
+                                                                         requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnPagosPrestamoController.validarCtaPropia}">
+                                                            <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}"  itemValue="-1"/>    
+                                                            <f:selectItems value="#{wpnPagosPrestamoController.cuentasCliente}" var="ctaOrigen" itemValue="#{ctaOrigen.numeroCuentaEnc}"
+                                                                           itemLabel="#{ctaOrigen.nombreProducto} - #{wpnPagosPrestamoController.formatoAsteriscosWeb(ctaOrigen.numeroCuenta)} - #{wpnPagosPrestamoController.capitalizarTexto(ctaOrigen.siglasTipoMoneda)}. #{wpnPagosPrestamoController.formatearMonto(ctaOrigen.saldoDisponible)}" />                                                                        
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtCtaDebitar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.nroPrestamo', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">                                                    
+                                                        <h:selectOneMenu class="marging-left-30px" id="txtPestamoAbonar" value="#{wpnPagosPrestamoController.prestamoSeleccionado}"
+                                                                         required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                                         validator="#{wpnPagosPrestamoController.validarPrestamo}">
+                                                            <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>    
+                                                            <f:selectItems value="#{wpnPagosPrestamoController.prestamos}" var="prestamo" itemValue="#{prestamo.numeroPrestamoEnc}"  itemLabel="#{prestamo.nombreProducto} - #{wpnPagosPrestamoController.formatoAsteriscosWeb(prestamo.numeroPrestamo)}" />
+                                                            <f:ajax event="change" render="panelPrestamos" listener="#{wpnPagosPrestamoController.obtenerDetallePrestamo}" execute="@this txtCtaDebitar"/>
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtPestamoAbonar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row> 
+
+                                            <p:row rendered="#{wpnPagosPrestamoController.mostrarDatosPrestamo}">
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.cuotasPagadas', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">                                                   
+                                                        <h:outputText value="#{wpnPagosPrestamoController.datosPrestamoSeleccionado.cantidadCuotasPagadasString}"/>                                             
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">   
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row rendered="#{wpnPagosPrestamoController.mostrarDatosPrestamo}">
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.fechaLiquidacion', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">    
+                                                        <h:outputText value="#{wpnPagosPrestamoController.formatearFecha(wpnPagosPrestamoController.datosPrestamoSeleccionado.fechaLiquidacionDate,'dd/MM/yyyy')}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">   
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row rendered="#{wpnPagosPrestamoController.mostrarDatosPrestamo}">
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.fechaVencimiento', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">   
+                                                        <h:outputText value="#{wpnPagosPrestamoController.formatearFecha(wpnPagosPrestamoController.datosPrestamoSeleccionado.fechaVencimientoDate,'dd/MM/yyyy')}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">   
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row rendered="#{wpnPagosPrestamoController.mostrarDatosPrestamo}">
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.montoCuota', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                        <h:outputText value="#{wpnPagosPrestamoController.formatearMonto(wpnPagosPrestamoController.datosPrestamoSeleccionado.montoCuota)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">   
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row rendered="#{wpnPagosPrestamoController.mostrarDatosPrestamo}">
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.saldoPrestamo', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">      
+                                                        <h:outputText value="#{wpnPagosPrestamoController.formatearMonto(wpnPagosPrestamoController.datosPrestamoSeleccionado.saldoActual)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc font-size-07em paddin-left10 margin-top-5">   
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row> 
+
+                                            <p:row rendered="#{wpnPagosPrestamoController.mostrarDatosPrestamo}">
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.pagoPrestamo.campo.montoAPagar', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5" id="divOtroMonto">
+                                                        <p:inputText  id="txtMonto" rendered="#{wpnPagosPrestamoController.mostrarDatosPrestamo}" maxlength="21" onkeyup="formatoMonto(this);" onkeypress="formatoMonto(this);"
+                                                                      value="#{wpnPagosPrestamoController.monto}"  validator="#{wpnPagosPrestamoController.validarMonto}" autocomplete="off" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                        <p:message for="txtMonto" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8" >
+                                    <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                        <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px" rendered="false">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                        </h:panelGroup>                                        
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                        <p:commandLink actionListener="#{wpnPagosPrestamoController.confirPaso2()}" update="@all @(.ui-message)">                                            
+                                            <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                            </h:panelGroup>
+                                        </p:commandLink>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!wpnPagosPrestamoController.tienePrestamos}">
+                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5" id="divMsjSinPrestamos">   
+                                    <p:message for="divMsjSinPrestamos" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" rendered="true"/>
+                                </h:panelGroup>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="margin-top-10 width-100 centrado" >
+                                    <p:commandLink actionListener="#{wpnMenuController.actionURLInicial}" immediate="true">
+                                        <h:panelGroup layout="block" id="divBotonRegresarInicio2" class="boton negro font-size-08em float-right centrado">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.volver', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </div>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+                <h:panelGroup rendered="#{wpnPagosPrestamoController.mostrarMensajeCierre}" layout="block" class="fondoCabeceraTabla centrado negro bold font-size-1punto2em">
+                    <h:form id="formtdsPaso2MensajeCierre">
+                        <h:panelGroup rendered="true">
+                            <h:panelGroup layout="block" styleClass="font-size-08em" >   
+                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.alerta.transaccionesCerradas', wpnInicioSesion.idCanal)}" class=" bold" />
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="margin-top-10 width-100 centrado" >
+                            <p:commandLink actionListener="#{wpnPagosPrestamoController.regresarPosCos()}" immediate="true">
+                                <h:panelGroup layout="block" id="divBotonRegresarInicio2" class="boton negro font-size-08em float-right centrado">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.volver', wpnInicioSesion.idCanal)}" class=" bold" />
+                                </h:panelGroup>
+                            </p:commandLink>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

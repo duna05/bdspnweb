@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnRegistroUsuariosController.validarFlujo6()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/externa.xhtml">  
+        <ui:define name="body" >
+
+            <h:form id="formRegistroUsuario6">  
+                <h:panelGroup layout="block" id="divExterna" class="cuerpo-externa">
+                    <p:panelGrid styleClass="width-100 paddin-top30">
+                        <p:row>
+                            <p:column styleClass="width-30 vertical-top">
+                                <h:panelGroup layout="block" id="divLogin"  class="data-left">
+                                    <div class=" negro bold font-size-08em">
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.titulo.tituloInformativo', wpnInicioSesion.idCanal)}
+                                    </div>
+                                    <br/>
+                                    <div class=" grisOsc font-size-07em justificado">    
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info1', wpnInicioSesion.idCanal)}
+                                        <br/>
+                                        <br/>
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info2', wpnInicioSesion.idCanal)}
+                                        <br/>
+                                        <br/>
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info3', wpnInicioSesion.idCanal)}
+                                        <br/>
+                                        <br/>
+                                        #{wpnTextosController.getNombreTexto('pnw.registro.texto.info4', wpnInicioSesion.idCanal)}
+                                    </div>
+                                </h:panelGroup>
+                            </p:column>
+
+                            <p:column styleClass="width-70 vertical-top">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="seis-pasos">
+                                        <p:steps activeIndex="5" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso4', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso5', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.registro.paso6', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                        <h:panelGrid columns="1" styleClass="width-100 sinBorde">
+
+                                            <h:panelGroup layout="block" styleClass="notificaciones-exitoso">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.operacionFinalizada', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+
+                                        </h:panelGrid>
+                                        
+                                        <h:panelGroup layout="block" styleClass="fondoCabeceraTablaOpFin">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.registro.operacionFinalizada', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                    <h:panelGroup layout="block" id="divBoton">
+                                        <p:commandLink actionListener="#{wpnRegistroUsuariosController.inicio()}" immediate="true">
+                                            <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.regresar', wpnInicioSesion.idCanal)}" styleClass=" bold"/>
+                                            </h:panelGroup>
+                                        </p:commandLink>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnCambioClaveController.limpiar()}" type="preRenderView" />
+        <f:event listener="#{wpnCambioClaveController.inicioCambioClave()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="#{wpnInicioSesion.template}">
+
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formCambioClave1">
+
+                    <h:panelGroup layout="block" id="divBodyCambioClave" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                            <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.paso1', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.paso2', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.paso3', wpnInicioSesion.idCanal)}"/>
+                                    <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.paso4', wpnInicioSesion.idCanal)}"/>
+                                </p:steps>
+                            </h:panelGroup>                        
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">                                        
+                                <p:panelGrid styleClass="width-100 sinBorde">
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.paso1', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.campo.tdd', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <p:inputText id="txtTdd" value="#{wpnCambioClaveController.flujoExternaUsuarioDTO.tdd}" 
+                                                             maxlength="16" styleClass="solo-numero font-size-09em"
+                                                             title="#{wpnTextosController.getNombreTexto('pnw.global.title.TDD', wpnInicioSesion.idCanal)}"
+                                                             required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                             validator="#{wpnInicioSesion.validarTDDDelSur}"/>
+                                                <p:tooltip id="toolTipTxtTdd" for="txtTdd" showEvent="focus" hideEvent="blur" style="font-size: 0.8em" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtTdd" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.campo.pin', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup id="divPin" layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <p:password id="txtPin" value="#{wpnCambioClaveController.flujoExternaUsuarioDTO.pin}" 
+                                                            maxlength="4" autocomplete="off" styleClass="solo-numero font-size-09em"
+                                                            title="#{wpnTextosController.getNombreTexto('pnw.global.title.pin', wpnInicioSesion.idCanal)}"
+                                                            required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                            validator="#{wpnInicioSesion.validarPin}"/>
+                                                <p:tooltip id="toolTipTxtPin" for="txtPin" showEvent="focus" hideEvent="blur" style="font-size: 0.8em" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="txtPin" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.cambioClave.campo.fechaVencimiento', wpnInicioSesion.idCanal)}"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column styleClass="max-widthCampo">
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                <h:panelGroup id="divFechaVenc" layout="block" styleClass="calendarMA" >
+                                                    <h:selectOneMenu id="mes" value="#{wpnInicioSesion.mes}" style="width: 110px; background-color: #FFF;" 
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.fVencimientoTDD', wpnInicioSesion.idCanal)}">
+                                                        <f:selectItems value="#{wpnInicioSesion.listMeses}"
+                                                                       var="listMeses"
+                                                                       itemValue="#{listMeses}" itemLabel="#{listMeses}" />                                                            
+                                                    </h:selectOneMenu>
+                                                    <h:selectOneMenu id="ano" value="#{wpnInicioSesion.ano}" style="width: 70px; background-color: #FFF;" 
+                                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.fVencimientoTDD', wpnInicioSesion.idCanal)}">
+                                                        <f:selectItems value="#{wpnInicioSesion.listAnos}"
+                                                                       var="listAnos"
+                                                                       itemValue="#{listAnos}" itemLabel="#{listAnos}" />                                                            
+                                                    </h:selectOneMenu>
+                                                    <p:tooltip id="toolTipMes" for="mes" showEvent="focus" hideEvent="blur" style="font-size: 0.8em" />
+                                                    <p:tooltip id="toolTipAno" for="ano" showEvent="focus" hideEvent="blur" style="font-size: 0.8em" />
+                                                </h:panelGroup>
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                <p:message for="mes" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                <p:message for="ano" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                <p:message for="divFechaVenc" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="max-widthTxt" colspan="3">
+                                            <p:message id="msjGlobal" for="divPin" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" /> 
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                </h:panelGroup>                                        
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                <p:remoteCommand name="rcEncriptarPin" actionListener="#{wpnCambioClaveController.encriptarPinFase1()}" global="false"/>
+                                <p:commandLink actionListener="#{wpnCambioClaveController.cambioClavePaso2()}" update="@form" onclick="rcEncriptarPin(); asignarPin('formCambioClave1:txtPin', '****')" oncomplete="PF('statusDialog').hide()" onsuccess="PF('statusDialog').hide()">
+                                    <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                    </h:panelGroup>
+                                    <p:resetInput target="txtPin"/>
+                                </p:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,57 @@
+.cuerpoTabla-etiquetaF {
+    min-height: 28px;
+    background: #FFF;
+    font-weight: 700;
+    font-size: 70%;
+    margin-top: 5px;
+    color: #666;
+    min-width: 76px;
+
+
+}
+
+#formRegistroUsuario1{
+    font-weight: 400;
+    background: #fff;
+    border-radius: 0;
+    position: relative;
+    top: -5px;
+    box-shadow: none;
+    font-family: Open Sans,sans-serif;
+    border: 1px solid #a8a8a8;
+    padding: 4px 8px;
+    min-width: 76px;
+    font-size: 70%;
+    height: 25%;
+}
+
+.marging-left-ficha{
+    background: blue;
+}
+
+.fondoCabeceraTablaF{
+    padding-top:4px;
+    padding-bottom:4px;
+    width:132.5%;
+}
+
+#formFichaCliente:nombrecomercial{
+
+    margin-left: 14%;
+}
+
+.filasFicha{
+    font-size: 70%;
+    color: #666;
+    font-family: Open Sans,sans-serif;
+    background: #FFF;
+    font-weight: 70%;
+    margin-top: 5px;
+    margin-bottom: 5px;  
+    font-weight: 700;
+}
+
+.primerCampo{
+    margin-left: 1%;
+}
+

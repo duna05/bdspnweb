@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <f:metadata> 
+        <f:event listener="#{wpnErroresController.iniciarErrores()}" type="preRenderView" />
+        <f:event listener="#{wpnInicioSesion.setSesionInvalidada(true)}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:composition template="/templates/externa.xhtml">
+        <ui:define name="body">
+
+            <h:form id="formError">
+
+                <p:dialog minWidth="400" style="min-width: 420px;" dynamic="false" header="Alerta" draggable="false"  modal="true" resizable="false"  widgetVar="dialogerror" visible="true" closable="false">
+
+                    <div class="centrado" style="background-color: #F7F7F6;">
+
+                        <div>
+                            <h:outputText class="azul font-size-1punto2em" value="#{wpnErroresController.tituloError}"/>
+                        </div>
+
+                        <div class="margin-top-10" >
+                            <h:outputText class="negro font-size-09em" value="#{wpnErroresController.msjError}"/>
+                        </div>
+
+                        <div class="height_10"></div>
+
+                        <div align="center">
+                            <h:commandLink id="cerrar" action="#{wpnErroresController.cerrarSesion(wpnInicioSesion.mensajeAlerta)}" immediate="true">
+                             <div class="boton negro bold font-size-08em" style="width:140px; margin-top:5px; ">                                     
+                                    <div class="centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.cerrar', wpnInicioSesion.idCanal)}" />
+                                    </div>
+                                </div>
+                            </h:commandLink>
+                        </div>                       
+
+
+
+                        <div class="height_10"></div>
+                    </div>
+
+                </p:dialog>
+
+            </h:form>
+
+
+        </ui:define>
+    </ui:composition>
+</html>

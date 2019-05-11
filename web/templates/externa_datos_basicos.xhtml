@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <h:head>            
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <meta http-equiv="Expires" content="0" /> 
+            <meta http-equiv="Cache-Control" content="no-cache"/>
+            <meta http-equiv="Pragma" content="no-cache" />
+            <meta http-equiv="Content-Type" content="text/html" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <link rel="shortcut icon" href="#{request.contextPath}/resources/images/logo42x31.png" /> 
+            <title>DELSUR Online Personas</title>       
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/styleFull.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/styleOpenSam.css" />
+            <!--link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/styleFicha.css" /-->
+             <link type="text/css" rel="stylesheet" href="http://localhost:8080/styleFicha.css" />
+            <script src="#{request.contextPath}/resources/js/jqueryfull.js?version=2018-02-26"></script>
+            <script src="#{request.contextPath}/resources/js/criptoBase64.js?version=2018-01-29"></script>
+            <!-- script src="# {resource['js:jqueryfull.js']}"></script -->
+            <!-- script src="# {resource['js:md5-min.js']}"></script -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    
+                    $.extend( $.ui.keyCode, {NUMPAD_ENTER: 108});
+                    $.extend( $.ui.keyCode, {NUMPAD_ADD: 107});
+                    $.extend( $.ui.keyCode, {NUMPAD_DECIMAL: 110});
+                    $.extend( $.ui.keyCode, {NUMPAD_DIVIDE: 111});
+                    $.extend( $.ui.keyCode, {NUMPAD_ENTER: 108});
+                    $.extend( $.ui.keyCode, {NUMPAD_MULTIPLY: 106});
+                    $.extend( $.ui.keyCode, {NUMPAD_SUBTRACT: 109});
+                    
+                //rotation speed and timer
+                var speed = 5000;
+
+                var run = setInterval(rotate, speed);
+                var slides = $('.slide');
+                var container = $('.slidesH ul');
+                var elm = container.find(':first-child').prop("tagName");
+                var item_width = container.width();
+                var previous = 'prev'; //id of previous button
+                var next = 'next'; //id of next button
+                slides.width(item_width); //set the slides to the correct pixel width
+                container.parent().width(item_width);
+                container.width(slides.length * item_width); //set the slides container to the correct total width
+                container.find(elm + ':first').before(container.find(elm + ':last'));
+                resetSlides();
+
+  
+                //if user clicked on prev button
+
+                $('#buttons p').click(function (e) {
+                  //slide the item
+
+                  if (container.is(':animated')) {
+                    return false;
+                  }
+                  if (e.target.id == previous) {
+                    container.stop().animate({
+                      'left': 0
+                    }, 1500, function () {
+                      container.find(elm + ':first').before(container.find(elm + ':last'));
+                      resetSlides();
+                    });
+                  }
+
+                  if (e.target.id == next) {
+                    container.stop().animate({
+                      'left': item_width * -2
+                    }, 1500, function () {
+                      container.find(elm + ':last').after(container.find(elm + ':first'));
+                      resetSlides();
+                    });
+                  }
+
+                  //cancel the link behavior      
+                  return false;
+
+                });
+
+                //if mouse hover, pause the auto rotation, otherwise rotate it  
+                container.parent().mouseenter(function () {
+                  clearInterval(run);
+                }).mouseleave(function () {
+                  run = setInterval(rotate, speed);
+                });
+
+
+                function resetSlides() {
+                  //and adjust the container so current is in the frame
+                  container.css({
+                    'left': -1 * item_width
+                  });
+                }
+
+              });
+                //a simple function to click next link
+                //a timer will call this function, and the rotation will begin
+
+                function rotate() {
+                  $('#next').click();
+                }
+
+                function redirectTimeOut() {
+                    window.setTimeout(function () {
+                        PF('redirectDialog').show();
+                        setTimeout(function() {redireccionLogin();}, 5000);
+                    }, #{wpnParametrosController.getNombreParametro('pnw.global.timeOut.redirLogin', idcanal)});
+                };
+                
+                function restarTimeOut() {};
+                
+               
+            </script>
+            
+            <h:outputScript library="primefaces/dialog" name="dialog.js"/>
+            <h:outputScript library="js" name="combo.js"/>
+        </h:head>
+        <h:body onload="redirectTimeOut();"> 
+            <noscript>
+                <div style="position: fixed; top: 0px; left: 0px; z-index: 3000; 
+                     height: 100%; width: 100%; background-color: #FFFFFF">
+
+                    <div id="supercontenedor" class="bodyGloblal"><!-- la caja que contiene todo -->
+                        <div class="wrapper">
+                            <header><!-- cabecera -->
+                                <div class="imgLogo_banner">
+                                    <div class="imgLogoInterna"></div>
+                                </div>
+                            </header> 		 
+                            <div id="superbody">  
+                                <p style="margin-left: 10px">Para visitar nuestra página web es necesario tener Javascript 
+                                    habilitado en tu navegador. Disculpe las molestias.</p>
+
+                            </div>
+                            <div class="pushExt"></div><!-- esto es importante para que el footer se quede fijo abajo -->
+                        </div>
+
+                        <footer class="footer"><!-- footer verde -->
+                            <h:panelGrid id="tblFooter2" columns="1" styleClass="width-100">
+                                <h:panelGroup layout="block" class="width-100">
+                                    <h:panelGroup layout="block" class="imgCertificados float-right clear padding-right50"></h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="texto-footer-margin clear">
+                                    <h:outputText class="texto-footer grisOsc font-size-06em float-right padding-right50" value="#{wpnTextosController.getNombreTexto('pnw.footer.texto.seguridad', wpnInicioSesion.idCanal)}"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="inherit-backgro width-100">
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="texto-footer-margin clear ">
+                                    <h:outputText class="texto-footer grisOsc font-size-06em float-right paddin-top20 paddin-bottom20 padding-right50" value="#{wpnTextosController.getNombreTexto('pnw.footer.texto.rif', wpnInicioSesion.idCanal)}"/>                      
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                        </footer>		 
+                    </div><!-- FIN de supercaja --> 
+
+                </div>
+            </noscript>
+            
+            <p:ajaxStatus onstart="PF('statusDialog').show(); " oncomplete="PF('statusDialog').hide()" onsuccess="PF('statusDialog').hide()" onerror="PF('statusDialog').hide()"/>
+
+            <div class="dialog-espera">
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" height="80px" width="160px">
+                    <p:panelGrid style="width: 100%; margin-top: 10px;">  
+                        <p:row>
+                            <p:column style="width: 50px;">
+                                <div class="imgGifCargando"></div>
+                            </p:column>
+                            <p:column>       
+                                <h:outputText value="#{wpnInicioSesion.textoStatus}"></h:outputText>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>                            
+                </p:dialog>
+            </div> 
+            
+            <div class="dialog-espera">
+                <p:dialog widgetVar="redirectDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" height="100px" width="350px">
+                    <p:panelGrid style="width: 100%; margin-top: 10px;">  
+                        <p:row>
+                            <p:column style="width: 50px;">
+                                <div class="imgGifCargando"></div>
+                            </p:column>
+                            <p:column>       
+                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.redirLogin', wpnInicioSesion.idCanal)}"></h:outputText>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>                            
+                </p:dialog>
+            </div> 
+
+            <div id="supercontenedor" class="bodyGloblal"><!-- la caja que contiene todo -->
+                <div class="wrapper">
+                    <header><!-- cabecera -->
+                        <div class="imgLogo_banner">                            
+                            <p:commandLink actionListener="#{wpnInicioSesion.redireccionInicio()}" immediate="true">                                            
+                                <div class="imgLogoInterna"></div>
+                            </p:commandLink>
+                            <div class="imgLogoInterna2"></div>
+                        </div>
+                    </header> 		 
+                    <div id="superbody" class="padding-right40">  
+                        <ui:insert name="body"/>
+                        <div class="dialog-espera">
+                            <p:dialog widgetVar="loginDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" height="80px" width="160px">
+                                <p:panelGrid style="width: 100%; margin-top: 10px;">  
+                                    <p:row>
+                                        <p:column style="width: 50px; background:#fff;">
+                                            <div class="imgGifCargando"></div>
+                                        </p:column>
+                                        <p:column>       
+                                            <h:outputText value="#{wpnInicioSesion.textoStatus}"></h:outputText>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>                            
+                            </p:dialog>
+                        </div>
+                    </div>
+                    <div class="pushExt"></div><!-- esto es importante para que el footer se quede fijo abajo -->
+                </div>
+
+                <footer class="footer width-100"><!-- footer verde -->
+                    <h:panelGrid id="tblFooter" columns="1" styleClass="width-100">
+                        <h:panelGroup layout="block" class="width-100">                                                
+                            <h:panelGroup layout="block" class="imgCertificados float-right clear padding-right50"></h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" class="texto-footer-margin clear">
+                            <h:outputText class="texto-footer azul font-size-06em float-left paddin-left20" value="#{wpnTextosController.getNombreTexto('pnw.global.texto.mensajeNavegadores', wpnInicioSesion.idCanal)}"/>  
+                            <h:outputText class="texto-footer grisOsc font-size-06em float-right padding-right20" value="#{wpnTextosController.getNombreTexto('pnw.footer.texto.seguridad', wpnInicioSesion.idCanal)}"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" class="inherit-backgro width-100">
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" class="texto-footer-margin clear ">
+                            <h:outputText class="texto-footer grisOsc font-size-06em float-right paddin-top20 paddin-bottom20 padding-right50" value="#{wpnTextosController.getNombreTexto('pnw.footer.texto.rif', wpnInicioSesion.idCanal)}"/>                      
+                        </h:panelGroup>                        
+                    </h:panelGrid>
+                    <!-- INICIO CONTROL DE LA VERSION -->
+                    <input type="hidden"  value="2018-10-23" id="fecha"/>
+                    <!-- FIN DE CONTROL DE LA VERSION -->
+                </footer><!-- fin del footer0 -->		 
+            </div><!-- FIN de supercaja --> 
+        </h:body>
+    </f:view> 
+</html>

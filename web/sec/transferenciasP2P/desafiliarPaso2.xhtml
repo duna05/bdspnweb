@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:metadata>
+        <f:event listener="#{wpnOTPController.limpiarOtp()}" type="preRenderView" />
+        <f:event listener="#{wpnGestionP2PController.limpiar()}" type="preRenderView" />
+        <f:event listener="#{wpnGestionP2PController.validarFlujoDesafiliar2()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5" rendered="#{wpnGestionP2PController.usuarioHabilitadoP2P}">
+                <h:form id="formDesafiliarServ2">
+                    <h:panelGroup layout="block" id="divBodyDesafiliar" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{wpnGestionP2PController.afiliacionesP2P != null and wpnGestionP2PController.afiliacionesP2P.size() > 0}">  
+                            <c:choose>
+                                <c:when test="#{wpnInicioSesion.validacionOTP == 1}">
+                                    <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                        <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                            <p:steps activeIndex="1" readonly="true" styleClass="fondo-pasos">
+                                                <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso1', wpnInicioSesion.idCanal)}"/>
+                                                <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                                <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                                <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                            </p:steps>
+                                        </h:panelGroup>                        
+                                    </h:panelGroup>
+                                </c:when>
+                                <c:when test="#{wpnInicioSesion.validacionOTP == 0 or wpnInicioSesion.validacionOTP == 2}">
+                                    <h:panelGroup layout="block" id="divCabeceraPDS" class="pasos-interna" style="height: 100px;">                        
+                                        <h:panelGroup layout="block" id="divPasosAfiServ" class="tres-pasos">
+                                            <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                                <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                                <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                                <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                            </p:steps>
+                                        </h:panelGroup>                        
+                                    </h:panelGroup>
+                                </c:when>
+                            </c:choose>
+
+                            <h:panelGroup layout="block" id="afiliacion">
+
+                                <h:panelGroup layout="block" styleClass="width-100">
+                                    <h:panelGroup layout="block">
+                                        <h:panelGrid columns="3">
+                                            <h:panelGroup layout="block" styleClass="negro font-size-09em">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.campo.afiliacion', wpnInicioSesion.idCanal)} "/>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block">
+                                                <h:selectOneMenu id="selectAfiEditar" value="#{wpnGestionP2PController.afiliacionSeleccionada}" styleClass="font-size-09em selectExterno marging-left-10px">                             
+                                                    <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>
+                                                    <f:selectItems value="#{wpnGestionP2PController.afiliacionesP2P}" var="afiliacion" itemValue="#{afiliacion.id}" itemLabel="#{afiliacion.nroTelefono} - #{wpnGestionP2PController.formatoAsteriscosWeb(afiliacion.nroCuenta)}"/>
+                                                    <p:ajax event="change" process="@this" update="@all" resetValues="true"/>
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>  
+                                            <h:panelGroup layout="block" styleClass="margin-top-10">  
+                                                <p:message for="selectAfiEditar" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                            </h:panelGroup>   
+                                        </h:panelGrid>                                        
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block" styleClass="width-100 margin-top-5">                                    
+                                    <h:panelGroup layout="block" styleClass="bordeRedondeado padding10" rendered="#{!wpnGestionP2PController.afiliacionSeleccionada.equalsIgnoreCase('-1')}">
+                                        <p:panelGrid styleClass="width-100 sinBorde" id="afiliacionEditar">
+                                            <p:row>
+                                                <p:column colspan="3">
+                                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>                                            
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">                                                    
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.campo.nroTelf', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                        <h:outputText value="#{wpnGestionP2PController.usuarioP2P.nroTelefono}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">
+                                                    </h:panelGroup>
+                                                </p:column> 
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.campo.nroIdentificacion', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                        <h:outputText value="#{wpnGestionP2PController.usuarioP2P.nroDocumento}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>  
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.campo.email', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                        <h:outputText value="#{wpnGestionP2PController.usuarioP2P.email}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">  
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.campo.nroCuenta', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                        <h:outputText value="#{wpnGestionP2PController.formatoAsteriscosWeb(wpnGestionP2PController.usuarioP2P.nroCuenta)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.campo.mtoMaxPorTrans', wpnInicioSesion.idCanal)}" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                        <h:outputText value="#{wpnGestionP2PController.usuarioP2P.mtoMaxTransaccion}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">  
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row>
+
+                                            <!--p:row>
+                                                <p:column styleClass="max-widthTxt" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                        <h:outputText value="# {wpnTextosController.getNombreTexto('pnw.desafiliarP2P.campo.mtoMaxTransDia', wpnInicioSesion.idCanal)}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column styleClass="max-widthCampo" style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5 font-size-07em">
+                                                        <h:outputText value="# {wpnGestionP2PController.usuarioP2P.mtoMaxDiario}"/>
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column style="background: white; border-top: 5px solid rgb(247,247,246);">
+                                                    <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:row-->
+
+                                            <p:row>
+                                                <p:column colspan="2">
+                                                    <p:message for="afiliacion" styleClass="cuerpoTabla  izquierda paddin-left10 margin-top-5" id="msjafil1"/>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                <h:panelGroup layout="block" id="divMsjs" class="float-left width-58">
+                                    <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px" rendered="false">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                    </h:panelGroup>                                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divBoton" class="width-42 float-right">
+                                    <p:commandLink actionListener="#{wpnGestionP2PController.desafiliarPaso3()}" update="@all @(.ui-message)">                                            
+                                        <h:panelGroup layout="block" id="divBotonData2" class="boton negro font-size-08em float-right centrado marging-left-10px">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" class="gris float-left margin-top-25 paddin-right25 paddin-left25 margin-bottom-10 clear justificado" id="divMsjSinAfiliaciones">
+                            <p:message rendered="true" for="divMsjSinAfiliaciones" id="msjSinAfiliaciones"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{!wpnGestionP2PController.usuarioHabilitadoP2P}">
+                <h:form id="formOTPController">
+                    <h:panelGroup rendered="true">
+                        <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5" id="SinPermisoP2P">   
+                            <p:message for="SinPermisoP2P" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" rendered="true"/>
+                        </h:panelGroup>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="margin-top-10 width-100 centrado" >
+                            <p:commandLink actionListener="#{wpnGestionP2PController.doRegresar()}" immediate="true">
+                                <h:panelGroup layout="block" id="divBotonRegresarInicio2" class="boton negro font-size-08em float-right centrado">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.volver', wpnInicioSesion.idCanal)}" class=" bold" />
+                                </h:panelGroup>
+                            </p:commandLink>
+                        </div>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>
+

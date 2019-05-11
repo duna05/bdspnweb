@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <!-- f:event listener="# {wpnInicioSesion.invalidarSesion}" type="preRenderView" / -->
+        <f:event listener="#{wpnInicioSesion.setTextoStatus(wpnTextosController.getNombreTexto('pnw.modal.texto.consultandoInf', wpnInicioSesion.idCanal))}" type="preRenderView" />
+        <f:event listener="#{wpnInicioSesion.initController}" type="preRenderView" />
+    </f:metadata>    
+    <ui:composition template="/templates/externa.xhtml">  
+        <ui:define name="body" >
+            <h:form id="formLogin">
+                <p:dialog header="Alerta" minWidth="400" style="min-width: 420px;" draggable="false"  modal="true" resizable="false" dynamic="false" widgetVar="dialogerror" closable="false" visible="#{wpnInicioSesion.mostrarAlerta}">
+                    <div class="centrado" style="  background-color: #F7F7F6;">
+
+                        <div>
+                            <h:outputText styleClass="azul font-size-1punto2em" value="#{wpnInicioSesion.mensajeAlerta}"/>
+                        </div>
+
+                        <div class="margin-top-10" >
+                            <h:outputText styleClass="negro font-size-09em" value="#{wpnInicioSesion.textoAlerta}"/>
+                        </div>
+
+                        <div class="height_10"></div>
+
+                        <div align="center"> 
+                            <h:commandLink id="cerrar" action="#{wpnInicioSesion.salir()}" immediate="true">
+                                <div class="boton negro bold font-size-08em" style="width:140px; margin-top:5px;">                                     
+                                    <div class="centrado">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.aceptar', wpnInicioSesion.idCanal)}" />
+                                    </div>
+                                </div>
+                            </h:commandLink>
+                        </div>
+
+                        <div class="height_10"></div>
+                    </div>
+
+                </p:dialog>
+                <h:panelGrid columns="2" styleClass="width-100">
+                    <h:panelGroup layout="block" id="divLogin" class="login-left ">
+                        <div>
+                            <h:outputText styleClass="titulos-tabla negro bold font-size-08em" value="#{wpnTextosController.getNombreTexto('pnw.login.texto.bienvenida', wpnInicioSesion.idCanal)}"/>
+                            <br/>
+                            <h:outputText styleClass="titulos-tabla grisOsc font-size-08em" value="#{wpnTextosController.getNombreTexto('pnw.login.texto.info', wpnInicioSesion.idCanal)}"/>
+                            <br/>
+                            <br/>
+                        </div>
+
+
+                        <p:panelGrid styleClass="width-100">      
+
+                            <p:row style="border: none;">
+
+                                <p:column style="max-width: 100px; vertical-align: top; padding-top: 15px;">
+                                    <h:outputText styleClass="titulos-tabla gris font-size-08em bold" value="#{wpnTextosController.getNombreTexto('pnw.login.texto.tipoLogin', wpnInicioSesion.idCanal)}"/>
+                                </p:column>
+                                <p:column styleClass="float-right" style="vertical-align: top; padding-top: 15px;">
+                                    <h:selectOneMenu id="selectTipoLogin" value="#{wpnInicioSesion.tipoLogin}" style="width:170px; background-color: #FFF;" 
+                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}"
+                                                     title="#{wpnTextosController.getNombreTexto('pnw.global.title.tipoLogin', wpnInicioSesion.idCanal)}">
+                                        <f:selectItem itemLabel="Tarjeta de Débito" itemValue="1"/>
+                                        <f:selectItem itemLabel="Documento de Identidad" itemValue="2"/>
+                                        <p:ajax event="change" immediate="true" update="@form"/>
+                                    </h:selectOneMenu>
+                                    <p:tooltip id="toolTipTipoLogin" for="selectTipoLogin" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row style="border: none;">
+                                <p:column colspan="2">
+                                    <p:message for="selectTipoLogin"/>
+                                </p:column>                                
+                            </p:row>
+
+                            <p:row style="border: none;" rendered="#{wpnInicioSesion.tipoLogin == 2}">
+
+                                <p:column style="max-width: 100px; vertical-align: top; padding-top: 15px;">
+                                    <h:outputText styleClass="titulos-tabla gris font-size-08em bold" value="#{wpnTextosController.getNombreTexto('pnw.login.texto.documento', wpnInicioSesion.idCanal)}"/>
+                                </p:column>
+                                <p:column styleClass="float-right" style="vertical-align: top; padding-top: 15px;">
+                                    <h:selectOneMenu id="selectTipoDoc" value="#{wpnInicioSesion.tipoDoc}" style="width: 40px; background-color: #FFF;" 
+                                                     required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">
+                                        <f:selectItem itemValue="V" itemLabel="V"/>
+                                        <f:selectItem itemValue="E" itemLabel="E"/> 
+                                        <f:selectItem itemValue="P" itemLabel="P"/>
+                                    </h:selectOneMenu>
+                                    <p:inputText  id="numDoc" required="true" style="min-width:120px;" value="#{wpnInicioSesion.nroDoc}" requiredMessage="#{wpnInicioSesion.mensajeNull}"
+                                                  title="#{wpnTextosController.getNombreTexto('pnw.global.title.nroDoc', wpnInicioSesion.idCanal)}"
+                                                  validator="#{wpnInicioSesion.validarIdentificacion}" maxlength="12" autocomplete="off" styleClass="font-size-09em" size="16">                                
+                                    </p:inputText>
+                                    <p:tooltip id="toolTipTipoDoc" for="numDoc" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row style="border: none;" rendered="#{wpnInicioSesion.tipoLogin == 2}">
+                                <p:column colspan="2">
+                                    <p:message for="numDoc"/>
+                                </p:column>                                
+                            </p:row>
+
+                            <p:row style="border: none;" rendered="#{wpnInicioSesion.tipoLogin == 1}">
+
+                                <p:column style="max-width: 100px; vertical-align: top; padding-top: 15px;">
+                                    <h:outputText styleClass="titulos-tabla gris font-size-08em bold" value="#{wpnTextosController.getNombreTexto('pnw.login.texto.numTDD', wpnInicioSesion.idCanal)}"/>
+                                </p:column>
+                                <p:column styleClass="float-right" style="vertical-align: top; padding-top: 15px;">
+                                    <p:inputText  id="nroTarjeta" required="true" style="min-width:160px;" value="#{wpnInicioSesion.tarjeta}" requiredMessage="#{wpnInicioSesion.mensajeNull}"
+                                                  title="#{wpnTextosController.getNombreTexto('pnw.global.title.TDD', wpnInicioSesion.idCanal)}"
+                                                  validator="#{wpnInicioSesion.validarTDDDelSur}" maxlength="16" autocomplete="off" styleClass="solo-numero font-size-09em" size="16">                                
+                                    </p:inputText>
+                                    <p:tooltip id="toolTipNroTarjeta" for="nroTarjeta" showEvent="focus" hideEvent="blur" styleClass="font-size-07em" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row style="border: none;" rendered="#{wpnInicioSesion.tipoLogin == 1}">
+                                <p:column colspan="2">
+                                    <p:message for="nroTarjeta"/>
+                                </p:column>                                
+                            </p:row>
+
+
+                            <p:row style="border: none;">
+
+                                <p:column style="max-width: 100px; vertical-align: top; padding-top: 15px;">
+                                    <h:outputText styleClass="titulos-tabla gris font-size-08em bold" value="#{wpnTextosController.getNombreTexto('pnw.login.texto.clave', wpnInicioSesion.idCanal)}"/>
+                                </p:column>
+                                <p:column styleClass="float-right" style="vertical-align: top; padding-top: 15px;">                                    
+                                    <h:panelGrid columns="2" width="100%">
+                                        <h:panelGroup> 
+                                            <p:inputText id="clave"                                                          
+                                                         maxlength="12" autocomplete="off" style="min-width:160px; display: block;" styleClass="font-size-09em" 
+                                                         title="# {wpnTextosController.getNombreTexto('pnw.global.title.claveGenerico', wpnInicioSesion.idCanal)}"
+                                                         onkeyup="copiarValorSustituirXAstericos('formLogin:claveInputTextOculto', 'formLogin:clave', event);"/> 
+
+                                            <p:inputText id="claveInputTextOculto" value="#{wpnInicioSesion.clave}" 
+                                                         style="min-width:160px; display: none;" styleClass="font-size-09em" />
+                                        </h:panelGroup>
+                                        <p:commandLink onmouseout="mostrarOcultarPassword('formLogin:claveInputTextOculto', 'formLogin:clave');" onmouseover="copiarValorSustituirXAstericos('formLogin:claveInputTextOculto', 'formLogin:clave', event); mostrarOcultarPassword('formLogin:claveInputTextOculto', 'formLogin:clave', event);" style="float: left;" styleClass="mostrar">
+                                            <p:spacer styleClass="mostrar" />
+                                        </p:commandLink>
+                                    </h:panelGrid>
+                                </p:column>
+                            </p:row>
+
+                            <p:row style="border: none;">
+                                <p:column colspan="2" styleClass="paddin-bottom20">
+                                    <p:message for="clave"/>
+                                </p:column>                                
+                            </p:row>
+
+                            <p:row style="border: none;">
+
+                                <p:column styleClass="paddin-top10"></p:column>
+                                <p:column styleClass="paddin-top10 float-right" style=" padding-bottom: 15px; padding-top: 5px;">
+                                    <p:remoteCommand name="rcEncriptarPass" actionListener="#{wpnInicioSesion.encriptarClaveWeb()}" global="false" process="@form"/>
+                                    <p:commandLink id="ingresar" actionListener="#{wpnInicioSesion.validarAcceso()}" update="@form"  onclick="rcEncriptarPass();
+                                            asignarPass('formLogin:clave', '********');">
+                                        <div class="boton negro bold font-size-08em" style="width:140px">                                    
+                                            <div class="centrado">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.login.boton.ingresar', wpnInicioSesion.idCanal)}" />
+                                            </div>
+                                        </div>
+                                    </p:commandLink>
+                                    <p:defaultCommand target="ingresar"/>
+                                </p:column>
+                            </p:row>
+
+                            <p:row style="height: 30px; border: none;">    
+                                <p:column styleClass="paddin-top30">
+                                    <p:commandLink id="lnkCrearUsr" actionListener="#{wpnInicioSesion.actionRegistro()}" onclick="PF('loginDialog').show();" immediate="true" global="false">
+                                        <div class="textoEnlacesAzul font-size-07em blink">                                        
+                                            <div class="izquierda">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.login.enlace.registro', wpnInicioSesion.idCanal)}" />
+                                            </div>
+                                        </div>
+                                    </p:commandLink>
+                                </p:column>
+
+                                <p:column colspan="2" styleClass="paddin-top20">
+                                    <p:commandLink id="lnkRecupUsr" action="#{wpnInicioSesion.desbloqueoUsuario()}" onclick="PF('loginDialog').show();" immediate="true" global="false">
+                                        <div class="azul font-size-07em">                                        
+                                            <div class="derecha">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.login.enlace.recupUsr', wpnInicioSesion.idCanal)}" />
+                                            </div>
+                                        </div>
+                                    </p:commandLink>
+                                </p:column>
+                            </p:row>  
+                            <p:row style="height: 30px; border: none;">
+                                <p:column styleClass="paddin-top30">
+                                    <p:commandLink id="lnkRecupPas" actionListener="#{wpnInicioSesion.actionOlvidoClave()}" onclick="PF('loginDialog').show();" immediate="true" global="false">
+                                        <div class="azul font-size-07em">                                        
+                                            <div class="izquierda">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.login.enlace.recupPass', wpnInicioSesion.idCanal)}" />
+                                            </div>
+                                        </div>
+                                    </p:commandLink>
+                                </p:column>
+
+                                <p:column colspan="2" styleClass="paddin-top20">
+                                    <p:commandLink id="lnkReiniUsr" actionListener="#{wpnInicioSesion.actionReinicioUsr()}" onclick="PF('loginDialog').show();" immediate="true" global="false">
+                                        <div class="azul font-size-07em">                                         
+                                            <div class="derecha">
+                                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.login.enlace.reiniUsr', wpnInicioSesion.idCanal)}" />
+                                            </div>
+                                        </div>
+                                    </p:commandLink>
+                                </p:column>
+                            </p:row>  
+
+                        </p:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" id="divCrearUsr" style="margin-bottom:0; width: 590px; height: 280px; border: none; position: relative; top: -50px;">   
+                        <h:panelGroup layout="block" class="imgSlide1">                
+                        </h:panelGroup>
+                        <!--p:carousel numVisible="1" style="margin-bottom:0; width: 590px; border: none;" circular="true" autoPlayInterval="12000" effectDuration="2000" responsive="true" >
+                <p:tab title="slide3">
+                    <h:panelGrid columns="1" cellpadding="10" style="border: none;"> 
+                        <h:panelGroup layout="block" class="imgSlide3">                
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="slide1">
+                    <h:panelGrid columns="1" cellpadding="10" style="border: none;"> 
+                        <h:panelGroup layout="block" class="imgSlide1">                
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:tab>
+</p:carousel-->   
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

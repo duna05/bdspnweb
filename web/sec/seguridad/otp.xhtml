@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">   
+    <f:metadata>
+        <f:event listener="#{wpnOTPController.limpiarOtp()}" type="preRenderView" />
+        <f:event listener="#{wpnOTPController.initController()}" type="preRenderView" />
+    </f:metadata>    
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5" rendered="#{wpnOTPController.usuarioHabilitadoP2P}">
+                <h:form id="formOtp">
+                    <h:panelGroup layout="block" id="divBodyOtp">
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+
+                        <c:choose>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('201')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listBenef.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listBenef.paso2', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup> 
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('202')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afiliar.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afiliar.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afiliar.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afiliar.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('4')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('5')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagoTDC.tercerosDelSur.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('1')}">
+                                <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.confirmPaso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.tpds.finPaso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('3')}">
+                                <h:panelGroup layout="block" id="divCabeceraTOB" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.ttob.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.ttob.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.ttob.confirmPaso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.ttob.finPaso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('1821')}">
+                                <h:panelGroup layout="block" id="divCabeceraTOB" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosAfiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarServ.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('1822')}">
+                                <h:panelGroup layout="block" id="divCabeceraTOB" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosDesafiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafilarServ.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('1861')}">
+                                <h:panelGroup layout="block" id="divCabeceraTOB" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosDesafiServ" class="seis-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarP2P.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarP2P.pasoContrato', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.afilarP2P.paso5', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('1881')}">
+                                <h:panelGroup layout="block" id="divCabeceraTOB" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosDesafiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.editarAfiP2P.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.editarAfiP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.editarAfiP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.editarAfiP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('1901')}">
+                                <h:panelGroup layout="block" id="divCabeceraTOB" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosDesafiServ" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.desafiliarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('462')}">
+                                <h:panelGroup layout="block" id="divPagosProgramados" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosPagosProgramados" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listPagProg.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.listPagProg.paso2', wpnInicioSesion.idCanal)}"/>  
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+
+                            <c:when test="#{wpnInicioSesion.idTransaccion.equalsIgnoreCase('1921')}">
+                                <h:panelGroup layout="block" id="divPagosProgramados" class="pasos-interna" style="height: 100px;">                        
+                                    <h:panelGroup layout="block" id="divPasosPagosProgramados" class="cuatro-pasos">
+                                        <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso1', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso2', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso3', wpnInicioSesion.idCanal)}"/>
+                                            <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.pagarP2P.paso4', wpnInicioSesion.idCanal)}"/>
+                                        </p:steps>
+                                    </h:panelGroup>                        
+                                </h:panelGroup>
+                            </c:when>
+
+                        </c:choose>
+
+                        <h:panelGroup layout="block" id="divCuerpoOtp" styleClass="width-100">                                    
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">
+                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.otp.paso1', wpnInicioSesion.idCanal)}" styleClass="width-100"/>
+                                </h:panelGroup>
+                                <h:panelGrid columns="1" styleClass="width-100 sinBorde">
+                                    <h:panelGroup layout="block" styleClass="font-size-07em margin-top-10">                                                
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.otp.texto.OTP1', wpnInicioSesion.idCanal)}" />
+                                    </h:panelGroup> 
+
+                                    <h:panelGroup layout="block" styleClass="centrado margin-top-10"> 
+                                        <p:inputText id="txtOTP" value="#{wpnOTPController.codigoOTP}"  maxlength="8" 
+                                                     styleClass="solo-numero font-size-09em" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                     validator="#{wpnInicioSesion.validarOTP}" rendered="#{wpnOTPController.otpGenerado}"/>
+                                    </h:panelGroup>                                            
+                                    <h:panelGroup layout="block" styleClass="margin-top-10">  
+                                        <p:message id="msjTxtOTP" for="txtOTP" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                    </h:panelGroup>                                    
+                                </h:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                            <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                <h:panelGroup layout="block" id="divBotonSiguiente" class="float-right" rendered="#{wpnOTPController.otpGenerado}">
+                                    <p:commandLink actionListener="#{wpnOTPController.validarOTPTOB()}" update="@all @(.ui-message)" resetValues="true">
+                                        <h:panelGroup layout="block" id="divBotonDataSiguiente" class="boton negro font-size-08em float-right centrado">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divBotonGenerarOtp" class="float-right" rendered="#{!wpnOTPController.otpGenerado}">
+                                    <p:commandLink action="#{wpnOTPController.generarOTP()}" update="formOtp:divCuerpoOtp, formOtp:divBoton" >
+                                        <h:panelGroup layout="block" id="divBotonDataGenerarOtp" class="boton negro font-size-08em float-right centrado paddin-left10 padding-right10">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.generarOtp', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+                <h:panelGroup rendered="#{wpnOTPController.moduloAfiliacionP2P}">
+                    <h:form id="formOTPControllerMensajeAfiliacion">
+                        <h:panelGroup rendered="true">
+                            <h:panelGroup layout="block" styleClass="font-size-08em" >   
+                                <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.afiliacionP2P.mensaje.productos', wpnInicioSesion.idCanal)}" class=" bold" />
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{!wpnOTPController.usuarioHabilitadoP2P}">
+                <h:form id="formOTPController">
+                    <h:panelGroup rendered="true">
+                        <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5" id="SinPermisoP2P">   
+                            <p:message for="SinPermisoP2P" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" rendered="true"/>
+                        </h:panelGroup>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="margin-top-10 width-100 centrado" >
+                            <p:commandLink actionListener="#{wpnOTPController.doRegresar()}" immediate="true">
+                                <h:panelGroup layout="block" id="divBotonRegresarInicio2" class="boton negro font-size-08em float-right centrado">
+                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.boton.volver', wpnInicioSesion.idCanal)}" class=" bold" />
+                                </h:panelGroup>
+                            </p:commandLink>
+                        </div>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

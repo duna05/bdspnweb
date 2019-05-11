@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{wpnChequeraController.reinciarSolChequeras()}" type="preRenderView" />
+        <f:event listener="#{wpnChequeraController.consultaInicial()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formSolChequera1">
+
+                    <h:panelGroup layout="block" id="divBodySolicitudChequera" >
+                        <h:panelGroup layout="block">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/><br/>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{wpnChequeraController.cuentasCliente != null and wpnChequeraController.cuentasCliente.size() > 0}">
+
+                            <h:panelGroup layout="block" id="divCrearUsr" class="pasos-interna" style="height: 100px;">                        
+                                <h:panelGroup layout="block" id="divPasosRegistro" class="cuatro-pasos">
+                                    <p:steps activeIndex="0" readonly="true" styleClass="fondo-pasos">
+                                        <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.paso1', wpnInicioSesion.idCanal)}"/>
+                                        <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.paso2', wpnInicioSesion.idCanal)}"/>
+                                        <p:menuitem value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.paso3', wpnInicioSesion.idCanal)}"/>
+                                    </p:steps>
+                                </h:panelGroup>                        
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" styleClass="width-100">                                    
+                                <h:panelGroup layout="block" styleClass="bordeRedondeado padding10">                                        
+                                    <p:panelGrid styleClass="width-100 sinBorde">
+                                        <p:row>
+                                            <p:column colspan="3">
+                                                <h:panelGroup layout="block" styleClass="fondoCabeceraTabla negro bold font-size-08em">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.paso1', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.campo.ctaCte', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <h:selectOneMenu class="marging-left-30px" id="txtCtaCte" value="#{wpnChequeraController.ctaCte}" required="true" 
+                                                                     requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnInicioSesion.validarSelectOneMenu}">
+                                                        <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/>  
+                                                        <f:selectItems value="#{wpnChequeraController.cuentasCliente}" var="ctaOrigen" itemLabel="#{ctaOrigen.nombreProducto} - #{wpnChequeraController.formatoAsteriscosWeb(ctaOrigen.numeroCuenta)}" 
+                                                                       itemValue="#{ctaOrigen.numeroCuentaEnc}" />
+                                                        <p:ajax update="divAgencias" event="change" listener="#{wpnChequeraController.setMantenerDatosForm(true)}"/>
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtCtaCte" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.campo.tipoChequera', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla font-size-07em izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <h:selectOneRadio id="txtTipoChequera" value="#{wpnChequeraController.tipoChequera}" 
+                                                                      required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}">
+                                                        <f:selectItem itemLabel="25 cheques" itemValue="1" />
+                                                    </h:selectOneRadio>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtTipoChequera" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.campo.cantidadChequeras', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5">
+                                                    <p:inputText id="txtCantidadChequeras" value="#{wpnChequeraController.cantChequeras}" 
+                                                                 maxlength="1" styleClass="solo-numero"
+                                                                 required="true" requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" 
+                                                                 validator="#{wpnChequeraController.validarCantidadChequeras}" readonly="true"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="txtCantidadChequeras" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" />
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="max-widthTxt">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla-etiqueta">
+                                                    <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.solicitudChequera.campo.agencias', wpnInicioSesion.idCanal)}"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column styleClass="max-widthCampo">
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla  izquierda grisOsc paddin-left10 margin-top-5" id="divAgencias">
+                                                    <h:selectOneMenu id="selectAgencias" value="#{wpnChequeraController.agencia}" required="true" 
+                                                                     requiredMessage="#{wpnTextosController.getNombreTexto('pnw.global.texto.requerido', wpnInicioSesion.idCanal)}" validator="#{wpnChequeraController.validarAgencias}">
+                                                        <f:selectItem itemLabel="#{wpnTextosController.getNombreTexto('pnw.global.texto.seleccione', wpnInicioSesion.idCanal)}" itemValue="-1"/> 
+                                                        <f:selectItems value="#{wpnChequeraController.agencias}" var="agencia" itemLabel="#{agencia.nombreAgencia} - #{agencia.nombreEstado}" 
+                                                                       itemValue="#{agencia.codigoAgencia}" />
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            <p:column>
+                                                <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5">   
+                                                    <p:message for="selectAgencias" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5"/>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" id="divMsjsBoton" class="width-100 margin-top-8">
+                                <h:panelGroup layout="block" id="divMsjs" class="float-left width-80">
+                                    <h:panelGroup layout="block" id="divMsjsData" class="botonAzul azul font-size-08em marging-right-50px">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.global.texto.astericos', wpnInicioSesion.idCanal)}" class="" />
+                                    </h:panelGroup>                                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" id="divBoton" class="width-20 float-right">
+                                    <p:commandLink actionListener="#{wpnChequeraController.solicitudChequeraPaso2()}" update="@all @(.ui-message)">
+                                        <h:panelGroup layout="block" id="divBotonData" class="boton negro font-size-08em float-right centrado">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.boton.siguiente', wpnInicioSesion.idCanal)}" class=" bold" />
+                                        </h:panelGroup>
+                                        <a href="solicitudChequeraPaso2.xhtml"></a>
+                                    </p:commandLink>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>                    
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" class="gris float-left margin-top-25 paddin-right25 paddin-left25 margin-bottom-10 clear justificado" id="divMsjSinCtas">
+                        <p:message rendered="true" for="divMsjSinCtas" id="msjSinCtas"/>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

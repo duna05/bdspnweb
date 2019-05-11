@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/templates/interna.xhtml">  
+        <ui:define name="body" >
+            <h:panelGroup layout="block" styleClass="bodyGloblal padding-right5 paddin-left5">
+                <h:form id="formPrestamo">                
+                    <h:panelGroup layout="block" id="divPosConsolidada" >
+                        <h:panelGroup layout="block" styleClass="width-100">
+                            <h:outputText class="titulos-tabla-principal negro font-size-7em float-left" value="#{wpnInicioSesion.nombreModulo} | #{wpnInicioSesion.nombreTransaccion}"/>
+                            <br/>
+                        </h:panelGroup>
+
+
+
+                        <h:panelGroup layout="block">
+                            <br/>
+                            <h:outputText value="#{wpnPrestamoController.prestamoDTO.nombreProducto}  #{wpnPrestamoController.prestamoDTO.codigoTipoProducto}" class="titulos-menu azul float-left marging-right-10px"/>
+                            <h:outputText class="titulos-menu azul marging-right-10px float-left marging-left-3px" value="#{wpnPrestamoController.prestamoDTO.numeroPrestamo}"/>
+                        </h:panelGroup> 
+
+
+                        <h:panelGroup layout="block" id="cabeceraCuenta" styleClass="width-100 clear">
+
+                            <h:panelGroup layout="block" styleClass="bordeRedondeado padding10 margin-bottom-25">
+
+                                <h:panelGrid columns="5" styleClass="width-100 sinBorde">
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.tipoPrestamo', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.nroPrestamo', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.fechaLiq', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.tasa', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.fechaVenc', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnPrestamoController.prestamoDTO.codigoTipoProducto}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc">
+                                        <c:choose>
+                                            <c:when test="#{wpnPrestamoController.listPrestamoDTO.size() > 1}">
+                                                <h:selectOneMenu value="#{wpnPrestamoController.prestamoSeleccionado}" styleClass="font-size-09em selectExterno" onchange="setTimeout(function () {salirTimeOut();}, #{wpnInicioSesion.timeout});">
+                                                    <f:selectItems value="#{wpnPrestamoController.listPrestamoDTO}" var="pres" itemLabel="#{pres.numeroPrestamo}" 
+                                                                   itemValue="#{pres.numeroPrestamo}" />
+                                                    <f:ajax event="change" render="formPrestamo" execute="@this" listener="#{wpnPrestamoController.actDetallePrestamo}"/>
+                                                </h:selectOneMenu>
+                                            </c:when> 
+                                            <c:otherwise>
+                                                <h:panelGroup layout="block" styleClass="font-size-075em">
+                                                    <h:outputText value="#{wpnPrestamoController.prestamoDTO.numeroPrestamo}"/>
+                                                </h:panelGroup>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnPrestamoController.fecha(wpnPrestamoController.prestamoDTO.fechaLiquidacionDate)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(wpnPrestamoController.prestamoDTO.tasa)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnPrestamoController.fecha(wpnPrestamoController.prestamoDTO.fechaVencimientoDate)}"/>
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.fechaProxPago', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.montoAprobado', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.saldoCapital', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">
+                                        <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.montoCuota', wpnInicioSesion.idCanal)}"/>
+                                    </h:panelGroup>
+                                     <h:panelGroup layout="block" styleClass="fondoCabeceraTablaClaro negro centrado bold font-size-085em">                                        
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">                                    
+                                        <h:outputText value="#{wpnPrestamoController.fecha(wpnPrestamoController.prestamoDTO.fechaProximoPagoDate)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(wpnPrestamoController.prestamoDTO.montoAprobado)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(wpnPrestamoController.prestamoDTO.saldoActual)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(wpnPrestamoController.prestamoDTO.montoCuota)}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="cuerpoTabla centrado grisOsc font-size-075em">                                        
+                                    </h:panelGroup>
+                                </h:panelGrid>
+
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="cuerpoTabla izquierda grisOsc paddin-left10 margin-top-5 clear">   
+                            <p:message for="divDetPres" styleClass="cuerpoTabla izquierda paddin-left10 margin-top-5" id="msjDetPrest"/>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block" styleClass="clear width-100 botoneraImpresion">
+                            <h:panelGrid columns="4" styleClass="float-right font-size-06em">
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink actionListener="#{wpnPrestamoController.detallePrestamoPDF}" ajax="false" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoDescarga float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Descargar PDF" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="botonImpresion">                                        
+                                    <p:commandLink action="#" styleClass="vertical-sub">
+                                        <h:panelGroup layout="block" styleClass="imgIconoImprimir float-left"/> 
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="Imprimir" class="grisOsc vertical-sub" />
+                                        </h:panelGroup>
+                                         <p:printer target="divDetPres"/>
+                                    </p:commandLink>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                </h:panelGroup>
+                            </h:panelGrid> 
+                            <div class="lineaGrisOscuro clear"  ></div>  
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dataTableEstilos clear" id="divDetPres">   
+                            <div class="cambioFondo">
+                                <p:dataTable id="datalist" value="#{wpnPrestamoController.prestamoDTO.movimientos}" var="item"
+                                             selectionMode="single" 
+                                             paginator="true"
+                                             paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {anterior} {PageLinks} {siguiente} {NextPageLink} {LastPageLink}"
+                                             paginatorPosition="bottom"
+                                             rowKey="#{item.numeroCuota}"
+                                             rows="#{ibParametrosFacade.textoParametro('pnw.global.dataTable.cantReg', inicioSesion.idCanal)}"
+                                             emptyMessage="#{wpnTextosController.getNombreTexto('pnw.dataTable.texto.vacio', wpnInicioSesion.idCanal)}"
+                                             >
+
+                                    <f:facet name="{anterior}">
+                                        Anterior
+                                    </f:facet>
+                                    <f:facet name="{siguiente}">
+                                        Siguiente
+                                    </f:facet>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.nroCuota', wpnInicioSesion.idCanal)}" />
+                                        </f:facet>
+                                        <h:outputText value="#{item.numeroCuota}" />                                                
+                                    </p:column>
+
+                                    <p:column styleClass="centrado">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.fechaPago', wpnInicioSesion.idCanal)}" />                                            
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaDePagoDate}" >                                    
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.montoOp', wpnInicioSesion.idCanal)}" />
+                                        </f:facet>
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(item.moraPagada)}" />                                    
+                                    </p:column>
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.capital', wpnInicioSesion.idCanal)}" />
+                                        </f:facet>
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(item.capital)}" />
+                                    </p:column>
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.intereses', wpnInicioSesion.idCanal)}" />
+                                        </f:facet>
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(item.interesesPagado)}" />
+                                    </p:column>
+
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.mora', wpnInicioSesion.idCanal)}" />
+                                        </f:facet>
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(item.mora)}" />
+                                    </p:column>
+
+                                    <p:column styleClass="derecha">
+                                        <f:facet name="header" >
+                                            <h:outputText value="#{wpnTextosController.getNombreTexto('pnw.detPrestamo.titulo.seguros', wpnInicioSesion.idCanal)}" />
+                                        </f:facet>
+                                        <h:outputText value="#{wpnPrestamoController.formatearMonto(item.seguro)}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>
